@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('client')->group(function(){
+    Route::get('/home', [ClientController::class, 'home'])->name('home');
+    Route::get('/registration', [ClientController::class, 'registration'])->name('registration');
+    Route::get('/login', [ClientController::class, 'login'])->name('login');
 });
