@@ -1,68 +1,65 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <style>
-  body,h1,h2,h3,h4,h5,h6 {
-    font-family: Lato;
-    font-size: 1.2rem
-  }
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+body,h1,h2,h3,h4,h5,h6 {
+  font-family: 'Open Sans', sans-serif !important;
+}
 
   body, html {
     height: 100%;
     line-height: 1.8;
   }
-
-  .w3-bar .w3-button {
-    padding: 1.5vw 2vw 1.5vw 2vw;
+  .navs, a{
+    background-color: black !important;
+    color: white;
+    text-decoration: none;
+    font-size: large !important;
   }
-
-  a.active{
-    background-color: #B6E0FF;
-    color: black;
-    font-weight: bold;
-  }
-
-  #overrides a:hover {
+  .navvv:hover{
     background-color: red !important;
     color: white !important;
-    font-weight: bold;
+    text-decoration: none !important;
   }
 
-  .navbar a:hover {
-    background-color: #B6E0FF !important;
-    color: black !important;
-  }
+  /* img:hover{
+    background-color: transparent !important;
+  } */
 </style>
 
-<div class="w3-top" style="background-color: black">
-  <div class="w3-bar w3-card" id="overrides">
-    <a href="#home" style="margin: 0%;"><img alt="" style=" height: 4.5rem" src="{{ asset('images/logo.jpg') }}" /></a>
-    <!-- Right-sided navbar links -->
-    <div id="nav" class="w3-right w3-hide-small" style="color: white; ">
-      <a href="" class="w3-bar-item w3-button {{ (request()->is('/')) ? 'active' : '' }}">Home</a>
-      <a href="" class="w3-bar-item w3-button {{ (request()->is('/')) ? 'active' : '' }}">About</a>
-      <a href="" class="w3-bar-item w3-button {{ (request()->is('about')) ? 'active' : '' }}">Register</a>
-      <!-- <a href="#pricing" class="w3-bar-item w3-button">Login</a> -->
-      
-    </div>
-    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+<div class="w3-top">
+  <div class="w3-bar w3-card w3-left-align w3-large navs">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item"><img alt="" class="" style="height: 3rem;" src="{{ asset('images/logo.jpg') }}" /></a>
+    <!-- <a href="#home" style="margin: 0%;"></a> -->
+    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Home</a>
+    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">About</a>
+    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Login</a>
+    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Contact Us</a>
+  </div>
 
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
-      <i class="fa fa-bars" id="overrides" style="color: white"></i>
-    </a>
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Home</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">About</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Login</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Contact Us</a>
   </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="
+https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
 
 <script>
-$(".list-group-item").click(function() {
-  // Select all list items
-  var listItems = $(".list-group-item");
-    
-  // Remove 'active' tag for all list items
-  for (let i = 0; i < listItems.length; i++) {
-      listItems[i].classList.remove("active");
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
   }
-    
-  // Add 'active' tag for currently selected item
-  this.classList.add(" active");
-});
+}
 </script>

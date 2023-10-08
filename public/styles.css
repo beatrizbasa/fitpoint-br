@@ -7,6 +7,7 @@
 
 body,h1,h2,h3,h4,h5,h6 {
   font-family: 'Open Sans', sans-serif;
+  font-size: medium;
 }
 
 * {
@@ -56,27 +57,24 @@ padding: 15px;
 }
 
 .buttons{
-  width: 17.25rem; height: 3.5rem; 
-  flex-shrink: 0; border-radius: 1.25rem; 
-  background: #4F94DC; color: #FFF; 
-  font-family: Lato; font-size: 1.3rem; 
-  font-style: normal; font-weight: 600; 
-  line-height: normal; border: none; 
-  padding: 1vw; cursor: pointer;
-  
+  padding: .25rem; font-size: 1rem; background-color: black; color: white; border: solid black;width: 8rem
 }
 
-.buttons:hover{
+.buttons, a{
+  padding: .25rem; font-size: 1rem; background-color: black; color: white; border: solid black;width: 8rem
+}
+
+/* .buttons:hover{
   background-color: #B6E0FF !important;
   color: black !important; 
-}
-
+} */
+/* 
 a:hover{
   background-color: #B6E0FF !important;
   color: black !important;
   text-decoration: underline !important;
   background-color:none !important;
-}
+} */
 
 .txt{
   font-family: Lato; 

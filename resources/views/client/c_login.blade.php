@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=11">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=14">
     <style>
         .center {
             margin: auto;
@@ -57,7 +57,7 @@
             
             <div class="col-6">
                 <div class="col-12 adjust-top">
-                    <h3 style="font-size: 2.5rem; color: black"><center><b>Login Account</b></center></h3>
+                    <b style="font-size: 2.5rem; color: black; font-size:xx-large"><center>Login Account</center></b>
                     <center><p style="font-size: 1.5rem; color: black">A&T Fitness Center</p></center>
                 </div>
                 <div class="col-12 adjust-top">
@@ -69,7 +69,7 @@
                     <input type="password" class="form-control" id="inputFname" aria-describedby="passwordHelp">
                 </div>
                 <div class="col-12">
-                <button type="button" class="btn btn-primary" style="padding: .25rem; font-size: 1rem; background-color: black; color: white; border: solid black; float: right; width: 8rem"> Login </button>
+                    <button type="button" class="btn buttons btn-primary" style="float: right"> Login </button>
                 </div>
             </div>
             
