@@ -14,8 +14,13 @@ use App\Http\Controllers\ClientController;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('main_home');
 });
 
 Route::prefix('client')->group(function(){
