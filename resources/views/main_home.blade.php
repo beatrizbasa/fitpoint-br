@@ -28,8 +28,7 @@
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px; width: auto">
-  <h1 class="w3-margin w3-jumbo">START PAGE</h1>
-  <p class="w3-xlarge">Template by w3.css</p>
+  <h1 class="w3-margin w3-jumbo">A&T FITNESS CENTER</h1>
   <button class="btn buttons w3-margin-top">Get Started</button>
 </header>
 
