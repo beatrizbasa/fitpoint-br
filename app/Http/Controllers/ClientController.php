@@ -4,30 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
-
-    public function home()
-    {
-        return view('client.c_home');
-    }
+    // public function index()
+    // {
+    //     //
+    // }
 
     public function registration()
     {
         return view('client.c_registration');
     }
 
-    public function login()
+    public function index()
     {
         return view('client.c_login');
+    }
+
+    public function login(Request $request){
+        // dd($request->all());
+
+        $check = $request->all();
+        if(Auth::guard('client')->attempt(['email' => $check['email'], 'password' => $check['password']])){
+            //if nagmatch lahat
+            return redirect()->route('client.home')->with('error', 'client logged in successfully');
+            // return view('admin.admin_dashboard');
+        }
+        else{
+            return back()->with('error', 'invalid credentialsss');
+            // return view('admin.error');
+        }
+    }
+
+    public function home()
+    {
+        return view('client.c_home');
     }
 
     /**

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,17 +60,23 @@
                     <b style="font-size: 2.5rem; color: black; font-size:xx-large"><center>Login Account</center></b>
                     <center><p style="font-size: 1.5rem; color: black">A&T Fitness Center</p></center>
                 </div>
+                @if(Session::has('error'))
+                {{ session::get('error') }}
+                @endif
+                <form action="{{ route('client.login') }}" method="post">
+                @csrf
                 <div class="col-12 adjust-top">
                     <label for="inputFname" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="inputFname" aria-describedby="emailHelp">
+                    <input type="email" name="email" class="form-control" aria-describedby="emailHelp">
                 </div>
                 <div class="col-12 adjust-top">
                     <label for="inputFname" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="inputFname" aria-describedby="passwordHelp">
+                    <input type="password" name="password" class="form-control" aria-describedby="passwordHelp">
                 </div>
                 <div class="col-12">
-                    <button type="button" class="btn buttons btn-primary" style="float: right"> Login </button>
+                    <button type="submit" class="btn buttons" style="float: right"> Login </button>
                 </div>
+                </form>
             </div>
             
         </div>
