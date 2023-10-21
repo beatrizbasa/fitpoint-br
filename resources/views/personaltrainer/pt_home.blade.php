@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7528702e77.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=42">
+    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=14">
     <style>
     body,h1,h2,h3,h4,h5,h6 {
         font-family: 'Open Sans', sans-serif;
@@ -28,9 +28,9 @@
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px; width: auto">
-  <h1 class="w3-margin w3-jumbo">A&T FITNESS CENTER</h1>
-    <!-- <button class="form-buttons">Get Started</button> -->
-    <a class="link-buttons" href="">Get Started</a>
+  <h1 class="w3-margin w3-jumbo">START PAGE</h1>
+  <p class="w3-xlarge">Template by w3.css</p>
+  <button class="btn buttons w3-margin-top">Get Started</button>
 </header>
 
 <!-- First Grid -->

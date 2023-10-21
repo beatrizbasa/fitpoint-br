@@ -46,6 +46,11 @@ class ClientController extends Controller
         return view('client.c_home');
     }
 
+    public function booked_personaltrainer()
+    {
+        return view('client.c_booked_personaltrainer');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

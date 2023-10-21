@@ -17,15 +17,16 @@ body,h1,h2,h3,h4,h5,h6 {
     text-decoration: none;
     font-size: large !important;
   }
-  .navvv:hover{
+
+  .navvv:hover, .mini-nav:hover{
     background-color: red !important;
     color: white !important;
     text-decoration: none !important;
   }
 
-  /* img:hover{
-    background-color: transparent !important;
-  } */
+  a {
+    color: white !important;
+  }
 </style>
 
 <div class="w3-top">
@@ -40,11 +41,11 @@ body,h1,h2,h3,h4,h5,h6 {
   </div>
 
   <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Home</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">About</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Login</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Contact Us</a>
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large" style="color: white">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Home</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">About</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Login</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Contact Us</a>
   </div>
 </div>
 

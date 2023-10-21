@@ -17,34 +17,45 @@ body,h1,h2,h3,h4,h5,h6 {
     text-decoration: none;
     font-size: large !important;
   }
-  .navvv:hover{
+
+  .navvv:hover, .mini-nav:hover{
     background-color: red !important;
     color: white !important;
     text-decoration: none !important;
   }
 
-  /* img:hover{
-    background-color: transparent !important;
-  } */
+  a.active{
+    border-bottom: 6px solid red !important;
+  }
+
+  a {
+    color: white !important;
+  }
 </style>
 
 <div class="w3-top">
-  <div class="w3-bar w3-card w3-left-align w3-large navs">
+  <div id="nav" class="w3-bar w3-card w3-left-align w3-large navs">
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <a href="#" class="w3-bar-item"><img alt="" class="" style="height: 3rem;" src="{{ asset('images/logo.jpg') }}" /></a>
+    <a href="{{ route('client.home') }}" class="w3-bar-item"><img alt="" class="" style="height: 3rem;" src="{{ asset('images/logo.jpg') }}" /></a>
     <!-- <a href="#home" style="margin: 0%;"></a> -->
-    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Home</a>
-    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">About Us</a>
-    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Login</a>
-    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Contact Us</a>
+    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.home') ? 'active' : '' }}">Home</a>
+    <a href="{{ route('client.booked_personaltrainer') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Booked Personal Trainer</a>
+    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Workout Plan</a>
+    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Appointments</a>
+    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Personal Trainers</a>
+    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Feedbacks</a>
+    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv w3-right {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">{{ Auth::guard('client')->user()->firstname }} {{ Auth::guard('client')->user()->lastname }}</a>
   </div>
 
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Home</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">About</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Login</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Contact Us</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Home</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Booked Personal Trainer</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Workout Plan</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Appointments</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Personal Trainers</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Feedbacks</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Profile</a>
   </div>
 </div>
 
@@ -62,4 +73,17 @@ function myFunction() {
     x.className = x.className.replace(" w3-show", "");
   }
 }
+
+$(".list-group-item").click(function() {
+  // Select all list items
+  var listItems = $(".list-group-item");
+    
+  // Remove 'active' tag for all list items
+  for (let i = 0; i < listItems.length; i++) {
+      listItems[i].classList.remove("active");
+  }
+    
+  // Add 'active' tag for currently selected item
+  this.classList.add(" active");
+});
 </script>
