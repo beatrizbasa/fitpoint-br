@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Booked Personal Trainer</title>
+    <title>Workout Plan</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -19,23 +19,6 @@
         font-family: 'Open Sans', sans-serif;
     }
     .fa-dumbbell,.fa-user-group {font-size:200px}
-
-    @media only screen and (max-width: 768px) {
-      /* For mobile phones: */
-      [class*="col-"] {
-        width: 100%;
-      }
-
-      .imgs {
-        max-width: 100%; 
-        height: auto;    /* This ensures the image keeps its aspect ratio */
-        display: block;
-      }
-
-      .mobile{
-        padding: 0.5rem 1rem 0.5rem 1rem !important;
-      }
-    }
     </style>
 </head>
 <body>
@@ -49,9 +32,9 @@
   <div class="w3-padding-64" style="margin-top: 3rem">
     <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
         <div class="col-12">
-            <h3 style="font-size:xx-large; ">Current Booked Personal Trainer</h3>
-            <p class="w3-text-grey">No current booked personal trainer yet.</p>
-            <a class="link-buttons" href="">Book your personal trainer now!</a>
+            <h3 style="font-size:xx-large; ">Current Workout Plan</h3>
+            <p class="w3-text-grey">No current workout plan yet.</p>
+            <a class="link-buttons" href="">Book your personal trainer now to get started!</a>
       </div>
     </div>
   </div>
@@ -62,8 +45,8 @@
   <div class=" " style="margin-top: 0rem;">
     <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
-        <h3 style="font-size:xx-large; ">Former Personal Trainers</h3>
-        <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your former A&T Fitness Center personal trainers.</h5>
+        <h3 style="font-size:xx-large; ">Past Workout Plans</h3>
+        <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your former workout plans.</h5>
       </div>
       
     </div>

@@ -25,37 +25,56 @@ body,h1,h2,h3,h4,h5,h6 {
   }
 
   a.active{
-    border-bottom: 6px solid red !important;
+    border-bottom: 5px solid red !important;
+    /* color: red !; */
+    font-weight: 900;
   }
 
   a {
     color: white !important;
+  } 
+
+  .drpdwn:hover{
+    background-color: red !important;
+    color: white !important;
+    text-decoration: none !important;
+  }
+
+  .drpdwn{
+    min-width: 180px !important;
   }
 </style>
 
-<div class="w3-top">
+<div class="w3-top" style="padding: 0rem;">
   <div id="nav" class="w3-bar w3-card w3-left-align w3-large navs">
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="{{ route('client.home') }}" class="w3-bar-item"><img alt="" class="" style="height: 3rem;" src="{{ asset('images/logo.jpg') }}" /></a>
     <!-- <a href="#home" style="margin: 0%;"></a> -->
     <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.home') ? 'active' : '' }}">Home</a>
     <a href="{{ route('client.booked_personaltrainer') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Booked Personal Trainer</a>
-    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Workout Plan</a>
-    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Appointments</a>
-    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Personal Trainers</a>
-    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">Feedbacks</a>
-    <a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv w3-right {{ (\Request::route()->getName() == 'client.booked_personaltrainer') ? 'active' : '' }}">{{ Auth::guard('client')->user()->firstname }} {{ Auth::guard('client')->user()->lastname }}</a>
+    <a href="{{ route('client.workout_plan') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.workout_plan') ? 'active' : '' }}">Workout Plan</a>
+    <a href="{{ route('client.appointments') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.appointments') ? 'active' : '' }}">Appointments</a>
+    <a href="{{ route('client.personal_trainers') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.personal_trainers') ? 'active' : '' }}">Personal Trainers</a>
+    <a href="{{ route('client.feedbacks') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.feedbacks') ? 'active' : '' }}">Feedbacks</a>
+    <div class="w3-dropdown-hover w3-right drpdwn">
+      <a href="#" class="w3-hide-small w3-button w3-padding-large navvv drpdwn {{ (\Request::route()->getName() == 'client.profile') ? 'active' : '' }}">{{ Auth::guard('client')->user()->firstname }} {{ Auth::guard('client')->user()->lastname }}</a>
+      <div class="w3-dropdown-content w3-bar-block w3-border drpdwn">
+        <a href="{{ route('client.profile') }}" class="w3-bar-item w3-button drpdwn ">View profile</a>
+        <a href="{{ route('client.logout') }}" class="w3-bar-item w3-button drpdwn">Logout</a>
+      </div>
+    </div>
   </div>
 
   <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Home</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Booked Personal Trainer</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Workout Plan</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Appointments</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Personal Trainers</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Feedbacks</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Profile</a>
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3- dropdown">
+    <a href="{{ route('client.home') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Home</a>
+    <a href="{{ route('client.booked_personaltrainer') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Booked Personal Trainer</a>
+    <a href="{{ route('client.workout_plan') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Workout Plan</a>
+    <a href="{{ route('client.appointments') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Appointments</a>
+    <a href="{{ route('client.personal_trainers') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Personal Trainers</a>
+    <a href="{{ route('client.feedbacks') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Feedbacks</a>
+    <a href="{{ route('client.profile') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Profile</a>
+    <a href="{{ route('client.logout') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Logout</a>
   </div>
 </div>
 
