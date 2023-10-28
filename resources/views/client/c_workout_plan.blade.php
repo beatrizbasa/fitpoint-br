@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7528702e77.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=20">
+    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=24">
     <style>
     body,h1,h2,h3,h4,h5,h6 {
         font-family: 'Open Sans', sans-serif;

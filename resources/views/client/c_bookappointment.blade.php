@@ -57,7 +57,7 @@
                     <td>{{ $personal_trainer->address }}</td>
                     <td>{{ $personal_trainer->contact_no }}</td>
                     <td>{{ $personal_trainer->gender }}</td>
-                    <td><a class="link-buttons" href="{{ route('client.book_appointment_form') }}">Book an appointment</a></td>
+                    <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $personal_trainer->id) }}">Book an appointment</a></td>
                 </tr>
                 @endforeach
                 </form>

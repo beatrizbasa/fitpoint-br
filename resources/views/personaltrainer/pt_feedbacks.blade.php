@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Appointments</title>
+    <title>Feedbacks</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -24,68 +24,39 @@
 <body>
 
 <!-- Navbar -->
-@include('partials.c_header')
+@include('partials.pt_header')
 
 <!-- First Grid -->
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
     <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
-      <div class="col-12">
-        <h3 style="font-size:xx-large; ">Current Appointment</h3>
-        @if($appointments == null)<p class="w3-text-grey">No current appointment yet.</p>
-        <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book an appointment now!</a>
-
-        @else
-        <div class="col-12" style="overflow-x:auto;">
-          <table id="per_trainersTbl" class="display">
-            <thead>
-                <tr>
-                    <th>Personal Trainer</th>
-                    <th>Mdical Condition</th>
-                    <th>Target</th>
-                    <th>Appointment Time</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($appointments as $appointment)
-                <tr>
-                    <td>{{ $appointment->fullname }}</td>
-                    <td>{{ $appointment->medical_condition }}</td>
-                    <td>{{ $appointment->target }}</td>
-                    <td>{{ $appointment->appointment_time }}</td>
-                    <td>{{ $appointment->status }}</td>
-                </tr>
-                @endforeach
-                </form>
-            </tbody>
-          </table>
-        </div>
-        @endif
+        <div class="col-12">
+            <h3 style="font-size:xx-large; ">Feedbacks</h3>
+            <p class="w3-text-grey">Below are the feedbacks submitted by your clients to you.</p>
       </div>
     </div>
   </div>
 
-  <hr style="border: 2px solid black" width="100%">
+  <!-- <hr style="border: 2px solid black" width="100%"> -->
 
   <!-- Second Grid -->
-  <div class=" " style="margin-top: 0rem;">
+  <!-- <div class=" " style="margin-top: 0rem;">
     <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
-        <h3 style="font-size:xx-large; ">Past Appointments</h3>
-        <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your past appointments in A&T Fitness Center.</h5>
+        <h3 style="font-size:xx-large; ">Former Personal Trainers</h3>
+        <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your former A&T Fitness Center personal trainers.</h5>
       </div>
       
     </div>
-  </div>
+  </div> -->
 
   </div>
 <!-- <div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.pt_footer')
 
 </body>
 </html>

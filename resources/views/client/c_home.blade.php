@@ -11,6 +11,10 @@
     <script src="https://kit.fontawesome.com/7528702e77.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{{ asset('styles.css') }}?version=20">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <style>
     body,h1,h2,h3,h4,h5,h6 {
         font-family: 'Open Sans', sans-serif;
@@ -49,10 +53,80 @@
 
   <div class="w3-padding-64" style="margin-top: 3rem">
     <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
-      <div class="col-12">
-        <h3 style="font-size:xx-large;">Appointment</h3>
-        <p class="w3-text-grey">No current booked appointment.</p>
-        <a class="link-buttons" href="">Book an appointment now!</a>
+    <div class="col-12">
+        <h3 style="font-size:xx-large; ">Current Appointment</h3>
+        @if($appointments == null)<p class="w3-text-grey">No current appointment yet.</p>
+        <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book an appointment now!</a>
+
+        @else
+        @foreach ($appointments as $appointment)
+        <br>
+        <div>
+          @if(Session::has('message'))
+            {{ session::get('message') }} 
+          @endif
+        </div>
+        <div class="col-4 adjust-top">
+          <label for="inputFname" class="form-label"><b>Personal trainer</b></label>
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $appointment->fullname }}">
+        </div>
+        <div class="col-4 adjust-top">
+          <label for="inputFname" class="form-label"><b>Medical condition</b></label>
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $appointment->medical_condition }}">
+        </div>
+        <div class="col-4 adjust-top">
+          <label for="inputFname" class="form-label"><b>Target of workout</b></label>
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $appointment->target }}">
+        </div>
+        <div class="col-4 adjust-top">
+          <label for="inputFname" class="form-label"><b>Appointment date</b></label>
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $appointment->appointment_date }}">
+        </div>
+        <div class="col-4 adjust-top">
+          <label for="inputFname" class="form-label"><b>Appointment time</b></label>
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $appointment->appointment_time }}">
+        </div>
+        <div class="col-4 adjust-top">
+          <label for="inputFname" class="form-label"><b>Appointment status</b></label>
+          @if($appointment->status == 'Pending')
+            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="PENDING" style="background-color: lightgray; font-weight: bold">
+          @elseif($appointment->status == 'Accepted')
+            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="ACCEPTED" style="background-color: lightgreen; color: darkgreen; font-weight: bold">
+          @elseif($appointment->status == 'Declined')
+            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="DECLINED" style="background-color: pink; color: darkred; font-weight: bold">
+          @endif
+        </div>
+        <div class="col-12">
+          <hr style="border: 2px solid black" width="100%">
+        </div>
+        @endforeach
+        @endif
+        <!-- <div class="col-12" style="overflow-x:auto;">
+          <table id="apptTbl" class="display">
+            <thead>
+                <tr>
+                    <th>Personal Trainer</th>
+                    <th>Mdical Condition</th>
+                    <th>Target</th>
+                    <th>Appointment Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($appointments as $appointment)
+                <tr>
+                    <td>{{ $appointment->fullname }}</td>
+                    <td>{{ $appointment->medical_condition }}</td>
+                    <td>{{ $appointment->target }}</td>
+                    <td>{{ $appointment->appointment_time }}</td>
+                    <td>{{ $appointment->status }}</td>
+                </tr>
+                @endforeach
+                </form>
+            </tbody>
+          </table>
+        </div> -->
+        
       </div>
     </div>
   </div>
@@ -77,25 +151,30 @@
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Personal Trainers</h3>
         <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of A&T Fitness Center's personal trainers where you can choose who you want to help you achieve your dream body!</h5>
-        <div class="row">
-          <div class="col-4" >
-            <div style="background: black;">
-              <img alt="" class="" style="flex-shrink: 0; width: 100%;" src="{{ asset('images/personal-trainer.png') }}" />
-              <center style="padding-top: 0.5rem; padding-bottom: 0.5rem; color: white">Personal Trainer Name 1</center>
-            </div>
-          </div> 
-          <div class="col-4" >
-            <div style="background: black;">
-              <img alt="" class="" style="flex-shrink: 0; width: 100%;" src="{{ asset('images/personal-trainer.png') }}" />
-              <center style="padding-top: 0.5rem; padding-bottom: 0.5rem; color: white">Personal Trainer Name 2</center>
-            </div>
-          </div> 
-          <div class="col-4" >
-            <div style="background: black;">
-              <img alt="" class="" style="flex-shrink: 0; width: 100%;" src="{{ asset('images/personal-trainer.png') }}" />
-              <center style="padding-top: 0.5rem; padding-bottom: 0.5rem; color: white">Personal Trainer Name 3</center>
-            </div>
-          </div> 
+        <div class="col-12" style="overflow-x:auto;">
+          <table id="per_trainersTbl" class="display">
+            <thead>
+                <tr>
+                    <th>Full name</th>
+                    <th>Address</th>
+                    <th>Contact no.</th>
+                    <th>Gender</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($personal_trainers as $personal_trainer)
+                <tr>
+                    <td>{{ $personal_trainer->full_name }}</td>
+                    <td>{{ $personal_trainer->address }}</td>
+                    <td>{{ $personal_trainer->contact_no }}</td>
+                    <td>{{ $personal_trainer->gender }}</td>
+                    <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $personal_trainer->id) }}">Book an appointment</a></td>
+                </tr>
+                @endforeach
+                </form>
+            </tbody>
+          </table>
         </div>
       </div>
       
@@ -108,6 +187,12 @@
 </div> -->
 
 @include('partials.footer')
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#per_trainersTbl').DataTable();
+    });
+</script>
 </body>
 </html>

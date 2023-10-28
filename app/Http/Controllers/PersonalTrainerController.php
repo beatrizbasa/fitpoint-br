@@ -25,7 +25,7 @@ class PersonalTrainerController extends Controller
         $check = $request->all();
         if(Auth::guard('personaltrainer')->attempt(['email' => $check['email'], 'password' => $check['password']])){
             //if nagmatch lahat
-            return redirect()->route('personaltrainer.home')->with('error', 'personaltrainer logged in successfully');
+            return redirect()->route('personaltrainer.appointments')->with('error', 'personaltrainer logged in successfully');
             // return view('admin.admin_dashboard');
         }
         else{
@@ -34,8 +34,33 @@ class PersonalTrainerController extends Controller
         }
     }
 
-    public function home()
+    public function appointments()
     {
-        return view('personaltrainer.pt_home');
+        return view('personaltrainer.pt_appointments');
+    }
+
+    public function clients_list()
+    {
+        return view('personaltrainer.pt_clients_list');
+    }
+
+    public function workout_plans()
+    {
+        return view('personaltrainer.pt_workout_plans');
+    }
+
+    public function feedbacks()
+    {
+        return view('personaltrainer.pt_feedbacks');
+    }
+
+    public function profile()
+    {
+        return view('personaltrainer.pt_profile');
+    }
+
+    public function logout(){
+        Auth::guard('personaltrainer')->logout();
+        return redirect()->route('personaltrainer.login_form')->with('error', 'fishfarmer logged out successfully');
     }
 }

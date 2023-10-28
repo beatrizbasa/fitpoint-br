@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7528702e77.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=20">
+    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=24">
     <style>
     body,h1,h2,h3,h4,h5,h6 {
         font-family: 'Open Sans', sans-serif;
@@ -35,28 +35,127 @@
         <h3 style="font-size:xx-large; ">Book Appointment</h3>
         <p class="w3-text-grey">Fill up appointment form.</p>
       </div>
-    </div>
-  </div>
-
-  <hr style="border: 2px solid black" width="100%">
-
-  <!-- Second Grid -->
-  <div class=" " style="margin-top: 0rem;">
-    <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
-      <div class="col-12">
-        <h3 style="font-size:xx-large; ">Past Appointments</h3>
-        <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your past appointments in A&T Fitness Center.</h5>
+      <div class="row " >
+        <div class="col-12">
+          <form id="apptForm" action="post">
+            @csrf
+            <div class="row">
+              <p class="w3-text-black" style="font-size: large;"><b>Personal Information</b></p>
+              <input name="client_id" type="hidden"  class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->id }}">
+              <div class="col-4 adjust-top">
+                <label for="inputFname" class="form-label">First name</label>
+                <input name="fname_inp" type="text"  class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->firstname }}">
+              </div>
+              <div class="col-4 adjust-top">
+                <label for="inputFname" class="form-label">Last name</label>
+                <input name="lname_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->lastname }}">
+              </div>
+              <div class="col-4 adjust-top">
+                <label for="inputFname" class="form-label">Gender</label>
+                <input name="gender_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->gender }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4 adjust-top">
+                <label for="inputFname" class="form-label">Address</label>
+                <input name="address_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->address }}">
+              </div>
+              <div class="col-4 adjust-top">
+                  <label for="inputFname" class="form-label">Contact no.</label>
+                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->contact_no }}">
+              </div>
+              <div class="col-4 adjust-top">
+                  <label for="inputFname" class="form-label">Birthday</label>
+                  <input name="bday_inp" type="date" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ Auth::guard('client')->user()->birthday }}">
+              </div>
+              <input name="personal_trainer_id" type="hidden"  class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $ptid }}">
+            </div>
+            <hr style="border: 2px solid black" width="100%">
+            @foreach ($personal_trainers as $personal_trainer)
+            <div class="row">
+              <p class="w3-text-black" style="font-size: large;"><b>Personal Trainer Information</b></p>
+              <div class="col-4 adjust-top">
+                <label for="inputFname" class="form-label">Fullname</label>
+                <input name="address_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->fullname }}">
+              </div>
+              <div class="col-4 adjust-top">
+                  <label for="inputFname" class="form-label">Address</label>
+                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->address }} }}">
+              </div>
+              <div class="col-4 adjust-top">
+                  <label for="inputFname" class="form-label">Contact no.</label>
+                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $personal_trainer->contact_no }}">
+              </div>
+              <div class="col-4 adjust-top">
+                  <label for="inputFname" class="form-label">Birthday</label>
+                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->birthday }}">
+              </div>
+              <div class="col-4 adjust-top">
+                  <label for="inputFname" class="form-label">Gender</label>
+                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $personal_trainer->gender }}">
+              </div>
+            </div>
+            <hr style="border: 2px solid black" width="100%">
+            <div class="row">
+              <p class="w3-text-black" style="font-size: large;"><b>Appointment Information</b></p>
+              <div class="col-3 adjust-top">
+                <label for="inputFname" class="form-label">Medical condition</label>
+                <input name="medical_condition" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp">
+              </div>
+              <div class="col-3 adjust-top">
+                <label for="inputFname" class="form-label">Target of workout</label>
+                <!-- <input type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"> -->
+                <select name="target" class="form-control" >
+                  <option>Select target of workout:</option>
+                  <option value="bodybuilding">Bodybuilding</option>
+                  <option value="powerlifting">Powerlifting</option>
+                  <option value="cardio">Cardio</option>
+                </select>
+              </div>
+              <div class="col-3 adjust-top">
+                <label for="inputFname" class="form-label">Appointment date</label>
+                <input name="appointment_date" type="date" class="form-control" id="inputFname" aria-describedby="emailHelp">
+              </div>
+              <div class="col-3 adjust-top">
+                <label for="inputFname" class="form-label">Appointment time</label>
+                <input name="appointment_time" type="time" class="form-control" id="inputFname" aria-describedby="emailHelp">
+              </div>
+            </div>
+            @endforeach
+            <div class="col-12">
+              <button type="submit" class="form-buttons" style="float: right;">Submit appointment </button>
+            </div>
+          </form>
+        </div>
       </div>
-      
     </div>
   </div>
-
   </div>
-<!-- <div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
-    <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
-</div> -->
 
 @include('partials.footer')
+<script>
+  $(document).ready(function(){
+    $("#apptForm").submit(function(e) {
+        e.preventDefault();
+        var url = "{{ route('client.insert_appointment') }}";
+        var redirect = "{{ route('client.home') }}"
+        let formData = $(this).serialize();
 
+        $.ajax({
+            type: "POST",
+            url: url,  // update the URL as per your route
+            data: formData,
+            success: function(response) {
+            //     // alert(response.message);
+              window.location.href=redirect;
+            //     // Refresh the page or update a data list/table if needed
+            },
+            error: function(error) {
+                alert("Error saving data");
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

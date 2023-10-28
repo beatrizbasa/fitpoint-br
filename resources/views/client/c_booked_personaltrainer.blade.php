@@ -51,7 +51,7 @@
         <div class="col-12">
             <h3 style="font-size:xx-large; ">Current Booked Personal Trainer</h3>
             <p class="w3-text-grey">No current booked personal trainer yet.</p>
-            <a class="link-buttons" href="">Book your personal trainer now!</a>
+            <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now!</a>
       </div>
     </div>
   </div>
