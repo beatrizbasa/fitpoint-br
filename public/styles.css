@@ -5,7 +5,7 @@
     font-weight: bold;
 }
 
-body,h1,h2,h3,h4,h5,h6 {
+body,h1,h2,h3,h4,h5,h6,a {
   font-family: 'Open Sans', sans-serif;
   font-size: medium;
 }
@@ -56,25 +56,40 @@ padding: 15px;
 .col-12 {width: 100%;}
 }
 
-.buttons{
-  padding: .25rem; font-size: 1rem; background-color: black; color: white; border: solid black;width: 8rem
+.form-buttons{
+  background-color: black;
+  border: none;
+  color: white;
+  padding: .5rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 0.5rem;
 }
 
-.buttons, a{
-  padding: .25rem; font-size: 1rem; background-color: black; color: white; border: solid black;width: 8rem
+.form-buttons:hover{
+  background-color: red !important;
+  color: white !important;
 }
 
-/* .buttons:hover{
-  background-color: #B6E0FF !important;
-  color: black !important; 
-} */
-/* 
-a:hover{
-  background-color: #B6E0FF !important;
-  color: black !important;
-  text-decoration: underline !important;
-  background-color:none !important;
-} */
+.link-buttons{
+  background-color: black;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  font-size: medium !important;
+  border: red;
+  width: auto;
+}
+
+.link-buttons:hover{
+  background-color: red !important;
+  border: none;
+}
 
 .txt{
   font-family: Lato; 
@@ -82,3 +97,4 @@ a:hover{
   font-style: normal; 
   font-weight: 600;
 }
+
