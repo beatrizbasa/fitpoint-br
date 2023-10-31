@@ -46,7 +46,7 @@
                         <th>Address</th>
                         <th>Contact no.</th>
                         <th>Gender</th>
-                        <th>Email</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,7 +56,7 @@
                         <td>{{ $personal_trainer->address }}</td>
                         <td>{{ $personal_trainer->contact_no }}</td>
                         <td>{{ $personal_trainer->gender }}</td>
-                        <td>{{ $personal_trainer->email }}</td>
+                        <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $personal_trainer->id) }}">Book an appointment</a></td>
                     </tr>
                     @endforeach
                     </form>

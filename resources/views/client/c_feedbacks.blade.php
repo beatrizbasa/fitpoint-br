@@ -96,61 +96,64 @@
 
 <!-- First Grid -->
 <div class="w3-container">
-
-  <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
-        <div class="col-12">
-            <h3 style="font-size:xx-large; ">Feedbacks</h3>
-            <p class="w3-text-grey">Send a feedback to your booked personal trainer!</p>
-            <!-- <a class="link-buttons" href="">Send a feedback</a> -->
-            <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
-
-            <!-- Modal -->
-            <button id="myBtn" class="form-buttons">Submit a feedback</button>
-
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <p>Feedback</p>
-                    <form id="modalForm" action="post">
-                        @csrf
-                        <label for="inputfeedback" class="form-label">Content</label>
-                        <textarea name="content" id="feedback_inp" class="form-control" required></textarea>
-                        <input type="number" name="personal_trainer_id">PT id
-                        <input type="number" name="client_id" value="{{ Auth::guard('client')->user()->id}}">
-                        <br><button type="submit" onclick="getData()" data-dismiss="modal" name="submit_fback" class="form-buttons" style="float: right;">Submit feedback</button>
-                    </form>
+    <div class="w3-padding-64" style="margin-top: 3rem">
+        <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+            <div class="col-12">
+                <h3 style="font-size:xx-large; ">Feedbacks</h3>
+                <p class="w3-text-grey">Send a feedback to your booked personal trainer!</p>
+                <button id="myBtn" class="form-buttons">Submit a feedback</button>
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Feedback contents</p>
+                        <form id="modalForm" action="post">
+                            @foreach ($personal_trainer as $ptrainer)
+                            @csrf
+                            Booked Personal Trainer: <b>{{ $ptrainer->fullname }}</b>
+                            <input type="hidden" name="personal_trainer_id" value="{{ $ptrainer->id }}">
+                            <label for="inputfeedback" class="form-label">Feedback message:</label>
+                            <textarea name="content" id="feedback_inp" class="form-control" required></textarea>
+                            <input type="hidden" name="client_id" value="{{ Auth::guard('client')->user()->id}}">
+                            <br><button type="submit" onclick="getData()" data-dismiss="modal" name="submit_fback" class="form-buttons" style="float: right;">Submit feedback</button>
+                            @endforeach
+                        </form>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="row">
-                <!-- <div class="col-4" >
-                    <div style="background: black;">
-                    <img alt="" class="" style="flex-shrink: 0; width: 100%;" src="{{ asset('images/personal-trainer.png') }}" />
-                    <center style="padding-top: 0.5rem; padding-bottom: 0.5rem; color: white">Personal Trainer Name 1</center>
-                    </div>
-                </div> 
-                <div class="col-4" >
-                    <div style="background: black;">
-                    <img alt="" class="" style="flex-shrink: 0; width: 100%;" src="{{ asset('images/personal-trainer.png') }}" />
-                    <center style="padding-top: 0.5rem; padding-bottom: 0.5rem; color: white">Personal Trainer Name 2</center>
-                    </div>
-                </div> 
-                <div class="col-4" >
-                    <div style="background: black;">
-                    <img alt="" class="" style="flex-shrink: 0; width: 100%;" src="{{ asset('images/personal-trainer.png') }}" />
-                    <center style="padding-top: 0.5rem; padding-bottom: 0.5rem; color: white">Personal Trainer Name 3</center>
-                    </div>
-                </div>  -->
+    <hr style="border: 2px solid black" width="100%">
+
+    <!-- Second Grid -->
+    <div class=" " style="margin-top: 0rem;">
+        <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
+        <div class="col-12">
+            <b style="font-size: x-large;">Submitted feedbacks</b>
+            <p class="w3-text-grey">Below are submitted feedbacks from other clients to different personal trainers.</p>
+        </div>
+        @foreach ($feedbacks as $feedback)
+            <div class="col-4">
+                <b>{{ $feedback->client_firstname }} {{ $feedback->client_lastname }}</b>
+                <textarea name="content" id="feedback_inp" class="form-control" readonly>{{ $feedback->content }}</textarea>
+            </div>
+        @endforeach
+        </div>
+    </div>
+
+        <div style="margin-top: 0rem;">
+            <div class="row"style="padding: 2rem 15rem 2rem 15rem;">
+                
+                
+            </div>
+            <!-- <div class="row">
                 <br>
                 <div class="col-12" style="overflow-x:auto;">
                     <table id="feedbackTbl" class="display">
                     <thead>
                         <tr>
-                            <th>Feedback</th>
-                            <th>Client Name</th>
                             <th>Personal Trainer Name</th>
+                            <th>Feedback</th>
                             <th>Date</th>
                             <th>Action</th>
                         </tr>
@@ -158,9 +161,9 @@
                     <tbody>
                         @foreach ($feedbacks as $feedback)
                         <tr>
+                            <td>{{ $feedback->ptrainer_firstname }} {{ $feedback->ptrainer_lastname }}</td>
                             <td>{{ $feedback->content }}</td>
-                            <td>{{ $feedback->client_id }}</td>
-                            <td>{{ $feedback->fullname }}</td>
+                            <td>{{ $feedback->content }}</td>
                             <td>{{ $feedback->created_at }}</td>
                             <td>
                                 <i class="fa fa-edit"></i>
@@ -172,7 +175,7 @@
                     </tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
   </div>

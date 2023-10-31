@@ -65,14 +65,13 @@ body,h1,h2,h3,h4,h5,h6 {
 
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3- dropdown">
-    <a href="{{ route('client.home') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Home</a>
-    <a href="{{ route('client.booked_personaltrainer') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Booked Personal Trainer</a>
-    <a href="{{ route('client.workout_plan') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Workout Plan</a>
-    <a href="{{ route('client.appointments') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Appointments</a>
-    <a href="{{ route('client.personal_trainers') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Personal Trainers</a>
-    <a href="{{ route('client.feedbacks') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Feedbacks</a>
-    <a href="{{ route('client.profile') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Profile</a>
-    <a href="{{ route('client.logout') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Logout</a>
+    <a href="{{ route('personaltrainer.appointments') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Appointments</a>
+    <a href="{{ route('personaltrainer.clients_list') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Clients List</a>
+    <a href="{{ route('personaltrainer.workout_plans') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Workout Plan</a>
+    <a href="{{ route('personaltrainer.appointments') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Feedbacks</a>
+    <a href="{{ route('personaltrainer.profile') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Profile</a>
+    <a href="{{ route('personaltrainer.feedbacks') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Feedbacks</a>
+    <a href="{{ route('personaltrainer.logout') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Logout</a>
   </div>
 </div>
 

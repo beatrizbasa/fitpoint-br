@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\Client;
 use App\Models\PersonalTrainer;
 use Illuminate\Http\Request;
 
@@ -68,4 +69,6 @@ class AppointmentController extends Controller
             ->get();
         return view('client.c_appointments', ['appointments' => $appointments]);
     }
+
+    
 }

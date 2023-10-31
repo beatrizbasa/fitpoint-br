@@ -46,7 +46,7 @@ Route::prefix('client')->group(function(){
 
     Route::get('/home', [ClientController::class, 'home'])->name('client.home');
 
-    Route::get('/booked_personaltrainer', [ClientController::class, 'booked_personaltrainer'])->name('client.booked_personaltrainer');
+    Route::get('/booked_personaltrainer/{cid}', [ClientController::class, 'booked_personaltrainer'])->name('client.booked_personaltrainer');
     Route::get('/workout_plan', [ClientController::class, 'workout_plan'])->name('client.workout_plan');
 
     Route::get('/appointments', [ClientController::class, 'appointments'])->name('client.appointments');
@@ -56,10 +56,13 @@ Route::prefix('client')->group(function(){
 
     Route::get('/personal_trainers', [ClientController::class, 'personal_trainers'])->name('client.personal_trainers');
 
-    Route::get('/feedbacks', [ClientController::class, 'feedbacks'])->name('client.feedbacks');
+    Route::get('/feedbacks/{cid}', [ClientController::class, 'feedbacks'])->name('client.feedbacks');
     Route::post('/insert_feedback', [ClientController::class, 'insert_feedback'])->name('client.insert_feedbacks');
 
     Route::get('/profile', [ClientController::class, 'profile'])->name('client.profile');
+    Route::get('/update_profile', [ClientController::class, 'update_profile'])->name('client.update_profile');
+    Route::post('/update_profile/save_changes/{cid}', [ClientController::class, 'update_profile_changes'])->name('client.update_profile_changes');
+
     Route::get('/logout', [ClientController::class, 'logout'])->name('client.logout');
 });
 

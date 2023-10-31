@@ -44,29 +44,29 @@
               <input name="client_id" type="hidden"  class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->id }}">
               <div class="col-4 adjust-top">
                 <label for="inputFname" class="form-label">First name</label>
-                <input name="fname_inp" type="text"  class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->firstname }}">
+                <input name="fname_inp" type="text"  class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->firstname }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                 <label for="inputFname" class="form-label">Last name</label>
-                <input name="lname_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->lastname }}">
+                <input name="lname_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->lastname }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                 <label for="inputFname" class="form-label">Gender</label>
-                <input name="gender_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->gender }}">
+                <input name="gender_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->gender }}" readonly>
               </div>
             </div>
             <div class="row">
               <div class="col-4 adjust-top">
                 <label for="inputFname" class="form-label">Address</label>
-                <input name="address_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->address }}">
+                <input name="address_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->address }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Contact no.</label>
-                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->contact_no }}">
+                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->contact_no }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Birthday</label>
-                  <input name="bday_inp" type="date" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ Auth::guard('client')->user()->birthday }}">
+                  <input name="bday_inp" type="date" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ Auth::guard('client')->user()->birthday }}" readonly>
               </div>
               <input name="personal_trainer_id" type="hidden"  class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $ptid }}">
             </div>
@@ -76,23 +76,23 @@
               <p class="w3-text-black" style="font-size: large;"><b>Personal Trainer Information</b></p>
               <div class="col-4 adjust-top">
                 <label for="inputFname" class="form-label">Fullname</label>
-                <input name="address_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->fullname }}">
+                <input name="address_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->fullname }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Address</label>
-                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->address }} }}">
+                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->address }} }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Contact no.</label>
-                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $personal_trainer->contact_no }}">
+                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $personal_trainer->contact_no }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Birthday</label>
-                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->birthday }}">
+                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->birthday }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Gender</label>
-                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $personal_trainer->gender }}">
+                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $personal_trainer->gender }}" readonly>
               </div>
             </div>
             <hr style="border: 2px solid black" width="100%">

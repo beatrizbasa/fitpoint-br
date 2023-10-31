@@ -51,4 +51,8 @@ class Client extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getFullNameAttribute($value) {
+        return $this->attributes['firstname'] . ' ' . $this->attributes['lastname'];
+    }
 }

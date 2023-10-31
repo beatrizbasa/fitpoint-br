@@ -19,12 +19,4 @@ class Appointment extends Model
         'appointment_time',
         'status',
     ];
-
-    public function getFullNameAttribute($value) {
-        // $appointments = Appointment::select('*')
-        //     ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
-        //     // ->where('countries.country_name', 'cdcd')
-        //     ->get();
-        return $this->attributes['firstname'] . ' ' . $this->attributes['lastname'];
-    }
 }

@@ -11,6 +11,10 @@
     <script src="https://kit.fontawesome.com/7528702e77.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{{ asset('styles.css') }}?version=20">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <style>
     body,h1,h2,h3,h4,h5,h6 {
         font-family: 'Open Sans', sans-serif;
@@ -31,9 +35,33 @@
 
   <div class="w3-padding-64" style="margin-top: 3rem">
     <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
-        <div class="col-12">
-            <h3 style="font-size:xx-large; ">Current Clients</h3>
-            <p class="w3-text-grey">Below is a list of all your current clients.</p>
+      <div class="col-12">
+          <h3 style="font-size:xx-large; ">Current Clients</h3>
+          <p class="w3-text-grey">Below is a list of all your current clients.</p>
+      </div>
+      <div class="col-12" style="overflow-x:auto;">
+        <table id="apptsTbl" class="display">
+          <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Address</th>
+                <th>Contact no.</th>
+                <th>Birthday</th>
+                <th>Gender</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($clients as $client)
+            <tr>
+                <td>{{ $client->client_firstname }} {{ $client->client_lastname }}</td>
+                <td>{{ $client->address }}</td>
+                <td>{{ $client->contact_no }}</td>
+                <td>{{ $client->birthday }}</td>
+                <td>{{ $client->gender }}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -57,6 +85,13 @@
 </div> -->
 
 @include('partials.pt_footer')
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#apptsTbl').DataTable();
+    $('#acc_apptsTbl').DataTable();
+  });
+</script>
 </body>
 </html>

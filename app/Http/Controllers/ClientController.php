@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DB;
 use App\Models\Appointment;
+use App\Models\Client;
 use App\Models\fullname;
 use App\Models\PersonalTrainer;
-use Symfony\Component\Console\Logger\ConsoleLogger;
+use Carbon\Carbon;
 
 class ClientController extends Controller
 {
@@ -56,21 +57,30 @@ class ClientController extends Controller
         foreach ($personal_trainers as $personal_trainer){
             $full_name = $personal_trainer->full_name;
         }
-        // return view('client.c_personal_trainers', ['personal_trainers' => $personal_trainers, 'fullname' => $full_name]);
+        
         $cid = Auth::guard('client')->user()->id;
+
+        $curr_date = Carbon::now()->format('Y-m-d');
         
         $appointments = Appointment::select('*')
             ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
             ->where('appointments.client_id', $cid)
-            ->orderBy('appointments.id', 'desc')
+            ->where('appointments.appointment_date', '>=', now())
+            ->orderBy('appointments.appointment_date', 'asc')
             ->get();
         
-        return view('client.c_home', ['appointments' => $appointments, 'personal_trainers' => $personal_trainers, 'fullname' => $full_name, 'cid' => $cid]);
+        return view('client.c_home', ['appointments' => $appointments, 'personal_trainers' => $personal_trainers, 'cid' => $cid]);
     }
 
-    public function booked_personaltrainer()
+    public function booked_personaltrainer($cid)
     {
-        return view('client.c_booked_personaltrainer');
+        $personal_trainer = Appointment::select('*')
+            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->where('appointments.client_id', $cid)
+            ->where('appointments.status', 'Accepted')
+            ->get();
+        // $personal_trainer = PersonalTrainer::get();
+        return view('client.c_booked_personaltrainer', ['personal_trainer' => $personal_trainer]);
     }
 
     public function workout_plan()
@@ -82,54 +92,105 @@ class ClientController extends Controller
     {
         // $appointments = Appointment::get();
         // return view('client.c_appointments', ['appointments' => $appointments]);
-        $appointments = Appointment::select('*')
-            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
-            // ->where('countries.country_name', 'cdcd')
+        $cid = Auth::guard('client')->user()->id;
+        // $curr_date = dd(Carbon::now()->format('Y-m-d'));
+        $curr_date = Carbon::now()->format('Y-m-d');
+        $pen_appts = Appointment::select('*')
+            ->join('personal_trainers', 'appointments.personal_trainer_id', '=', 'personal_trainers.id')
+            ->where('appointments.appointment_date', '>=', now())
+            ->where('appointments.client_id', $cid)
+            ->where('appointments.status', 'Pending')
+            ->orderBy('appointments.appointment_date', 'asc')
             ->get();
-        return view('client.c_appointments', ['appointments' => $appointments]);
-    }
 
-    // public function book_appointment()
-    // {
-    //     $personal_trainers = PersonalTrainer::get();
+        $acc_appts = Appointment::select('*')
+            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->where('appointments.client_id', $cid)
+            ->where('appointments.status', 'Accepted')
+            ->orderBy('appointments.appointment_date', 'asc')
+            ->get();
         
-    //     foreach ($personal_trainers as $personal_trainer){
-    //         $full_name = $personal_trainer->full_name;
-    //     }
+        $dec_appts = Appointment::select('*')
+            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->where('appointments.client_id', $cid)
+            ->where('appointments.status', 'Declined')
+            ->orderBy('appointments.appointment_date', 'asc')
+            ->get();
+        
+        $can_appts = Appointment::select('*')
+            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->where('appointments.client_id', $cid)
+            ->where('appointments.status', 'Cancelled')
+            ->orderBy('appointments.id', 'desc')
+            ->get();
 
-    //     return view('client.c_bookappointment', ['personal_trainers' => $personal_trainers, 'fullname' => $full_name]);
-    // }
-
-    // public function appointment_form()
-    // {
-    //     return view('client.c_book_appointment_form');
-    // }
+        return view('client.c_appointments', ['pen_appts' => $pen_appts, 'acc_appts' => $acc_appts, 'dec_appts' => $dec_appts, 'can_appts' => $can_appts]);
+    }
 
     public function personal_trainers()
     {
-        // $personal_trainers = PersonalTrainer::get();
-        // $users = PersonalTrainer::all()->lists('full_name', 'id');
         $personal_trainers = PersonalTrainer::get();
         
         foreach ($personal_trainers as $personal_trainer){
             $full_name = $personal_trainer->full_name;
         }
-        return view('client.c_personal_trainers', ['personal_trainers' => $personal_trainers, 'fullname' => $full_name]);
+        return view('client.c_personal_trainers', ['personal_trainers' => $personal_trainers]);
     }
 
     
 
-    public function feedbacks()
+    public function feedbacks($cid)
     {
-        $feedbacks = Feedbacks::get();
- 
-        // return view('user.index', ['users' => $users]);
-        return view('client.c_feedbacks', ['feedbacks' => $feedbacks]);
+        $personal_trainer = Appointment::select('*')
+            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->join('clients', 'clients.id', '=', 'appointments.client_id')
+            ->where('appointments.client_id', $cid)
+            ->where('appointments.status', 'Accepted')
+            ->get();
+
+        $feedbacks = Feedbacks::join('personal_trainers', 'personal_trainers.id', '=', 'feedbacks.personal_trainer_id')
+            ->join('clients', 'clients.id', '=', 'feedbacks.client_id')
+            ->select('personal_trainers.firstname as ptrainer_firstname', 'personal_trainers.lastname as ptrainer_lastname', 'clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'feedbacks.content as content', 'feedbacks.created_at as fback_date')
+            ->get();
+            
+        return view('client.c_feedbacks', ['feedbacks' => $feedbacks, 'personal_trainer'=>$personal_trainer]);
     }
 
     public function profile()
     {
         return view('client.c_profile');
+    }
+
+    public function update_profile()
+    {
+        return view('client.c_profile_update');
+    }
+
+    public function update_profile_changes(Request $request, $cid){
+        // $validatedData = $request->validate([
+        //     'firstname' => 'required|string',
+        //     'lastname' => 'required|string',
+        //     'address' => 'required|string',
+        //     'contact_no' => 'required|integer',
+        //     'birthday' => 'required|date',
+        //     'gender' => 'required|string',
+        // ]);
+    
+        // Client::whereId($cid)->update($validatedData);
+        // return view('client.c_profile');
+
+        $client = Client::findOrFail($cid);
+
+        $client->firstname = $request->input('firstname');
+        $client->lastname = $request->input('lastname');
+        $client->address = $request->input('address');
+        $client->contact_no = $request->input('contact_no');
+        $client->birthday = $request->input('birthday');
+        $client->gender = $request->input('gender');
+    
+        $client->save();
+    
+        return redirect()->route('client.profile');
     }
 
     public function logout(){

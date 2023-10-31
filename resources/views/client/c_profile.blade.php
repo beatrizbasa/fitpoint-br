@@ -31,9 +31,34 @@
 
   <div class="w3-padding-64" style="margin-top: 3rem">
     <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+      <div class="col-12">
+        <h3 style="font-size:xx-large; ">Profile</h3>
+        <p class="w3-text-grey">Below is your profile information.</p>
+      </div>
+      <div class="col-12">
+        <div class="col-4">
+          <label for="inputFname" class="form-label"><b>Full name</b></label>
+          <input name="lname_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->firstname }} {{ Auth::guard('client')->user()->lastname }}" readonly>
+        </div>
+        <div class="col-4">
+          <label for="inputFname" class="form-label"><b>Address</b></label>
+          <input name="lname_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->address }} " readonly>
+        </div>
+        <div class="col-4">
+          <label for="inputFname" class="form-label"><b>Contact no.</b></label>
+          <input name="lname_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->contact_no }} " readonly>
+        </div>
+        <div class="col-4">
+          <label for="inputFname" class="form-label"><b>Birthday</b></label>
+          <input name="lname_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->birthday }} " readonly>
+        </div>
+        <div class="col-4">
+          <label for="inputFname" class="form-label"><b>Gender</b></label>
+          <input name="lname_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->gender }} " readonly>
+        </div>
         <div class="col-12">
-            <h3 style="font-size:xx-large; ">Profile</h3>
-            <p class="w3-text-grey">No current booked personal trainer yet.</p>
+        <a class="link-buttons" style="float: right;" href="{{ route('client.update_profile') }}">Update profile</a>
+        </div>
       </div>
     </div>
   </div>

@@ -53,8 +53,8 @@
 
   <div class="w3-padding-64" style="margin-top: 3rem">
     <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
-    <div class="col-12">
-        <h3 style="font-size:xx-large; ">Current Appointment</h3>
+      <div class="col-12">
+        <h3 style="font-size:xx-large; ">Upcoming Appointment</h3>
         @if($appointments == null)<p class="w3-text-grey">No current appointment yet.</p>
         <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book an appointment now!</a>
 
@@ -101,32 +101,6 @@
         </div>
         @endforeach
         @endif
-        <!-- <div class="col-12" style="overflow-x:auto;">
-          <table id="apptTbl" class="display">
-            <thead>
-                <tr>
-                    <th>Personal Trainer</th>
-                    <th>Mdical Condition</th>
-                    <th>Target</th>
-                    <th>Appointment Time</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($appointments as $appointment)
-                <tr>
-                    <td>{{ $appointment->fullname }}</td>
-                    <td>{{ $appointment->medical_condition }}</td>
-                    <td>{{ $appointment->target }}</td>
-                    <td>{{ $appointment->appointment_time }}</td>
-                    <td>{{ $appointment->status }}</td>
-                </tr>
-                @endforeach
-                </form>
-            </tbody>
-          </table>
-        </div> -->
-        
       </div>
     </div>
   </div>
