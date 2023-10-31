@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-  <!-- rochelle -->
-<head> 
-    <title>A&T Fitness Center</title>
-=======
 <head>
     <title>Home</title>
->>>>>>> 8c61677bc3cf6e33029e96a5f221cffc52222c3a
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
