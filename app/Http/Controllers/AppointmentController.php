@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Client;
-use App\Models\PersonalTrainer;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -13,31 +13,31 @@ class AppointmentController extends Controller
     //
     public function book_appointment()
     {
-        $personal_trainers = PersonalTrainer::get();
+        $instructors = Instructor::get();
         
-        foreach ($personal_trainers as $personal_trainer){
-            $full_name = $personal_trainer->full_name;
+        foreach ($instructors as $instructor){
+            $full_name = $instructor->full_name;
         }
 
-        return view('client.c_bookappointment', ['personal_trainers' => $personal_trainers, 'fullname' => $full_name]);
+        return view('client.c_bookappointment', ['instructors' => $instructors, 'fullname' => $full_name]);
     }
 
     public function appointment_form($ptid)
     {
         // $personal_trainers = PersonalTrainer::get();
-        $personal_trainers = PersonalTrainer::select('*')
+        $instructors = Instructor::select('*')
             ->where('id', $ptid)
             ->get();
 
-        foreach ($personal_trainers as $personal_trainer){
-            $full_name = $personal_trainer->full_name;
+        foreach ($instructors as $instructor){
+            $full_name = $instructor->full_name;
         }
 
         // $personal_trainer = PersonalTrainer::select('*')
         //     ->where('id', $ptid)
         //     ->get();
 
-        return view('client.c_book_appointment_form', ['personal_trainers' => $personal_trainers, 'fullname' => $full_name, 'ptid' => $ptid]);
+        return view('client.c_book_appointment_form', ['instructors' => $instructors, 'fullname' => $full_name, 'ptid' => $ptid]);
         // return view('client.c_book_appointment_form');
     }
 
@@ -46,7 +46,7 @@ class AppointmentController extends Controller
             'client_id' => 'required|integer',
             'medical_condition' => 'required|string',
             'target' => 'required|string',
-            'personal_trainer_id' => 'required|integer',
+            'instructor_id' => 'required|integer',
             'appointment_date' => 'required|string',
             'appointment_time' => 'required|string',
             // add other fields validations
@@ -64,7 +64,7 @@ class AppointmentController extends Controller
 
     public function view_appointment(){
         $appointments = Appointment::select('*')
-            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainers_id')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
             ->where('countries.country_name', 'cdcd')
             ->get();
         return view('client.c_appointments', ['appointments' => $appointments]);

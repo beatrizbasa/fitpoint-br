@@ -14,7 +14,7 @@ class Appointment extends Model
         'client_id',
         'medical_condition',
         'target',
-        'personal_trainer_id',
+        'instructor_id',
         'appointment_date',
         'appointment_time',
         'status',

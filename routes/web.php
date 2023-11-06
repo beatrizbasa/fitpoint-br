@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\PersonalTrainerController;
+use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 
@@ -46,7 +46,7 @@ Route::prefix('client')->group(function(){
 
     Route::get('/home', [ClientController::class, 'home'])->name('client.home');
 
-    Route::get('/booked_personaltrainer/{cid}', [ClientController::class, 'booked_personaltrainer'])->name('client.booked_personaltrainer');
+    Route::get('/booked_instructor/{cid}', [ClientController::class, 'booked_instructor'])->name('client.booked_instructor');
     Route::get('/workout_plan', [ClientController::class, 'workout_plan'])->name('client.workout_plan');
 
     Route::get('/appointments', [ClientController::class, 'appointments'])->name('client.appointments');
@@ -54,7 +54,7 @@ Route::prefix('client')->group(function(){
     Route::get('/book_appointment_form/{ptid}', [AppointmentController::class, 'appointment_form'])->name('client.book_appointment_form');
     Route::post('/insert_appointment', [AppointmentController::class, 'insert_appointment'])->name('client.insert_appointment');
 
-    Route::get('/personal_trainers', [ClientController::class, 'personal_trainers'])->name('client.personal_trainers');
+    Route::get('/instructors', [ClientController::class, 'instructors'])->name('client.instructors');
 
     Route::get('/feedbacks/{cid}', [ClientController::class, 'feedbacks'])->name('client.feedbacks');
     Route::post('/insert_feedback', [ClientController::class, 'insert_feedback'])->name('client.insert_feedbacks');
@@ -66,19 +66,19 @@ Route::prefix('client')->group(function(){
     Route::get('/logout', [ClientController::class, 'logout'])->name('client.logout');
 });
 
-Route::prefix('personaltrainer')->group(function(){
-    Route::get('/home', [PersonalTrainerController::class, 'home'])->name('personaltrainer.home');
-    Route::get('/registration', [PersonalTrainerController::class, 'registration'])->name('personaltrainer.registration');
-    Route::get('/login_form', [PersonalTrainerController::class, 'index'])->name('personaltrainer.login_form');
-    Route::post('/login/login_personaltrainer', [PersonalTrainerController::class, 'login'])->name('personaltrainer.login');
+Route::prefix('instructor')->group(function(){
+    Route::get('/home', [InstructorController::class, 'home'])->name('instructor.home');
+    Route::get('/registration', [InstructorController::class, 'registration'])->name('instructor.registration');
+    Route::get('/login_form', [InstructorController::class, 'index'])->name('instructor.login_form');
+    Route::post('/login/login_instructor', [InstructorController::class, 'login'])->name('instructor.login');
 
-    Route::get('/appointments', [PersonalTrainerController::class, 'appointments'])->name('personaltrainer.appointments');
-    Route::get('/clients_list', [PersonalTrainerController::class, 'clients_list'])->name('personaltrainer.clients_list');
-    Route::get('/workout_plans', [PersonalTrainerController::class, 'workout_plans'])->name('personaltrainer.workout_plans');
-    Route::get('/feedbacks', [PersonalTrainerController::class, 'feedbacks'])->name('personaltrainer.feedbacks');
+    Route::get('/appointments', [InstructorController::class, 'appointments'])->name('instructor.appointments');
+    Route::get('/clients_list', [InstructorController::class, 'clients_list'])->name('instructor.clients_list');
+    Route::get('/workout_plans', [InstructorController::class, 'workout_plans'])->name('instructor.workout_plans');
+    Route::get('/feedbacks', [InstructorController::class, 'feedbacks'])->name('instructor.feedbacks');
 
-    Route::get('/profile', [PersonalTrainerController::class, 'profile'])->name('personaltrainer.profile');
-    Route::get('/logout', [PersonalTrainerController::class, 'logout'])->name('personaltrainer.logout');
+    Route::get('/profile', [InstructorController::class, 'profile'])->name('instructor.profile');
+    Route::get('/logout', [InstructorController::class, 'logout'])->name('instructor.logout');
 });
 
 Route::prefix('admin')->group(function(){

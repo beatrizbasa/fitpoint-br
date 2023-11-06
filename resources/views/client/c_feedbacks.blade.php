@@ -107,10 +107,10 @@
                         <span class="close">&times;</span>
                         <p>Feedback contents</p>
                         <form id="modalForm" action="post">
-                            @foreach ($personal_trainer as $ptrainer)
+                            @foreach ($instructor as $ptrainer)
                             @csrf
-                            Booked Personal Trainer: <b>{{ $ptrainer->fullname }}</b>
-                            <input type="hidden" name="personal_trainer_id" value="{{ $ptrainer->id }}">
+                            Booked Personal Trainer: <b>{{ $ptrainer->full_name }}</b>
+                            <input type="hidden" name="instructor_id" value="{{ $ptrainer->id }}">
                             <label for="inputfeedback" class="form-label">Feedback message:</label>
                             <textarea name="content" id="feedback_inp" class="form-control" required></textarea>
                             <input type="hidden" name="client_id" value="{{ Auth::guard('client')->user()->id}}">

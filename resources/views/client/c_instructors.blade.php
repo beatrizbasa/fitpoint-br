@@ -50,13 +50,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($personal_trainers as $personal_trainer)
+                    @foreach ($instructors as $instructor)
                     <tr>
-                        <td>{{ $personal_trainer->full_name }}</td>
-                        <td>{{ $personal_trainer->address }}</td>
-                        <td>{{ $personal_trainer->contact_no }}</td>
-                        <td>{{ $personal_trainer->gender }}</td>
-                        <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $personal_trainer->id) }}">Book an appointment</a></td>
+                        <td>{{ $instructor->full_name }}</td>
+                        <td>{{ $instructor->address }}</td>
+                        <td>{{ $instructor->contact_no }}</td>
+                        <td>{{ $instructor->gender }}</td>
+                        <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $instructor->id) }}">Book an appointment</a></td>
                     </tr>
                     @endforeach
                     </form>

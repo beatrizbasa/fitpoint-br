@@ -50,14 +50,14 @@
     <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Current Booked Personal Trainer</h3>
-        @if($personal_trainer == null)<p class="w3-text-grey">No current booked personal trainer yet.</p>
+        @if($instructor == null)<p class="w3-text-grey">No current booked personal trainer yet.</p>
         <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now!</a>
 
         @else
-          @foreach ($personal_trainer as $p_trainer)
+          @foreach ($instructor as $p_trainer)
           <div class="col-4 adjust-top">
             <label for="inputFname" class="form-label"><b>Personal trainer</b></label>
-            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $p_trainer->fullname }}" readonly>
+            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $p_trainer->firstname }} {{ $p_trainer->lastname }}" readonly>
           </div>
           <div class="col-4 adjust-top">
             <label for="inputFname" class="form-label"><b>Address</b></label>

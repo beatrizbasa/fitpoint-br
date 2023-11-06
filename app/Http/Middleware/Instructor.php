@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class PersonalTrainer
+class Instructor
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class PersonalTrainer
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('personaltrainer')->check()){
-            return redirect()->route('personaltrainer.login_form')->with('error', 'login first');
+        if (!Auth::guard('instructor')->check()){
+            return redirect()->route('instructor.login_form')->with('error', 'login first');
         }
 
         return $next($request);

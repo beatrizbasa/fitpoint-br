@@ -31,10 +31,6 @@
         height: auto;    /* This ensures the image keeps its aspect ratio */
         display: block;
       }
-
-      .phone{
-
-      }
     }
     </style>
 </head>

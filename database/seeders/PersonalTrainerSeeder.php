@@ -5,9 +5,9 @@ namespace Database\Seeders;
 // use App\Http\Middleware\PersonalTrainer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\PersonalTrainer;
+use App\Models\Instructor;
 
-class PersonalTrainerSeeder extends Seeder
+class InstructorSeeder extends Seeder
 {
     /**
      * Run the database seeds.

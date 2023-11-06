@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('medical_condition');
             $table->string('target');
-            $table->integer('personal_trainer_id');
+            $table->integer('instructor_id');
             $table->integer('appointment_time');
             $table->timestamps();
         });
