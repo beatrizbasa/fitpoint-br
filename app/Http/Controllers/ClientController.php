@@ -13,6 +13,8 @@ use App\Models\Client;
 use App\Models\fullname;
 use App\Models\Instructor;
 use Carbon\Carbon;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class ClientController extends Controller
 {
@@ -29,7 +31,7 @@ class ClientController extends Controller
         return view('client.c_registration');
     }
 
-    public function index()
+    public function to_login()
     {
         return view('client.c_login');
     }
@@ -137,7 +139,6 @@ class ClientController extends Controller
         return view('client.c_instructors', ['instructors' => $instructors]);
     }
 
-    
 
     public function feedbacks($cid)
     {
@@ -207,48 +208,126 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function index(Request $request): View
+    {     
+        $perPage = $request->input('per_page', 5); // Number of items to show per page
+        $clients = Client::paginate($perPage);
+        return view('clients.index',compact('clients'));
+                    
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
     {
-        //
+        return view('clients.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'contact_no' => 'required|size:11',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required',
+            'birthday' => 'required',
+            'gender' => 'required|in:male,female',
+        ]);
+      
+       Client::create($request->all());
+       
+        return redirect()->route('clients.index')->with('success','Client created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Client $client): View
     {
-        //
+        return view('clients.edit', compact('client'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Client $client): RedirectResponse
     {
-        //
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'contact_no' => 'required|size:11', 
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required',
+            'birthday' => 'required',
+            'gender' => 'required|in:male,female',
+        ]);
+      
+        $client->update($request->all());
+      
+        return redirect()->route('clients.index')->with('success','Client updated successfully');
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = Client::query();
+
+        if (!empty($search)) {
+            $query->where(function($query) use ($search) {
+                $query->where('firstname', 'LIKE', "%$search%")
+                ->orWhere('lastname', 'LIKE', "%$search%")
+                ->orWhere('address', 'LIKE', "%$search%")
+                ->orWhere('email', 'LIKE', "%$search%")
+                ->orWhere('contact_no', 'LIKE', "%$search%")
+                ->orWhere('password', 'LIKE', "%$search%")
+                ->orWhere('birthday', 'LIKE', "%$search%")
+                ->orWhere('gender', 'LIKE', "%$search%")
+               
+                ->orWhere('created_at', 'LIKE', "%$search%");
+            });
+        }
+        $clients = $query->paginate(5);
+
+        return view('clients.index', compact('clients'));
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function trash(): View
     {
-        //
+        $client = Client::onlyTrashed()->get();
+    
+        return view('clients.trash', compact('client'));
+    }
+    
+    public function destroy($id): RedirectResponse
+    {
+        $client = Client::findOrFail($id);
+        $client->delete(); // Soft delete
+    
+        return redirect()->route('clients.index')->with('success', 'Client Deleted successfully');
+    }
+    
+    public function restore($id): RedirectResponse
+    {
+        $client = Client::onlyTrashed()->findOrFail($id);
+        $client ->restore();
+    
+        return redirect()->route('clients.index')->with('success', 'Instructor restored successfully');
+    }
+
+
+
+    public function forceDelete($id): RedirectResponse
+    {
+        $client  = Client::onlyTrashed()->findOrFail($id);
+        $client ->forceDelete(); // Permanently delete
+
+        return redirect()->route('client .trash')->with('success', 'Client permanently deleted');
     }
 }

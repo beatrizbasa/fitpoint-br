@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Client extends Authenticatable
@@ -55,4 +56,7 @@ class Client extends Authenticatable
     public function getFullNameAttribute($value) {
         return $this->attributes['firstname'] . ' ' . $this->attributes['lastname'];
     }
+
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
 }

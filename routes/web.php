@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\PaymentsController;
 
 
 /*
@@ -41,7 +42,7 @@ Route::get('/main', function () {
 
 Route::prefix('client')->group(function(){
     Route::get('/registration', [ClientController::class, 'registration'])->name('client.registration');
-    Route::get('/login_form', [ClientController::class, 'index'])->name('client.login_form');
+    Route::get('/login_form', [ClientController::class, 'to_login'])->name('client.login_form');
     Route::post('/login/login_client', [ClientController::class, 'login'])->name('client.login');
 
     Route::get('/home', [ClientController::class, 'home'])->name('client.home');
@@ -69,7 +70,7 @@ Route::prefix('client')->group(function(){
 Route::prefix('instructor')->group(function(){
     Route::get('/home', [InstructorController::class, 'home'])->name('instructor.home');
     Route::get('/registration', [InstructorController::class, 'registration'])->name('instructor.registration');
-    Route::get('/login_form', [InstructorController::class, 'index'])->name('instructor.login_form');
+    Route::get('/login_form', [InstructorController::class, 'to_login'])->name('instructor.login_form');
     Route::post('/login/login_instructor', [InstructorController::class, 'login'])->name('instructor.login');
 
     Route::get('/appointments', [InstructorController::class, 'appointments'])->name('instructor.appointments');
@@ -82,8 +83,40 @@ Route::prefix('instructor')->group(function(){
 });
 
 Route::prefix('admin')->group(function(){
-    Route::get('/home', [AdminController::class, 'home'])->name('admin.home');
+    Route::get('/home', [AdminController::class, 'home'])->name('admin.index');
     Route::get('/registration', [AdminController::class, 'registration'])->name('admin.registration');
-    Route::get('/login_form', [AdminController::class, 'index'])->name('login_form');
+    Route::get('/login_form', [AdminController::class, 'to_login'])->name('login_form');
     Route::post('/login/login_admin', [AdminController::class, 'login'])->name('admin.login');
+
+    Route::get('/search',[AdminController::class,'search'])->name('admin.search');
+    Route::get('/trashedAdmins', [AdminController::class, 'trash'])->name('admin.trash');
+    Route::get('/restore/{id}', [AdminController::class, 'restore'])->name('admin.restore');
+    Route::get('/forceDelete/{id}', [AdminController::class,'forceDelete'])->name('admin.forceDelete');
+
+    Route::resource('instructor', InstructorController::class);
+    Route::get('/instructor/filter', [InstructorController::class, 'filter'])->name('instructor.filter');
+    Route::get('/instructors/search', [InstructorController::class, 'search'])->name('instructor.search');
+    Route::get('/trashedInstructors', [InstructorController::class, 'trash'])->name('instructor.trash');
+    Route::get('/instructor/restore/{id}', [InstructorController::class, 'restore'])->name('instructor.restore');
+    Route::get('/instructor/forceDelete/{id}', [InstructorController::class, 'forceDelete'])->name('instructor.forceDelete');
+
+
+    Route::resource('clients', ClientController::class);
+    Route::get('/trashedClients', [ClientController::class, 'trash'])->name('clients.trash');
+    Route::get('/client/restore/{id}', [ClientController::class, 'restore'])->name('clients.restore');
+    Route::get('/client/forceDelete/{id}', [ClientController::class, 'forceDelete'])->name('clients.forceDelete');
+    Route::get('/client/search',[ClientController::class,'search'])->name('clients.search');
+
+    Route::resource('feedback', FeedbackController::class);
+
+    Route::resource('appointments', AppointmentsController::class);
+
+    Route::resource('payments', PaymentsController::class);
+    Route::get('/payments/mark-as-paid/{id}', [PaymentsController::class, 'markAsPaid'])->name('payments.markAsPaid');
+    Route::get('/payments/mark-as-unpaid/{id}', [PaymentsController::class, 'markAsUnpaid'])->name('payments.markAsUnpaid');
+    Route::get('/paymets/search', [PaymentsController::class, 'search'])->name('payments.search');
+
+    Route::get('/trashedPayments', [PaymentsController::class, 'trash'])->name('payments.trash');
+    Route::get('/payments/restore/{id}', [PaymentsController::class, 'restore'])->name('payments.restore');
+    Route::get('/payments/forceDelete/{id}', [PaymentsController::class, 'forceDelete'])->name('payments.forceDelete');
 });

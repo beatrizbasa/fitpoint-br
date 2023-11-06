@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Feedbacks;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class InstructorController extends Controller
 {
@@ -16,7 +19,7 @@ class InstructorController extends Controller
         return view('instructor.i_registration');
     }
 
-    public function index()
+    public function to_login()
     {
         return view('instructor.i_login');
     }
@@ -109,5 +112,123 @@ class InstructorController extends Controller
     public function logout(){
         Auth::guard('instructor')->logout();
         return redirect()->route('instructor.login_form')->with('error', 'fishfarmer logged out successfully');
+    }
+
+    public function index()
+    {
+        $instructors = Instructor::paginate(5); // 10 instructors per page
+        return view('admin.i_index', compact('instructors'));
+    }            
+    
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
+    {
+        return view('instructor.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'contact_no' => 'required|size:11',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required',
+            'birthday' => 'required',
+            'gender' => 'required|in:male,female',
+        ]);
+      
+        Instructor::create($request->all());
+       
+        return redirect()->route('instructor.index')->with('success','Instructor created successfully.');
+    }
+
+    public function edit(Instructor $instructor)
+    {
+        return view('instructor.edit', compact('instructor'));
+    }
+    
+    public function update(Request $request, Instructor $instructor)
+    {
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'contact_no' => 'required|size:11',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required|same:password', // Ensure password matches confirm_password
+            'birthday' => 'required',
+            'gender' => 'required|in:male,female,other', // Include 'other' in the list
+        ]);
+    
+        $instructor->update($request->all());
+    
+        return redirect()->route('instructor.index')->with('success', 'Instructor updated successfully');
+    }
+    
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = Instructor::query();
+
+        if (!empty($search)) {
+            $query->where(function($query) use ($search) {
+                $query->where('firstname', 'LIKE', "%$search%")
+                ->orWhere('lastname', 'LIKE', "%$search%")
+                ->orWhere('address', 'LIKE', "%$search%")
+                ->orWhere('email', 'LIKE', "%$search%")
+                ->orWhere('contact_no', 'LIKE', "%$search%")
+                ->orWhere('password', 'LIKE', "%$search%")
+                ->orWhere('birthday', 'LIKE', "%$search%")
+                ->orWhere('gender', 'LIKE', "%$search%")
+                ->orWhere('created_at', 'LIKE', "%$search%")
+                ->orWhere('updated_at', 'LIKE', "%$search%");
+            });
+        }
+        $instructors = $query->paginate(5);
+
+        return view('instructor.index', compact('instructors'));
+ 
+    }
+
+    public function trash(): View
+    {
+        $Instructor = Instructor::onlyTrashed()->get();
+    
+        return view('instructor.trash', compact('Instructor'));
+    }
+    public function destroy($id): RedirectResponse
+    {
+        $instructor = Instructor::findOrFail($id);
+        $instructor->delete(); // Soft delete
+    
+        return redirect()->route('instructor.index')->with('success', 'Instructor Deleted successfully');
+    }
+    
+    public function restore($id): RedirectResponse
+    {
+        $instructor = Instructor::onlyTrashed()->findOrFail($id);
+        $instructor->restore();
+    
+        return redirect()->route('instructor.index')->with('success', 'Instructor restored successfully');
+    }
+
+
+
+    public function forceDelete($id): RedirectResponse
+    {
+        $instructor = Instructor::onlyTrashed()->findOrFail($id);
+        $instructor->forceDelete(); // Permanently delete
+
+        return redirect()->route('instructor.trash')->with('success', 'Instructor permanently deleted');
     }
 }
