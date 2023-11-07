@@ -212,7 +212,7 @@ class ClientController extends Controller
     {     
         $perPage = $request->input('per_page', 5); // Number of items to show per page
         $clients = Client::paginate($perPage);
-        return view('clients.index',compact('clients'));
+        return view('admin.c_index',compact('clients'));
                     
     }
     /**
@@ -220,7 +220,7 @@ class ClientController extends Controller
      */
     public function create(): View
     {
-        return view('clients.create');
+        return view('admin.c_create');
     }
 
     /**
@@ -247,7 +247,7 @@ class ClientController extends Controller
 
     public function edit(Client $client): View
     {
-        return view('clients.edit', compact('client'));
+        return view('admin.c_edit', compact('client'));
     }
     /**
      * Update the specified resource in storage.
@@ -293,7 +293,7 @@ class ClientController extends Controller
         }
         $clients = $query->paginate(5);
 
-        return view('clients.index', compact('clients'));
+        return view('admin.c_index', compact('clients'));
     }
     /**
      * Remove the specified resource from storage.
@@ -328,6 +328,6 @@ class ClientController extends Controller
         $client  = Client::onlyTrashed()->findOrFail($id);
         $client ->forceDelete(); // Permanently delete
 
-        return redirect()->route('client .trash')->with('success', 'Client permanently deleted');
+        return redirect()->route('client.trash')->with('success', 'Client permanently deleted');
     }
 }

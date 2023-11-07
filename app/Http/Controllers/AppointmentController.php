@@ -70,5 +70,11 @@ class AppointmentController extends Controller
         return view('client.c_appointments', ['appointments' => $appointments]);
     }
 
-    
+    public function index()
+    {
+        $appointments = Appointment::paginate(5);
+        // You can replace 'Appointment' with your actual model name if it's different.
+
+        return view('admin.appointment_index', compact('appointments'));
+    }
 }

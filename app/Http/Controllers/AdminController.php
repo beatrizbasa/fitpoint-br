@@ -38,7 +38,7 @@ class AdminController extends Controller
         $check = $request->all();
         if(Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])){
             //if nagmatch lahat
-            return redirect()->route('admin.a_home')->with('error', 'admin logged in successfully');
+            return redirect()->route('admin.index')->with('error', 'admin logged in successfully');
             // return view('admin.admin_dashboard');
         }
         else{

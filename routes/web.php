@@ -7,6 +7,7 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\FeedbackController;
 
 
 /*
@@ -100,7 +101,6 @@ Route::prefix('admin')->group(function(){
     Route::get('/instructor/restore/{id}', [InstructorController::class, 'restore'])->name('instructor.restore');
     Route::get('/instructor/forceDelete/{id}', [InstructorController::class, 'forceDelete'])->name('instructor.forceDelete');
 
-
     Route::resource('clients', ClientController::class);
     Route::get('/trashedClients', [ClientController::class, 'trash'])->name('clients.trash');
     Route::get('/client/restore/{id}', [ClientController::class, 'restore'])->name('clients.restore');
@@ -109,7 +109,7 @@ Route::prefix('admin')->group(function(){
 
     Route::resource('feedback', FeedbackController::class);
 
-    Route::resource('appointments', AppointmentsController::class);
+    Route::resource('appointments', AppointmentController::class);
 
     Route::resource('payments', PaymentsController::class);
     Route::get('/payments/mark-as-paid/{id}', [PaymentsController::class, 'markAsPaid'])->name('payments.markAsPaid');
