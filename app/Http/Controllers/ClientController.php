@@ -15,6 +15,7 @@ use App\Models\Instructor;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -52,6 +53,22 @@ class ClientController extends Controller
         }
     }
 
+    public function register_acc(Request $request){
+        Client::insert([
+            'firstname' => $request -> firstname,
+            'lastname' => $request -> lastname,
+            'address' => $request->address,
+            'contact_no' => $request->contact,
+            'birthday' => $request->birthday,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), //makes it a hash password
+            'created_at' => Carbon::now(),
+        ]);
+
+        return redirect()->route('client.login_form')->with('error', 'Client account created successfully');
+    }
+
     public function home()
     {
         $instructors = Instructor::get();
@@ -65,13 +82,17 @@ class ClientController extends Controller
         $curr_date = Carbon::now()->format('Y-m-d');
         
         $appointments = Appointment::select('*')
-            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
+            ->join('instructors', 'appointments.instructor_id', '=', 'instructors.id')
             ->where('appointments.client_id', $cid)
-            ->where('appointments.appointment_date', '>=', now())
+            // ->where('appointments.appointment_date', '>=', now())
             ->orderBy('appointments.appointment_date', 'asc')
             ->get();
+
+        foreach ($appointments as $appt){
+            $curr_appt = $appt->id;
+        }
         
-        return view('client.c_home', ['appointments' => $appointments, 'instructors' => $instructors, 'cid' => $cid]);
+        return view('client.c_home', ['appointments' => $appointments, 'curr_appt'=>$curr_appt, 'instructors' => $instructors, 'cid' => $cid]);
     }
 
     public function booked_instructor($cid)
@@ -87,7 +108,18 @@ class ClientController extends Controller
 
     public function workout_plan()
     {
-        return view('client.c_workout_plan');
+        $cid = Auth::guard('client')->user()->id;
+        $instructor = Appointment::select('*')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
+            ->where('appointments.client_id', $cid)
+            ->where('appointments.status', 'Accepted')
+            ->get();
+
+            foreach ($instructor as $ins){
+                $curr_ins = $ins->firstname;
+            }
+            
+        return view('client.c_workout_plan',['curr_ins'=>$curr_ins]);
     }
 
     public function appointments()

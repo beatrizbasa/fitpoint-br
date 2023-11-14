@@ -55,7 +55,7 @@
     <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Upcoming Appointment</h3>
-        @if($appointments == null)<p class="w3-text-grey">No current appointment yet.</p>
+        @if($curr_appt == null)<p class="w3-text-grey">No current appointment yet.</p>
         <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book an appointment now!</a>
 
         @else
@@ -68,7 +68,7 @@
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Personal trainer</b></label>
-          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $appointment->fullname }}">
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $appointment->firstname }} {{ $appointment->lastname }}">
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Medical condition</b></label>
@@ -111,8 +111,11 @@
     <div class="row mobile" style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Workout Plan</h3>
+        <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p>
+        @if($curr_appt == null)
         <p class="w3-text-grey">No ongoing workout plan yet.</p>
         <a class="link-buttons" href="">Book your personal trainer now!</a>
+        @endif
       </div>
     </div>
   </div>
@@ -124,6 +127,7 @@
     <div class="row mobile"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Personal Trainers</h3>
+        @if($curr_appt == null)
         <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of A&T Fitness Center's personal trainers where you can choose who you want to help you achieve your dream body!</h5>
         <div class="col-12" style="overflow-x:auto;">
           <table id="per_trainersTbl" class="display">
@@ -150,6 +154,11 @@
             </tbody>
           </table>
         </div>
+        @else
+          @foreach ($appointments as $appt)
+          <h5 style="padding: 2rem 0rem 2rem 0rem;">Your personal trainer is <b>{{ $appt->firstname }} {{ $appt->lastname }}</b></h5>
+          @endforeach
+        @endif
       </div>
       
     </div>

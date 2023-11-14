@@ -39,10 +39,15 @@ require __DIR__.'/auth.php';
 
 Route::get('/main', function () {
     return view('main_home');
-});
+})->name('home');
+
+Route::get('/about', function () {
+    return view('main_about');
+})->name('about');
 
 Route::prefix('client')->group(function(){
     Route::get('/registration', [ClientController::class, 'registration'])->name('client.registration');
+    Route::post('/register_acc', [ClientController::class, 'register_acc'])->name('client.register_acc');
     Route::get('/login_form', [ClientController::class, 'to_login'])->name('client.login_form');
     Route::post('/login/login_client', [ClientController::class, 'login'])->name('client.login');
 

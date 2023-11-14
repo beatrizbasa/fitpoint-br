@@ -33,8 +33,11 @@
     <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
         <div class="col-12">
             <h3 style="font-size:xx-large; ">Current Workout Plan</h3>
-            <p class="w3-text-grey">No current workout plan yet.</p>
+            <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p>
+            @if ($curr_ins == null )
+            <p class="w3-text-grey">No ongoing workout plan yet.</p>
             <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now to get started!</a>
+            @endif
       </div>
     </div>
   </div>
