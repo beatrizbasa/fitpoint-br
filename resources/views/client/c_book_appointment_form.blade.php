@@ -132,7 +132,7 @@
   </div>
   </div>
 
-@include('partials.footer')
+@include('partials.c_footer')
 <script>
   $(document).ready(function(){
     $("#apptForm").submit(function(e) {

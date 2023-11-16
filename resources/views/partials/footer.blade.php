@@ -34,7 +34,7 @@
         </div>
         <div class="col-3 foot" style=" padding: 3rem">
             <div class="col-12">
-                <b style="float: left; font-size: xx-large">Services</b>
+                <b style="float: left; font-size: xx-large">Quick links</b>
             </div>
             <div class="col-12">
                 <ul style="list-style-type: none; padding: 0rem; text-decoration: none;">

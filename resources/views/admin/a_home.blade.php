@@ -76,7 +76,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.c_footer')
 
 </body>
 </html>

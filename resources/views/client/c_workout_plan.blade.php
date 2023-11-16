@@ -19,6 +19,16 @@
         font-family: 'Open Sans', sans-serif;
     }
     .fa-dumbbell,.fa-user-group {font-size:200px}
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+      }
+
+      .mobile{
+        padding: 0.5rem 1rem 0.5rem 1rem !important;
+      }
+    }
     </style>
 </head>
 <body>
@@ -30,13 +40,15 @@
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+    <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
         <div class="col-12">
             <h3 style="font-size:xx-large; ">Current Workout Plan</h3>
-            <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p>
-            @if ($curr_ins == null )
+            <!-- <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p> -->
+            @if ($curr_ins == '' )
             <p class="w3-text-grey">No ongoing workout plan yet.</p>
             <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now to get started!</a>
+            @else
+            <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p>
             @endif
       </div>
     </div>
@@ -46,7 +58,7 @@
 
   <!-- Second Grid -->
   <div class=" " style="margin-top: 0rem;">
-    <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
+    <div class="row mobile"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Past Workout Plans</h3>
         <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your former workout plans.</h5>
@@ -60,7 +72,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.c_footer')
 
 </body>
 </html>

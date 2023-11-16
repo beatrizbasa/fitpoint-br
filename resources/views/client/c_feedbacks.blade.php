@@ -86,6 +86,7 @@
         text-decoration: none;
         cursor: pointer;
     }
+    
 
     </style>
 </head>
@@ -97,7 +98,7 @@
 <!-- First Grid -->
 <div class="w3-container">
     <div class="w3-padding-64" style="margin-top: 3rem">
-        <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+        <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
             <div class="col-12">
                 <h3 style="font-size:xx-large; ">Feedbacks</h3>
                 <p class="w3-text-grey">Send a feedback to your booked personal trainer!</p>
@@ -105,6 +106,11 @@
                 <div id="myModal" class="modal">
                     <div class="modal-content">
                         <span class="close">&times;</span>
+
+                        @if ($ins_id == '')
+                        <p>&nbsp;</p>
+                        <p>No personal trainer to give feedback to.</p>
+                        @else
                         <p>Feedback contents</p>
                         <form id="modalForm" action="post">
                             @foreach ($instructor as $ptrainer)
@@ -117,6 +123,7 @@
                             <br><button type="submit" onclick="getData()" data-dismiss="modal" name="submit_fback" class="form-buttons" style="float: right;">Submit feedback</button>
                             @endforeach
                         </form>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -127,7 +134,7 @@
 
     <!-- Second Grid -->
     <div class=" " style="margin-top: 0rem;">
-        <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
+        <div class="row mobile"  style="padding: 2rem 15rem 2rem 15rem;">
         <div class="col-12">
             <b style="font-size: x-large;">Submitted feedbacks</b>
             <p class="w3-text-grey">Below are submitted feedbacks from other clients to different personal trainers.</p>
@@ -187,7 +194,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.c_footer')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <script>

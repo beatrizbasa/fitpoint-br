@@ -39,7 +39,7 @@
       cursor: pointer;
       padding: 14px 16px;
       transition: 0.3s;
-      font-size: 17px;
+      font-size: medium !important;
     }
 
     /* Change background color of buttons on hover */
@@ -59,6 +59,23 @@
       border: 1px solid #ccc;
       border-top: none;
     }
+
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+      }
+
+      .imgs {
+        max-width: 100%; 
+        height: auto;    /* This ensures the image keeps its aspect ratio */
+        display: block;
+      }
+
+      .mobile{
+        padding: 0.5rem 1rem 0.5rem 1rem !important;
+      }
+    }
     </style>
 </head>
 <body>
@@ -70,10 +87,10 @@
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+    <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
     <div class="col-12">
         <h3 style="font-size:xx-large; ">Upcoming Appointment</h3>
-        @if($pen_appts == null)<p class="w3-text-grey">No current appointment yet.</p>
+        @if($pen_id == null)<p class="w3-text-grey">No current appointment yet.</p>
         <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book an appointment now!</a>
 
         @else
@@ -127,7 +144,7 @@
 
   <!-- Second Grid -->
   <div class=" " style="margin-top: 0rem;">
-    <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
+    <div class="row mobile"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Past Appointments</h3>
         <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your past appointments in A&T Fitness Center filtered per status.</h5>
@@ -229,7 +246,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.c_footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script>

@@ -88,8 +88,12 @@ class ClientController extends Controller
             ->orderBy('appointments.appointment_date', 'asc')
             ->get();
 
+        $curr_appt = '';
         foreach ($appointments as $appt){
             $curr_appt = $appt->id;
+        }
+        if ($curr_appt == null){
+            $curr_appt == '';
         }
         
         return view('client.c_home', ['appointments' => $appointments, 'curr_appt'=>$curr_appt, 'instructors' => $instructors, 'cid' => $cid]);
@@ -102,8 +106,16 @@ class ClientController extends Controller
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Accepted')
             ->get();
+
+        $curr_ins = '';
+        foreach ($instructor as $ins){
+            $curr_appt = $ins->id;
+        }
+        if ($curr_ins == null){
+            $curr_ins == '';
+        }
         // $instructor = PersonalTrainer::get();
-        return view('client.c_booked_instructor', ['instructor' => $instructor]);
+        return view('client.c_booked_instructor', ['instructor' => $instructor, 'curr_ins'=>$curr_ins]);
     }
 
     public function workout_plan()
@@ -115,10 +127,15 @@ class ClientController extends Controller
             ->where('appointments.status', 'Accepted')
             ->get();
 
-            foreach ($instructor as $ins){
-                $curr_ins = $ins->firstname;
-            }
-            
+        $curr_ins = '';
+        foreach ($instructor as $ins){
+            $curr_ins = $ins->firstname;
+        }
+
+        if ($curr_ins == null){
+            $curr_ins == '';
+        }
+        
         return view('client.c_workout_plan',['curr_ins'=>$curr_ins]);
     }
 
@@ -136,6 +153,15 @@ class ClientController extends Controller
             ->where('appointments.status', 'Pending')
             ->orderBy('appointments.appointment_date', 'asc')
             ->get();
+
+        $pen_id = '';
+        foreach ($pen_appts as $pens){
+            $pen_id = $pens->id;
+        }
+
+        if ($pen_id == null){
+            $pen_id == '';
+        }
 
         $acc_appts = Appointment::select('*')
             ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
@@ -158,7 +184,7 @@ class ClientController extends Controller
             ->orderBy('appointments.id', 'desc')
             ->get();
 
-        return view('client.c_appointments', ['pen_appts' => $pen_appts, 'acc_appts' => $acc_appts, 'dec_appts' => $dec_appts, 'can_appts' => $can_appts]);
+        return view('client.c_appointments', ['pen_appts' => $pen_appts, 'acc_appts' => $acc_appts, 'dec_appts' => $dec_appts, 'can_appts' => $can_appts, 'pen_id'=>$pen_id]);
     }
 
     public function instructors()
@@ -185,8 +211,17 @@ class ClientController extends Controller
             ->join('clients', 'clients.id', '=', 'feedbacks.client_id')
             ->select('instructors.firstname as ptrainer_firstname', 'instructors.lastname as ptrainer_lastname', 'clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'feedbacks.content as content', 'feedbacks.created_at as fback_date')
             ->get();
+        
+        $ins_id = '';
+        foreach ($instructor as $ins){
+            $ins_id = $ins->id;
+        }
+
+        if ($ins_id == null){
+            $ins_id == '';
+        }
             
-        return view('client.c_feedbacks', ['feedbacks' => $feedbacks, 'instructor'=>$instructor]);
+        return view('client.c_feedbacks', ['feedbacks' => $feedbacks, 'instructor'=>$instructor, 'ins_id'=>$ins_id]);
     }
 
     public function profile()

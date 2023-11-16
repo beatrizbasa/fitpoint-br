@@ -94,7 +94,7 @@
                         <input type="password" name="conf_passw" class="form-control" id="inputFname" aria-describedby="emailHelp">
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn buttons btn-primary" style="float: right;"> Register </button>
+                        <button type="submit" class="form-buttons" style="float: right;"> Register </button>
                     </div>
                 </form>
             </div>
