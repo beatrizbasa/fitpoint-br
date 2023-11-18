@@ -109,6 +109,27 @@ class InstructorController extends Controller
         return view('instructor.i_profile');
     }
 
+    public function update_profile()
+    {
+        return view('instructor.i_update_profile');
+    }
+
+    public function update_profile_changes(Request $request, $ptid){
+
+        $instructor = Instructor::findOrFail($ptid);
+
+        $instructor->firstname = $request->input('firstname');
+        $instructor->lastname = $request->input('lastname');
+        $instructor->address = $request->input('address');
+        $instructor->contact_no = $request->input('contact_no');
+        $instructor->birthday = $request->input('birthday');
+        $instructor->gender = $request->input('gender');
+    
+        $instructor->save();
+    
+        return redirect()->route('instructor.profile');
+    }
+
     public function logout(){
         Auth::guard('instructor')->logout();
         return redirect()->route('instructor.login_form')->with('error', 'fishfarmer logged out successfully');

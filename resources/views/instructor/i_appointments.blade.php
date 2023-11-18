@@ -88,6 +88,17 @@
       border: 1px solid #ccc;
       border-top: none;
     }
+
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+      }
+
+      .mobile{
+        padding: 0.5rem 1rem 0.5rem 1rem !important;
+      }
+    }
     </style>
 </head>
 <body>
@@ -99,7 +110,7 @@
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+    <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Pending Appointments</h3>
         @if($appointments == null)<p class="w3-text-grey">No pending appointments yet.</p>
@@ -140,7 +151,7 @@
 
   <!-- Second Grid -->
   <div class=" " style="margin-top: 0rem;">
-    <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
+    <div class="row mobile"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Past Appointments</h3>
         <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your past appointments in A&T Fitness Center filtered per status.</h5>

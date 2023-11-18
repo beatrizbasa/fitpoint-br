@@ -86,26 +86,59 @@
                 <br><b style="font-size: x-large">Meet the Team</b>
                 <ul>
                     <li><b>Jan Raemel Cabrillas</b></li>
-                    Passionate about fitness and dedicated to creating a positive impact on the community, [Founder/Owner Name] founded [Gym Name] with the vision of making fitness accessible to everyone.
+                    Passionate about fitness and dedicated to creating a positive impact on the community, Jan Raemel founded A&T Fitness Center with the vision of making fitness accessible to everyone.
                 </ul>
                 <br><b style="font-size: large">Our Trainers</b>
                 <p>
                     Our team of certified trainers is committed to helping you reach your fitness goals. With diverse expertise in various fitness disciplines, they are here to guide, motivate, and support you on your journey.
                 </p>
                 <ul>
-                    <li><b>Yano Campos</b></li>
-                    Passionate about fitness and dedicated to creating a positive impact on the community, [Founder/Owner Name] founded [Gym Name] with the vision of making fitness accessible to everyone.
+                    <li><b>Mariano "Yano" Campos</b></li>
+                    With a passion for helping individuals surpass their fitness goals, Yano Campos brings an unparalleled level of energy, expertise, and personalized attention to every training session. 
+                    <p><b>His expertise include:</b>
+                        <ul>
+                            <li>Bodybuilding</li>
+                            <li>One-on-one personal training</li>
+                            <li>Weight loss</li>
+                            <li>Mass gaining</li>
+                        </ul>
+                    </p>
 
                     <li><b>Mandy Castro</b></li>
-                    Passionate about fitness and dedicated to creating a positive impact on the community, [Founder/Owner Name] founded [Gym Name] with the vision of making fitness accessible to everyone.
+                    Mandy is not just a personal trainer; he is your committed partner on your journey to a healthier lifestyle. Mandy brings a wealth of knowledge and expertise to our gym, ensuring that each workout is not just a routine but a carefully crafted experience tailored to your unique needs.
+                    <p><b>His expertise include:</b>
+                        <ul>
+                            <li>Bodybuilding</li>
+                            <li>One-on-one personal training</li>
+                            <li>Group exercises</li>
+                            <li>Weight loss</li>
+                            <li>Mass gaining</li>
+                        </ul>
+                    </p>
+
+                    <li><b>Dan Cayetano</b></li>
+                    Dan is not just a fitness professional; he is your confidant on this wellness adventure. His dedication extends beyond the gym floor, as he is committed to providing ongoing support and encouragement, ensuring that you stay on track even outside our gym walls.
+                    <p><b>His expertise include:</b>
+                        <ul>
+                            <li>Bodybuilding</li>
+                            <li>One-on-one personal training</li>
+                            <li>Group exercises</li>
+                            <li>Weight loss</li>
+                            <li>Mass gaining</li>
+                        </ul>
+                    </p>
                 </ul>
             </p>
             
             <p>
                 <br><b style="font-size: x-large">Services</b>
-                <p>From cutting-edge workout equipment to spacious exercise studios, [Gym Name] offers a variety of amenities to enhance your fitness experience.</p>
+                <p>From updated workout equipment to a spacious exercise space, A&T Fitness Center offers a variety of amenities to enhance your fitness experience.</p>
                 <ul>
-                    <li><b>Jan Raemel Cabrillas</b></li>
+                    <li><b>Personal Training</b></li>
+                    Passionate about fitness and dedicated to creating a positive impact on the community, [Founder/Owner Name] founded [Gym Name] with the vision of making fitness accessible to everyone.
+                    <li><b>Boxing Training</b></li>
+                    Passionate about fitness and dedicated to creating a positive impact on the community, [Founder/Owner Name] founded [Gym Name] with the vision of making fitness accessible to everyone.
+                    <li><b>Zumba Classes</b></li>
                     Passionate about fitness and dedicated to creating a positive impact on the community, [Founder/Owner Name] founded [Gym Name] with the vision of making fitness accessible to everyone.
                 </ul>
             </p>

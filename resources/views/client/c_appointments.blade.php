@@ -171,7 +171,7 @@
           <tbody>
             @foreach ($acc_appts as $acc_appt)
             <tr>
-                <td>{{ $acc_appt->full_name }}</td>
+                <td>{{ $acc_appt->firstname }} {{ $acc_appt->lastname }}</td>
                 <td>{{ $acc_appt->medical_condition }}</td>
                 <td>{{ $acc_appt->target }}</td>
                 <td>{{ $acc_appt->appointment_date }}</td>
@@ -199,7 +199,7 @@
           <tbody>
             @foreach ($dec_appts as $dec_appt)
             <tr>
-                <td>{{ $dec_appt->full_name }}</td>
+                <td>{{ $dec_appt->firstname }} {{ $dec_appt->lastname }}</td>
                 <td>{{ $dec_appt->medical_condition }}</td>
                 <td>{{ $dec_appt->target }}</td>
                 <td>{{ $dec_appt->appointment_date }}</td>
@@ -227,7 +227,7 @@
           <tbody>
             @foreach ($can_appts as $can_appt)
             <tr>
-                <td>{{ $can_appt->full_name }}</td>
+                <td>{{ $can_appt->firstname }} {{ $can_appt->lastname }}</td>
                 <td>{{ $can_appt->medical_condition }}</td>
                 <td>{{ $can_appt->target }}</td>
                 <td>{{ $can_appt->appointment_date }}</td>

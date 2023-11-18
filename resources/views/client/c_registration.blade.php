@@ -83,7 +83,12 @@
                     </div>
                     <div class="col-6 adjust-top">
                         <label for="inputFname" class="form-label">Gender</label>
-                        <input type="text" name="gender" class="form-control" id="inputFname" aria-describedby="emailHelp">
+                        <!-- <input type="text" name="gender" class="form-control" id="inputFname" aria-describedby="emailHelp"> -->
+                        <select name="gender" class="form-control">
+                            <option val>-- select --</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                        </select>
                     </div>
                     <div class="col-6 adjust-top">
                         <label for="inputFname" class="form-label">Password</label>

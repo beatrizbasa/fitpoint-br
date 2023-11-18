@@ -109,7 +109,7 @@ class ClientController extends Controller
 
         $curr_ins = '';
         foreach ($instructor as $ins){
-            $curr_appt = $ins->id;
+            $curr_ins = $ins->id;
         }
         if ($curr_ins == null){
             $curr_ins == '';

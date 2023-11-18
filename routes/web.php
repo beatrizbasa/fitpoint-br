@@ -86,6 +86,9 @@ Route::prefix('instructor')->group(function(){
 
     Route::get('/profile', [InstructorController::class, 'profile'])->name('instructor.profile');
     Route::get('/logout', [InstructorController::class, 'logout'])->name('instructor.logout');
+
+    Route::get('/update_profile', [InstructorController::class, 'update_profile'])->name('instructor.update_profile');
+    Route::post('/update_profile/save_changes/{ptid}', [InstructorController::class, 'update_profile_changes'])->name('instructor.update_profile_changes');
 });
 
 Route::prefix('admin')->group(function(){

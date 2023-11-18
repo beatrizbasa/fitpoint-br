@@ -50,7 +50,7 @@
     <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Current Booked Personal Trainer</h3>
-        @if($curr_ins == null)<p class="w3-text-grey">No current booked personal trainer yet.</p>
+        @if($curr_ins == '')<p class="w3-text-grey">No current booked personal trainer yet.</p>
         <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now!</a>
 
         @else

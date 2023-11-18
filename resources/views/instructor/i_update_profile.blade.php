@@ -41,7 +41,7 @@
 <body>
 
 <!-- Navbar -->
-@include('partials.c_header')
+@include('partials.pt_header')
 
 <!-- First Grid -->
 <div class="w3-container">
@@ -52,34 +52,35 @@
             <h3 style="font-size:xx-large; ">Update Profile</h3>
             <p class="w3-text-grey">Update your profile information.</p>
         </div>
-        <form action="{{ route('client.update_profile_changes', Auth::guard('client')->user()->id) }}" method="POST">
+        <form action="{{ route('instructor.update_profile_changes', Auth::guard('instructor')->user()->id) }}" method="POST">
             @csrf
             <div class="col-12">
                 <div class="col-4">
                     <label for="inputFname" class="form-label"><b>First name</b></label>
-                    <input name="firstname" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->firstname }}">
+                    <input name="firstname" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('instructor')->user()->firstname }}">
                 </div>
                 <div class="col-4">
                     <label for="inputFname" class="form-label"><b>Last name</b></label>
-                    <input name="lastname" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->lastname }}">
+                    <input name="lastname" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('instructor')->user()->lastname }}">
                 </div>
                 <div class="col-4">
                     <label for="inputFname" class="form-label"><b>Address</b></label>
-                    <input name="address" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->address }} ">
+                    <input name="address" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('instructor')->user()->address }} ">
                 </div>
                 <div class="col-4">
                     <label for="inputFname" class="form-label"><b>Contact no.</b></label>
-                    <input name="contact_no" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->contact_no }} ">
+                    <input name="contact_no" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('instructor')->user()->contact_no }} ">
                 </div>
                 <div class="col-4">
                     <label for="inputFname" class="form-label"><b>Birthday</b></label>
-                    <input name="birthday" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->birthday }} ">
+                    <input name="birthday" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('instructor')->user()->birthday }} ">
                 </div>
                 <div class="col-4">
                     <label for="inputFname" class="form-label"><b>Gender</b></label>
-                    <!-- <input name="gender" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->gender }} "> -->
+                    <!-- <input name="gender" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('instructor')->user()->gender }} "> -->
+
                     <select name="gender" class="form-control">
-                        @if (Auth::guard('client')->user()->gender == 'female')
+                        @if (Auth::guard('instructor')->user()->gender == 'female')
                         <option value="female">Female</option>
                         <option value="male">Male</option>
                         @else
@@ -101,7 +102,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.c_footer')
+@include('partials.pt_footer')
 
 </body>
 </html>

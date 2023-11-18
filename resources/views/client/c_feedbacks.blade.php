@@ -115,7 +115,7 @@
                         <form id="modalForm" action="post">
                             @foreach ($instructor as $ptrainer)
                             @csrf
-                            Booked Personal Trainer: <b>{{ $ptrainer->full_name }}</b>
+                            Booked Personal Trainer: <b>{{ $ptrainer->firstname }} {{ $ptrainer->lastname }}</b>
                             <input type="hidden" name="instructor_id" value="{{ $ptrainer->id }}">
                             <label for="inputfeedback" class="form-label">Feedback message:</label>
                             <textarea name="content" id="feedback_inp" class="form-control" required></textarea>

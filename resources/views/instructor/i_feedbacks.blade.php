@@ -19,6 +19,17 @@
         font-family: 'Open Sans', sans-serif;
     }
     .fa-dumbbell,.fa-user-group {font-size:200px}
+
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+      }
+
+      .mobile{
+        padding: 0.5rem 1rem 0.5rem 1rem !important;
+      }
+    }
     </style>
 </head>
 <body>
@@ -30,7 +41,7 @@
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+    <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
         <div class="col-12">
           <h3 style="font-size:xx-large; ">Feedbacks</h3>
           <p class="w3-text-grey">Below are the feedbacks submitted by your clients to you.</p>
