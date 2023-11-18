@@ -23,6 +23,23 @@
         font-family: 'Open Sans', sans-serif;
     }
     .fa-dumbbell,.fa-user-group {font-size:200px}
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+      }
+
+      .imgs {
+        max-width: 100%; 
+        height: auto;    /* This ensures the image keeps its aspect ratio */
+        display: block;
+      }
+
+      .mobile{
+        padding: 0.5rem 1rem 0.5rem 1rem !important;
+      }
+    }
+
     </style>
 </head>
 <body>
@@ -34,7 +51,7 @@
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+    <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
         <div class="col-12">
             <h3 style="font-size:xx-large; ">Personal Trainers</h3>
             <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of A&T Fitness Center's personal trainers where you can choose who you want to help you achieve your dream body!</h5>
@@ -50,13 +67,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($personal_trainers as $personal_trainer)
+                    @foreach ($instructors as $instructor)
                     <tr>
-                        <td>{{ $personal_trainer->full_name }}</td>
-                        <td>{{ $personal_trainer->address }}</td>
-                        <td>{{ $personal_trainer->contact_no }}</td>
-                        <td>{{ $personal_trainer->gender }}</td>
-                        <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $personal_trainer->id) }}">Book an appointment</a></td>
+                        <td>{{ $instructor->full_name }}</td>
+                        <td>{{ $instructor->address }}</td>
+                        <td>{{ $instructor->contact_no }}</td>
+                        <td>{{ $instructor->gender }}</td>
+                        <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $instructor->id) }}">Book an appointment</a></td>
                     </tr>
                     @endforeach
                     </form>
@@ -74,7 +91,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.c_footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script>

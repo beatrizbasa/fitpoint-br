@@ -49,50 +49,59 @@
                 <img alt="" class="" style="width: 100%; border-radius: 1.5rem; " src="{{ asset('images/logo.jpg') }}" />
             </div>
             
+
             <div class="col-7 adjust-top">
                 <div class="col-12 adjust-top">
                     <b style="font-size: 2.5rem; color: black; font-size:xx-large"><center>Register Account</center></b>
                     <center><p style="font-size: 1.5rem; color: black">A&T Fitness Center</p></center>
                 </div>
-                <div class="col-6 adjust-top">
-                    <label for="inputFname" class="form-label">First name</label>
-                    <input type="text" class="form-control" id="inputFname" aria-describedby="emailHelp">
-                </div>
-                <div class="col-6 adjust-top">
-                    <label for="inputFname" class="form-label">Last name</label>
-                    <input type="text" class="form-control" id="inputFname" aria-describedby="emailHelp">
-                </div>
-                <div class="col-12 adjust-top">
-                    <label for="inputFname" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="inputFname" aria-describedby="emailHelp">
-                </div>
-                <div class="col-6 adjust-top">
-                    <label for="inputFname" class="form-label">Contact no.</label>
-                    <input type="number" class="form-control" id="inputFname" aria-describedby="emailHelp">
-                </div>
-                <div class="col-6 adjust-top">
-                    <label for="inputFname" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="inputFname" aria-describedby="emailHelp">
-                </div>
-                <div class="col-6 adjust-top">
-                    <label for="inputFname" class="form-label">Birthday</label>
-                    <input type="date" class="form-control" id="inputFname" aria-describedby="emailHelp" style="padding: 0.3rem;">
-                </div>
-                <div class="col-6 adjust-top">
-                    <label for="inputFname" class="form-label">Gender</label>
-                    <input type="text" class="form-control" id="inputFname" aria-describedby="emailHelp">
-                </div>
-                <div class="col-6 adjust-top">
-                    <label for="inputFname" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="inputFname" aria-describedby="passwordHelp">
-                </div>
-                <div class="col-6 adjust-top">
-                    <label for="inputFname" class="form-label">Confirm password</label>
-                    <input type="password" class="form-control" id="inputFname" aria-describedby="emailHelp">
-                </div>
-                <div class="col-12">
-                    <button type="button" class="btn buttons btn-primary" style="float: right;"> Register </button>
-                </div>
+                <form action="{{ route('client.register_acc') }}" method="post"> 
+                @csrf
+                    <div class="col-6 adjust-top">
+                        <label for="inputFname" class="form-label">First name</label>
+                        <input type="text" name="firstname" class="form-control" id="inputFname" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-6 adjust-top">
+                        <label for="inputFname" class="form-label">Last name</label>
+                        <input type="text" name="lastname" class="form-control" id="inputFname" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-12 adjust-top">
+                        <label for="inputFname" class="form-label">Address</label>
+                        <input type="text"name="address" class="form-control" id="inputFname" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-6 adjust-top">
+                        <label for="inputFname" class="form-label">Contact no.</label>
+                        <input type="number" name="contact" class="form-control" id="inputFname" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-6 adjust-top">
+                        <label for="inputFname" class="form-label">Email address</label>
+                        <input type="email" name="email" class="form-control" id="inputFname" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-6 adjust-top">
+                        <label for="inputFname" class="form-label">Birthday</label>
+                        <input type="date" name="birthday" class="form-control" id="inputFname" aria-describedby="emailHelp" style="padding: 0.3rem;">
+                    </div>
+                    <div class="col-6 adjust-top">
+                        <label for="inputFname" class="form-label">Gender</label>
+                        <!-- <input type="text" name="gender" class="form-control" id="inputFname" aria-describedby="emailHelp"> -->
+                        <select name="gender" class="form-control">
+                            <option val>-- select --</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                        </select>
+                    </div>
+                    <div class="col-6 adjust-top">
+                        <label for="inputFname" class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" id="inputFname" aria-describedby="passwordHelp">
+                    </div>
+                    <div class="col-6 adjust-top">
+                        <label for="inputFname" class="form-label">Confirm password</label>
+                        <input type="password" name="conf_passw" class="form-control" id="inputFname" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="form-buttons" style="float: right;"> Register </button>
+                    </div>
+                </form>
             </div>
             
         </div>

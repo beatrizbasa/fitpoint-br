@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PersonalTrainer extends Authenticatable
+class Instructor extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     /**
@@ -16,7 +17,7 @@ class PersonalTrainer extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guard = 'personaltrainer';
+    protected $guard = 'instructor';
 
     protected $fillable = [
         'firstname',
@@ -52,4 +53,8 @@ class PersonalTrainer extends Authenticatable
     public function getFullNameAttribute($value) {
         return $this->attributes['firstname'] . ' ' . $this->attributes['lastname'];
     }
+
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+    protected $table = 'instructors';
 }

@@ -23,6 +23,17 @@
         font-family: 'Open Sans', sans-serif;
     }
     .fa-dumbbell,.fa-user-group {font-size:200px}
+
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+      }
+
+      .mobile{
+        padding: 0.5rem 1rem 0.5rem 1rem !important;
+      }
+    }
     </style>
 </head>
 <body>
@@ -34,7 +45,7 @@
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+    <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
       <div class="col-12">
           <h3 style="font-size:xx-large; ">Current Clients</h3>
           <p class="w3-text-grey">Below is a list of all your current clients.</p>
@@ -70,12 +81,35 @@
 
   <!-- Second Grid -->
   <div class=" " style="margin-top: 0rem;">
-    <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
+    <div class="row mobile"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Former Clients</h3>
         <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your former clients.</h5>
       </div>
-      
+      <div class="col-12" style="overflow-x:auto;">
+        <table id="frmerTbl" class="display">
+          <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Address</th>
+                <th>Contact no.</th>
+                <th>Birthday</th>
+                <th>Gender</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($clients as $client)
+            <tr>
+                <td>{{ $client->client_firstname }} {{ $client->client_lastname }}</td>
+                <td>{{ $client->address }}</td>
+                <td>{{ $client->contact_no }}</td>
+                <td>{{ $client->birthday }}</td>
+                <td>{{ $client->gender }}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -91,6 +125,7 @@
   $(document).ready(function() {
     $('#apptsTbl').DataTable();
     $('#acc_apptsTbl').DataTable();
+    $('#frmerTbl').DataTable();
   });
 </script>
 </body>

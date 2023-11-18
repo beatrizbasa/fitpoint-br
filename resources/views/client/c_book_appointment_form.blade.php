@@ -68,31 +68,31 @@
                   <label for="inputFname" class="form-label">Birthday</label>
                   <input name="bday_inp" type="date" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ Auth::guard('client')->user()->birthday }}" readonly>
               </div>
-              <input name="personal_trainer_id" type="hidden"  class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $ptid }}">
+              <input name="instructor_id" type="hidden"  class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $ptid }}">
             </div>
             <hr style="border: 2px solid black" width="100%">
-            @foreach ($personal_trainers as $personal_trainer)
+            @foreach ($instructors as $instructor)
             <div class="row">
               <p class="w3-text-black" style="font-size: large;"><b>Personal Trainer Information</b></p>
               <div class="col-4 adjust-top">
                 <label for="inputFname" class="form-label">Fullname</label>
-                <input name="address_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->fullname }}" readonly>
+                <input name="address_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $instructor->fullname }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Address</label>
-                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->address }} }}" readonly>
+                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $instructor->address }} }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Contact no.</label>
-                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $personal_trainer->contact_no }}" readonly>
+                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $instructor->contact_no }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Birthday</label>
-                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $personal_trainer->birthday }}" readonly>
+                  <input name="contact_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $instructor->birthday }}" readonly>
               </div>
               <div class="col-4 adjust-top">
                   <label for="inputFname" class="form-label">Gender</label>
-                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $personal_trainer->gender }}" readonly>
+                  <input name="bday_inp" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp"  value="{{ $instructor->gender }}" readonly>
               </div>
             </div>
             <hr style="border: 2px solid black" width="100%">
@@ -132,7 +132,7 @@
   </div>
   </div>
 
-@include('partials.footer')
+@include('partials.c_footer')
 <script>
   $(document).ready(function(){
     $("#apptForm").submit(function(e) {

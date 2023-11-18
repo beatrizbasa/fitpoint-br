@@ -3,9 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\PersonalTrainerController;
+use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\DashboardController;
 
 
 /*
@@ -37,16 +40,21 @@ require __DIR__.'/auth.php';
 
 Route::get('/main', function () {
     return view('main_home');
-});
+})->name('home');
+
+Route::get('/about', function () {
+    return view('main_about');
+})->name('about');
 
 Route::prefix('client')->group(function(){
     Route::get('/registration', [ClientController::class, 'registration'])->name('client.registration');
-    Route::get('/login_form', [ClientController::class, 'index'])->name('client.login_form');
+    Route::post('/register_acc', [ClientController::class, 'register_acc'])->name('client.register_acc');
+    Route::get('/login_form', [ClientController::class, 'to_login'])->name('client.login_form');
     Route::post('/login/login_client', [ClientController::class, 'login'])->name('client.login');
 
     Route::get('/home', [ClientController::class, 'home'])->name('client.home');
 
-    Route::get('/booked_personaltrainer/{cid}', [ClientController::class, 'booked_personaltrainer'])->name('client.booked_personaltrainer');
+    Route::get('/booked_instructor/{cid}', [ClientController::class, 'booked_instructor'])->name('client.booked_instructor');
     Route::get('/workout_plan', [ClientController::class, 'workout_plan'])->name('client.workout_plan');
 
     Route::get('/appointments', [ClientController::class, 'appointments'])->name('client.appointments');
@@ -54,7 +62,7 @@ Route::prefix('client')->group(function(){
     Route::get('/book_appointment_form/{ptid}', [AppointmentController::class, 'appointment_form'])->name('client.book_appointment_form');
     Route::post('/insert_appointment', [AppointmentController::class, 'insert_appointment'])->name('client.insert_appointment');
 
-    Route::get('/personal_trainers', [ClientController::class, 'personal_trainers'])->name('client.personal_trainers');
+    Route::get('/instructors', [ClientController::class, 'instructors'])->name('client.instructors');
 
     Route::get('/feedbacks/{cid}', [ClientController::class, 'feedbacks'])->name('client.feedbacks');
     Route::post('/insert_feedback', [ClientController::class, 'insert_feedback'])->name('client.insert_feedbacks');
@@ -66,24 +74,71 @@ Route::prefix('client')->group(function(){
     Route::get('/logout', [ClientController::class, 'logout'])->name('client.logout');
 });
 
-Route::prefix('personaltrainer')->group(function(){
-    Route::get('/home', [PersonalTrainerController::class, 'home'])->name('personaltrainer.home');
-    Route::get('/registration', [PersonalTrainerController::class, 'registration'])->name('personaltrainer.registration');
-    Route::get('/login_form', [PersonalTrainerController::class, 'index'])->name('personaltrainer.login_form');
-    Route::post('/login/login_personaltrainer', [PersonalTrainerController::class, 'login'])->name('personaltrainer.login');
+Route::prefix('instructor')->group(function(){
+    Route::get('/home', [InstructorController::class, 'home'])->name('instructor.home');
+    Route::get('/registration', [InstructorController::class, 'registration'])->name('instructor.registration');
+    Route::get('/login_form', [InstructorController::class, 'to_login'])->name('instructor.login_form');
+    Route::post('/login/login_instructor', [InstructorController::class, 'login'])->name('instructor.login');
 
-    Route::get('/appointments', [PersonalTrainerController::class, 'appointments'])->name('personaltrainer.appointments');
-    Route::get('/clients_list', [PersonalTrainerController::class, 'clients_list'])->name('personaltrainer.clients_list');
-    Route::get('/workout_plans', [PersonalTrainerController::class, 'workout_plans'])->name('personaltrainer.workout_plans');
-    Route::get('/feedbacks', [PersonalTrainerController::class, 'feedbacks'])->name('personaltrainer.feedbacks');
+    Route::get('/appointments', [InstructorController::class, 'appointments'])->name('instructor.appointments');
+    Route::get('/clients_list', [InstructorController::class, 'clients_list'])->name('instructor.clients_list');
+    Route::get('/workout_plans', [InstructorController::class, 'workout_plans'])->name('instructor.workout_plans');
+    Route::get('/feedbacks', [InstructorController::class, 'feedbacks'])->name('instructor.feedbacks');
 
-    Route::get('/profile', [PersonalTrainerController::class, 'profile'])->name('personaltrainer.profile');
-    Route::get('/logout', [PersonalTrainerController::class, 'logout'])->name('personaltrainer.logout');
+    Route::get('/profile', [InstructorController::class, 'profile'])->name('instructor.profile');
+    Route::get('/logout', [InstructorController::class, 'logout'])->name('instructor.logout');
+
+    Route::get('/update_profile', [InstructorController::class, 'update_profile'])->name('instructor.update_profile');
+    Route::post('/update_profile/save_changes/{ptid}', [InstructorController::class, 'update_profile_changes'])->name('instructor.update_profile_changes');
 });
+Route::resource('/dashboard', DashboardController::class);
 
+// 
 Route::prefix('admin')->group(function(){
-    Route::get('/home', [AdminController::class, 'home'])->name('admin.home');
+    
+    Route::resource('/dashboard', DashboardController::class);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::resource('admin', AdminController::class);
+    Route::get('/index', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/registration', [AdminController::class, 'registration'])->name('admin.registration');
-    Route::get('/login_form', [AdminController::class, 'index'])->name('login_form');
+    Route::get('/login_form', [AdminController::class, 'to_login'])->name('login_form');
     Route::post('/login/login_admin', [AdminController::class, 'login'])->name('admin.login');
+
+    Route::get('/admins/search', [AdminController::class, 'search'])->name('admins.search');
+    Route::get('/trashedAdmins', [AdminController::class, 'trash'])->name('admin.trash');
+    Route::get('/admin/restore/{id}', [AdminController::class, 'restore'])->name('admin.restore');
+    Route::get('/admin/forceDelete/{id}', [AdminController::class,'forceDelete'])->name('admin.forceDelete');
+
+    Route::resource('instructor', InstructorController::class);
+    Route::get('/instructors/search', [InstructorController::class, 'search'])->name('instructor.search');
+    Route::get('/trashedInstructors', [InstructorController::class, 'trash'])->name('instructor.trash');
+    Route::get('/instructor/restore/{id}', [InstructorController::class, 'restore'])->name('instructor.restore');
+    Route::get('/instructor/forceDelete/{id}', [InstructorController::class, 'forceDelete'])->name('instructor.forceDelete');
+
+    Route::resource('clients', ClientController::class);
+    Route::get('/clients/search', [ClientController::class, 'search'])->name('clients.search');
+    Route::get('/trashedClients', [ClientController::class, 'trash'])->name('clients.trash');
+    Route::get('/client/restore/{id}', [ClientController::class, 'restore'])->name('clients.restore');
+    Route::get('/client/forceDelete/{id}', [ClientController::class, 'forceDelete'])->name('clients.forceDelete');
+    Route::get('/client/search',[ClientController::class,'search'])->name('clients.search');
+
+    Route::resource('feedback', FeedbackController::class);
+
+    Route::resource('appointments', AppointmentController::class);
+    Route::get('/appointment/search', [AppointmentController::class, 'search'])->name('appointments.search');
+    Route::get('/trashedAppointments', [AppointmentController::class, 'trash'])->name('appointments.trash');
+    Route::get('/appointments/restore/{id}', [AppointmentController::class, 'restore'])->name('appointments.restore');
+    Route::get('/appointments/forceDelete/{id}', [AppointmentController::class, 'forceDelete'])->name('appointments.forceDelete');
+    Route::get('/appointments/show/{id}', [AppointmentController::class, 'show'])->name('appointments.view');
+
+    Route::resource('payments', PaymentsController::class);
+    Route::get('/payments/mark-as-paid/{id}', [PaymentsController::class, 'markAsPaid'])->name('payments.markAsPaid');
+    Route::get('/payments/mark-as-unpaid/{id}', [PaymentsController::class, 'markAsUnpaid'])->name('payments.markAsUnpaid');
+    Route::get('/paymets/search', [PaymentsController::class, 'search'])->name('payments.search');
+    Route::get('/trashedPayments', [PaymentsController::class, 'trash'])->name('payments.trash');
+    Route::get('/payments/restore/{id}', [PaymentsController::class, 'restore'])->name('payments.restore');
+    Route::get('/payments/forceDelete/{id}', [PaymentsController::class, 'forceDelete'])->name('payments.forceDelete');
+    Route::get('/unpaid-persons', [PaymentsController::class, 'searchUnpaid'])->name('payments.unpaid-persons');
+    
+    Route::get('/paid-persons', [PaymentsController::class, 'searchPaid'])->name('payments.paid-persons');
 });

@@ -51,13 +51,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($personal_trainers as $personal_trainer)
+                @foreach ($instructors as $instructor)
                 <tr>
-                    <td>{{ $personal_trainer->full_name }}</td>
-                    <td>{{ $personal_trainer->address }}</td>
-                    <td>{{ $personal_trainer->contact_no }}</td>
-                    <td>{{ $personal_trainer->gender }}</td>
-                    <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $personal_trainer->id) }}">Book an appointment</a></td>
+                    <td>{{ $instructor->full_name }}</td>
+                    <td>{{ $instructor->address }}</td>
+                    <td>{{ $instructor->contact_no }}</td>
+                    <td>{{ $instructor->gender }}</td>
+                    <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $instructor->id) }}">Book an appointment</a></td>
                 </tr>
                 @endforeach
                 </form>
@@ -76,7 +76,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.c_footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script>

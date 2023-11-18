@@ -19,6 +19,23 @@
         font-family: 'Open Sans', sans-serif;
     }
     .fa-dumbbell,.fa-user-group {font-size:200px}
+
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+      }
+
+      .imgs {
+        max-width: 100%; 
+        height: auto;    /* This ensures the image keeps its aspect ratio */
+        display: block;
+      }
+
+      .mobile{
+        padding: 0.5rem 1rem 0.5rem 1rem !important;
+      }
+    }
     </style>
 </head>
 <body>
@@ -30,7 +47,7 @@
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+    <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
         <div class="col-12">
             <h3 style="font-size:xx-large; ">Update Profile</h3>
             <p class="w3-text-grey">Update your profile information.</p>
@@ -60,7 +77,16 @@
                 </div>
                 <div class="col-4">
                     <label for="inputFname" class="form-label"><b>Gender</b></label>
-                    <input name="gender" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->gender }} ">
+                    <!-- <input name="gender" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ Auth::guard('client')->user()->gender }} "> -->
+                    <select name="gender" class="form-control">
+                        @if (Auth::guard('client')->user()->gender == 'female')
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                        @else
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        @endif
+                    </select>
                 </div>
                 <div class="col-12">
                     <button type="submit" class="form-buttons" style="float: right;"> Save changes </button>
@@ -75,7 +101,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.c_footer')
 
 </body>
 </html>

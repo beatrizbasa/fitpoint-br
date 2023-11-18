@@ -64,7 +64,7 @@
                 @if(Session::has('error'))
                 {{ session::get('error') }}
                 @endif
-                <form action="{{ route('personaltrainer.login') }}" method="post">
+                <form action="{{ route('instructor.login') }}" method="post">
                 @csrf
                 <div class="col-12 adjust-top">
                     <label for="inputFname" class="form-label">Email address</label>

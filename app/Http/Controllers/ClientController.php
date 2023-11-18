@@ -11,8 +11,11 @@ use App\Http\Controllers\DB;
 use App\Models\Appointment;
 use App\Models\Client;
 use App\Models\fullname;
-use App\Models\PersonalTrainer;
+use App\Models\Instructor;
 use Carbon\Carbon;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -29,7 +32,7 @@ class ClientController extends Controller
         return view('client.c_registration');
     }
 
-    public function index()
+    public function to_login()
     {
         return view('client.c_login');
     }
@@ -50,12 +53,28 @@ class ClientController extends Controller
         }
     }
 
+    public function register_acc(Request $request){
+        Client::insert([
+            'firstname' => $request -> firstname,
+            'lastname' => $request -> lastname,
+            'address' => $request->address,
+            'contact_no' => $request->contact,
+            'birthday' => $request->birthday,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), //makes it a hash password
+            'created_at' => Carbon::now(),
+        ]);
+
+        return redirect()->route('client.login_form')->with('error', 'Client account created successfully');
+    }
+
     public function home()
     {
-        $personal_trainers = PersonalTrainer::get();
+        $instructors = Instructor::get();
         
-        foreach ($personal_trainers as $personal_trainer){
-            $full_name = $personal_trainer->full_name;
+        foreach ($instructors as $instructor){
+            $full_name = $instructor->full_name;
         }
         
         $cid = Auth::guard('client')->user()->id;
@@ -63,29 +82,61 @@ class ClientController extends Controller
         $curr_date = Carbon::now()->format('Y-m-d');
         
         $appointments = Appointment::select('*')
-            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->join('instructors', 'appointments.instructor_id', '=', 'instructors.id')
             ->where('appointments.client_id', $cid)
-            ->where('appointments.appointment_date', '>=', now())
+            // ->where('appointments.appointment_date', '>=', now())
             ->orderBy('appointments.appointment_date', 'asc')
             ->get();
+
+        $curr_appt = '';
+        foreach ($appointments as $appt){
+            $curr_appt = $appt->id;
+        }
+        if ($curr_appt == null){
+            $curr_appt == '';
+        }
         
-        return view('client.c_home', ['appointments' => $appointments, 'personal_trainers' => $personal_trainers, 'cid' => $cid]);
+        return view('client.c_home', ['appointments' => $appointments, 'curr_appt'=>$curr_appt, 'instructors' => $instructors, 'cid' => $cid]);
     }
 
-    public function booked_personaltrainer($cid)
+    public function booked_instructor($cid)
     {
-        $personal_trainer = Appointment::select('*')
-            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+        $instructor = Appointment::select('*')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Accepted')
             ->get();
-        // $personal_trainer = PersonalTrainer::get();
-        return view('client.c_booked_personaltrainer', ['personal_trainer' => $personal_trainer]);
+
+        $curr_ins = '';
+        foreach ($instructor as $ins){
+            $curr_ins = $ins->id;
+        }
+        if ($curr_ins == null){
+            $curr_ins == '';
+        }
+        // $instructor = PersonalTrainer::get();
+        return view('client.c_booked_instructor', ['instructor' => $instructor, 'curr_ins'=>$curr_ins]);
     }
 
     public function workout_plan()
     {
-        return view('client.c_workout_plan');
+        $cid = Auth::guard('client')->user()->id;
+        $instructor = Appointment::select('*')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
+            ->where('appointments.client_id', $cid)
+            ->where('appointments.status', 'Accepted')
+            ->get();
+
+        $curr_ins = '';
+        foreach ($instructor as $ins){
+            $curr_ins = $ins->firstname;
+        }
+
+        if ($curr_ins == null){
+            $curr_ins == '';
+        }
+        
+        return view('client.c_workout_plan',['curr_ins'=>$curr_ins]);
     }
 
     public function appointments()
@@ -96,64 +147,81 @@ class ClientController extends Controller
         // $curr_date = dd(Carbon::now()->format('Y-m-d'));
         $curr_date = Carbon::now()->format('Y-m-d');
         $pen_appts = Appointment::select('*')
-            ->join('personal_trainers', 'appointments.personal_trainer_id', '=', 'personal_trainers.id')
+            ->join('instructors', 'appointments.instructor_id', '=', 'instructors.id')
             ->where('appointments.appointment_date', '>=', now())
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Pending')
             ->orderBy('appointments.appointment_date', 'asc')
             ->get();
 
+        $pen_id = '';
+        foreach ($pen_appts as $pens){
+            $pen_id = $pens->id;
+        }
+
+        if ($pen_id == null){
+            $pen_id == '';
+        }
+
         $acc_appts = Appointment::select('*')
-            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Accepted')
             ->orderBy('appointments.appointment_date', 'asc')
             ->get();
         
         $dec_appts = Appointment::select('*')
-            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Declined')
             ->orderBy('appointments.appointment_date', 'asc')
             ->get();
         
         $can_appts = Appointment::select('*')
-            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Cancelled')
             ->orderBy('appointments.id', 'desc')
             ->get();
 
-        return view('client.c_appointments', ['pen_appts' => $pen_appts, 'acc_appts' => $acc_appts, 'dec_appts' => $dec_appts, 'can_appts' => $can_appts]);
+        return view('client.c_appointments', ['pen_appts' => $pen_appts, 'acc_appts' => $acc_appts, 'dec_appts' => $dec_appts, 'can_appts' => $can_appts, 'pen_id'=>$pen_id]);
     }
 
-    public function personal_trainers()
+    public function instructors()
     {
-        $personal_trainers = PersonalTrainer::get();
+        $instructors = Instructor::get();
         
-        foreach ($personal_trainers as $personal_trainer){
-            $full_name = $personal_trainer->full_name;
+        foreach ($instructors as $instructor){
+            $full_name = $instructor->full_name;
         }
-        return view('client.c_personal_trainers', ['personal_trainers' => $personal_trainers]);
+        return view('client.c_instructors', ['instructors' => $instructors]);
     }
 
-    
 
     public function feedbacks($cid)
     {
-        $personal_trainer = Appointment::select('*')
-            ->join('personal_trainers', 'personal_trainers.id', '=', 'appointments.personal_trainer_id')
+        $instructor = Appointment::select('*')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
             ->join('clients', 'clients.id', '=', 'appointments.client_id')
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Accepted')
             ->get();
 
-        $feedbacks = Feedbacks::join('personal_trainers', 'personal_trainers.id', '=', 'feedbacks.personal_trainer_id')
+        $feedbacks = Feedbacks::join('instructors', 'instructors.id', '=', 'feedbacks.instructor_id')
             ->join('clients', 'clients.id', '=', 'feedbacks.client_id')
-            ->select('personal_trainers.firstname as ptrainer_firstname', 'personal_trainers.lastname as ptrainer_lastname', 'clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'feedbacks.content as content', 'feedbacks.created_at as fback_date')
+            ->select('instructors.firstname as ptrainer_firstname', 'instructors.lastname as ptrainer_lastname', 'clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'feedbacks.content as content', 'feedbacks.created_at as fback_date')
             ->get();
+        
+        $ins_id = '';
+        foreach ($instructor as $ins){
+            $ins_id = $ins->id;
+        }
+
+        if ($ins_id == null){
+            $ins_id == '';
+        }
             
-        return view('client.c_feedbacks', ['feedbacks' => $feedbacks, 'personal_trainer'=>$personal_trainer]);
+        return view('client.c_feedbacks', ['feedbacks' => $feedbacks, 'instructor'=>$instructor, 'ins_id'=>$ins_id]);
     }
 
     public function profile()
@@ -167,17 +235,6 @@ class ClientController extends Controller
     }
 
     public function update_profile_changes(Request $request, $cid){
-        // $validatedData = $request->validate([
-        //     'firstname' => 'required|string',
-        //     'lastname' => 'required|string',
-        //     'address' => 'required|string',
-        //     'contact_no' => 'required|integer',
-        //     'birthday' => 'required|date',
-        //     'gender' => 'required|string',
-        // ]);
-    
-        // Client::whereId($cid)->update($validatedData);
-        // return view('client.c_profile');
 
         $client = Client::findOrFail($cid);
 
@@ -202,7 +259,7 @@ class ClientController extends Controller
         $data = $request->validate([
             'client_id' => 'required|integer',
             'content' => 'required|string',
-            'personal_trainer_id' => 'required|integer',
+            'instructor_id' => 'required|integer',
             // add other fields validations
         ]);
     
@@ -218,48 +275,126 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function index(Request $request): View
+    {     
+        $perPage = $request->input('per_page', 5); // Number of items to show per page
+        $clients = Client::paginate($perPage);
+        return view('admin.c_index',compact('clients'));
+                    
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
     {
-        //
+        return view('admin.c_create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'contact_no' => 'required|size:11',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required',
+            'birthday' => 'required',
+            'gender' => 'required|in:male,female',
+        ]);
+      
+       Client::create($request->all());
+       
+        return redirect()->route('clients.index')->with('success','Client created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Client $client): View
     {
-        //
+        return view('admin.c_edit', compact('client'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Client $client): RedirectResponse
     {
-        //
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'contact_no' => 'required|size:11', 
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required',
+            'birthday' => 'required',
+            'gender' => 'required|in:male,female',
+        ]);
+      
+        $client->update($request->all());
+      
+        return redirect()->route('clients.index')->with('success','Client updated successfully');
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = Client::query();
+
+        if (!empty($search)) {
+            $query->where(function($query) use ($search) {
+                $query->where('firstname', 'LIKE', "%$search%")
+                ->orWhere('lastname', 'LIKE', "%$search%")
+                ->orWhere('address', 'LIKE', "%$search%")
+                ->orWhere('email', 'LIKE', "%$search%")
+                ->orWhere('contact_no', 'LIKE', "%$search%")
+                ->orWhere('password', 'LIKE', "%$search%")
+                ->orWhere('birthday', 'LIKE', "%$search%")
+                ->orWhere('gender', 'LIKE', "%$search%")
+               
+                ->orWhere('created_at', 'LIKE', "%$search%");
+            });
+        }
+        $clients = $query->paginate(5);
+
+        return view('admin.c_index', compact('clients'));
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function trash(): View
     {
-        //
+        $client = Client::onlyTrashed()->get();
+    
+        return view('clients.trash', compact('client'));
+    }
+    
+    public function destroy($id): RedirectResponse
+    {
+        $client = Client::findOrFail($id);
+        $client->delete(); // Soft delete
+    
+        return redirect()->route('clients.index')->with('success', 'Client Deleted successfully');
+    }
+    
+    public function restore($id): RedirectResponse
+    {
+        $client = Client::onlyTrashed()->findOrFail($id);
+        $client ->restore();
+    
+        return redirect()->route('clients.index')->with('success', 'Instructor restored successfully');
+    }
+
+
+
+    public function forceDelete($id): RedirectResponse
+    {
+        $client  = Client::onlyTrashed()->findOrFail($id);
+        $client ->forceDelete(); // Permanently delete
+
+        return redirect()->route('client.trash')->with('success', 'Client permanently deleted');
     }
 }

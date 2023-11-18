@@ -47,17 +47,17 @@
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
-    <div class="row" style="padding: 0rem 15rem 0rem 15rem;">
+    <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Current Booked Personal Trainer</h3>
-        @if($personal_trainer == null)<p class="w3-text-grey">No current booked personal trainer yet.</p>
+        @if($curr_ins == '')<p class="w3-text-grey">No current booked personal trainer yet.</p>
         <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now!</a>
 
         @else
-          @foreach ($personal_trainer as $p_trainer)
+          @foreach ($instructor as $p_trainer)
           <div class="col-4 adjust-top">
             <label for="inputFname" class="form-label"><b>Personal trainer</b></label>
-            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $p_trainer->fullname }}" readonly>
+            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $p_trainer->firstname }} {{ $p_trainer->lastname }}" readonly>
           </div>
           <div class="col-4 adjust-top">
             <label for="inputFname" class="form-label"><b>Address</b></label>
@@ -85,7 +85,7 @@
 
   <!-- Second Grid -->
   <div class=" " style="margin-top: 0rem;">
-    <div class="row"  style="padding: 2rem 15rem 2rem 15rem;">
+    <div class="row mobile"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Former Personal Trainers</h3>
         <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your former A&T Fitness Center personal trainers.</h5>
@@ -99,7 +99,7 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.footer')
+@include('partials.c_footer')
 
 </body>
 </html>

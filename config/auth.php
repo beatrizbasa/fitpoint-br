@@ -48,9 +48,9 @@ return [
             'driver' => 'session',
             'provider' => 'clients',
         ],
-        'personaltrainer' => [
+        'instructor' => [
             'driver' => 'session',
-            'provider' => 'personal_trainers',
+            'provider' => 'instructors',
         ]
     ],
 
@@ -84,9 +84,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Client::class,
         ],
-        'personal_trainers' => [
+        'instructors' => [
             'driver' => 'eloquent',
-            'model' => App\Models\PersonalTrainer::class,
+            'model' => App\Models\Instructor::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

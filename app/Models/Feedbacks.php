@@ -13,6 +13,6 @@ class Feedbacks extends Model
         'feedback_id',
         'client_id',
         'content',
-        'personal_trainer_id',
+        'instructor_id',
     ];
 }

@@ -27,24 +27,32 @@ body,h1,h2,h3,h4,h5,h6 {
   a {
     color: white !important;
   }
+
+  a.active{
+    border-bottom: 5px solid red !important;
+    /* color: red !; */
+    font-weight: 900;
+  }
 </style>
+
+<a href="{{ route('client.home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'client.home') ? 'active' : '' }}">Home</a>
 
 <div class="w3-top">
   <div class="w3-bar w3-card w3-left-align w3-large navs">
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <a href="#" class="w3-bar-item"><img alt="" class="" style="height: 3rem;" src="{{ asset('images/logo.jpg') }}" /></a>
+    <a href="{{ route('home') }}" class="w3-bar-item"><img alt="" class="" style="height: 3rem;" src="{{ asset('images/logo.jpg') }}" /></a>
     <!-- <a href="#home" style="margin: 0%;"></a> -->
-    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Home</a>
-    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">About Us</a>
-    <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Login</a>
+    <a href="{{ route('home') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'home') ? 'active' : '' }}">Home</a>
+    <a href="{{ route('about') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv {{ (\Request::route()->getName() == 'about') ? 'active' : '' }}">About Us</a>
+    <a href="{{ route('client.login_form') }}" class="w3-bar-item w3-hide-small w3-padding-large navvv">Login</a>
     <a href="#" class="w3-bar-item w3-hide-small w3-padding-large navvv">Contact Us</a>
   </div>
 
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large" style="color: white">
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Home</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">About</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Login</a>
+    <a href="{{ route('home') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Home</a>
+    <a href="{{ route('about') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">About</a>
+    <a href="{{ route('client.login_form') }}" class="w3-bar-item w3-button w3-padding-large mini-nav">Login</a>
     <a href="#" class="w3-bar-item w3-button w3-padding-large mini-nav">Contact Us</a>
   </div>
 </div>
