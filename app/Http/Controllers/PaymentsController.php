@@ -14,12 +14,24 @@ class PaymentsController extends Controller
     public function index(Request $request, $status = null): View
     {
         // Retrieve all payments
-        $payments = Payments::paginate(5);
+        // $payments = Payments::paginate(5);
 
+        // // Calculate the total payments
+        // $totalPayments = Payments::sum('amount');
+
+        // return view('admin.p_index', compact('payments', 'totalPayments'));
+
+        $payments = Payments::paginate(5);
+    
         // Calculate the total payments
         $totalPayments = Payments::sum('amount');
+        $totalAmount = Payments::sum('amount');
+        $totalPaidPayments = Payments::where('status', 1)->sum('amount');
+        $totalUnPaidPayments = Payments::where('status', 0)->sum('amount');
+        $paidPayments = Payments::where('status', 1)->get();
+        $unpaidPayments = Payments::where('status', 0)->get();
 
-        return view('admin.p_index', compact('payments', 'totalPayments'));
+        return view('admin.p_index', compact('payments','totalAmount','totalPayments', 'totalPaidPayments', 'paidPayments','unpaidPayments'));
     }
 
     /**
@@ -64,69 +76,64 @@ class PaymentsController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Payments $payment): View
-{
-    return view('admin.p_edit', compact('payment'));
-}
+    {
+        return view('admin.p_edit', compact('payment'));
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Payments $payments): RedirectResponse
-{
-    $request->validate([
-        'firstname' => 'required',
-        'lastname' => 'required',
-        'address' => 'required',
-        'contact_no' => 'required|size:11',
-        'email' => 'required|email',
-        'birthday' => 'required',
-        'gender' => 'required|in:male,female',
-        'amount' => 'required',
-        'status' => 'required|in:unpaid,paid', // Add validation for status (0 for Unpaid, 1 for Paid)
-    ]);
-   
-    $payments->update($request->all());
-   
-    return redirect()->route('admin.p_index')
-        ->with('success', 'Payment updated successfully');
-}
+    {
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'contact_no' => 'required|size:11',
+            'email' => 'required|email',
+            'gender' => 'required|in:male,female',
+            'amount' => 'required',
+        ]);
+    
+        $payments->update($request->all());
+    
+        return redirect()->route('admin.p_index')
+            ->with('success', 'Payment updated successfully');
+    }
 
 
-public function search(Request $request)
-{
-    $search = $request->input('search');
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
 
-    $query = Payments::query();
+        $query = Payments::query();
 
-    if (!empty($search)) {
-        $query->where(function ($query) use ($search) {
-            $query->where('firstname', 'LIKE', "%$search%")
-                ->orWhere('lastname', 'LIKE', "%$search%")
-                ->orWhere('address', 'LIKE', "%$search%")
-                ->orWhere('email', 'LIKE', "%$search%")
-                ->orWhere('contact_no', 'LIKE', "%$search%")
-                ->orWhere('gender', 'LIKE', "%$search%")
-                ->orWhere('amount', 'LIKE', "%$search%")
-                ->orWhere('created_at', 'LIKE', "%$search%")
-                ->orWhere('updated_at', 'LIKE', "%$search%")
-                ->orWhere(function ($query) use ($search) {
-                    $query->where('status', 'LIKE', "%$search%")
-                        ->orWhere('status', '1', '0');
-                        
-                });
+        if (!empty($search)) {
+            $query->where(function ($query) use ($search) {
+                $query->where('firstname', 'LIKE', "%$search%")
+                    ->orWhere('lastname', 'LIKE', "%$search%")
+                    ->orWhere('status', 'LIKE', "%$search%")
+                    ->orWhere('address', 'LIKE', "%$search%")
+                    ->orWhere('email', 'LIKE', "%$search%")
+                    ->orWhere('contact_no', 'LIKE', "%$search%")
+                    ->orWhere('gender', 'LIKE', "%$search%")
+                    ->orWhere('amount', 'LIKE', "%$search%")
+                    ->orWhere('created_at', 'LIKE', "%$search%")
+                    ->orWhere('updated_at', 'LIKE', "%$search%");
+                    
             });
         }
-        
-    
+        $payments = $query->paginate(5);
+        $totalAmount = Payments::sum('amount');
+        $unpaidPayments = Payments::where('status', 0)->get();
+        $paidPayments = Payments::where('status', 1)->get();
 
-    $payments = $query->paginate(5);
-
-    return view('admin.p_index', compact('payments'));
-}
+        // return view('admin.p_index', compact('payments'));
+        return view('admin.p_index', compact('payments','totalAmount','paidPayments','unpaidPayments'));
+    }
 
     public function destroy($id): RedirectResponse
     {
-    
         $payments = Payments::findOrFail($id);
         $payments->delete();
         return redirect()->route('admin.index')
@@ -148,9 +155,15 @@ public function search(Request $request)
     {
         $payment = Payments::find($id);
     
+        if (!$payment) {
+            return redirect()->back()->with('error', 'Payment not found.');
+        }
+    
         // Update the payment status to "Unpaid" (0)
         $payment->status = 0;
-        $payment->save();
+        if (!$payment->save()) {
+            return redirect()->back()->with('error', 'Failed to mark payment as Unpaid.');
+        }
     
         return redirect()->back()->with('success', 'Payment marked as Unpaid.');
     }
@@ -169,18 +182,57 @@ public function search(Request $request)
         $payments = Payments::onlyTrashed()->findOrFail($id);
         $payments->restore();
     
-        return redirect()->route('admin.index')
-                        ->with('success', 'Payments restored successfully');
+        return redirect()->route('admin.p_index')->with('success', 'Payments restored successfully');
     }
 
 
 
-public function forceDelete($id): RedirectResponse
-{
-    $payments = Payments::onlyTrashed()->findOrFail($id);
-    $payments->forceDelete(); // Permanently delete
+    public function forceDelete($id): RedirectResponse
+    {
+        $payments = Payments::onlyTrashed()->findOrFail($id);
+        $payments->forceDelete(); // Permanently delete
 
-    return redirect()->route('admin.p_trash')
-                    ->with('success', 'Payments permanently deleted');
+        return redirect()->route('admin.p_trash')->with('success', 'Payments permanently deleted');
+    }
+
+    public function searchpaid(Request $request)
+{
+
+    $query = Payments::where('status', 1);
+
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where(function ($query) use ($search) {
+            $query->where('firstname', 'LIKE', "%$search%")
+                ->orWhere('lastname', 'LIKE', "%$search%")
+                ->orWhere('amount', 'LIKE', "%$search%")
+                ->orWhere('email', 'LIKE', "%$search%"); 
+        });
+    }
+
+    $paidPayments = $query->paginate(5);
+
+    return view('admin.p_paid-persons', compact('paidPayments'));
+}
+
+
+public function searchUnpaid(Request $request)
+{
+
+    $query = Payments::where('status', 0);
+
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where(function ($query) use ($search) {
+            $query->where('firstname', 'LIKE', "%$search%")
+                ->orWhere('lastname', 'LIKE', "%$search%")
+                ->orWhere('email', 'LIKE', "%$search%")
+                ->orWhere('amount', 'LIKE', "%$search%"); 
+        });
+    }
+
+    $unpaidPayments = $query->paginate(5);
+
+    return view('admin.p_unpaid-persons', compact('unpaidPayments'));
 }
 }

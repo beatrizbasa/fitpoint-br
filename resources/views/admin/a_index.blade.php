@@ -1,32 +1,33 @@
 @extends('layouts.app')
 @section('content')
-
+<br><br><br>
 @if (session('success'))
-    <div class="alert text-white bg-dark bg-gradient">
+    <div class="alert text-white text-center bg-dark bg-gradient">
         {{ session('success') }}
     </div>
 @endif
 
 <style>
-    .search{
-        border: none; 
-        .table-responsive{
-    overflow-x: auto;
-}
+    .search {
+        border: none;
     }
-</style><br><br>
-<div class="container mt-5">
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+</style>
+
+<div class="container mt-3">
 <h1 class="text-danger ">Admins</h1>
 <a href="{{ route('admin.create') }}" class="btn btn-outline-dark mt-3 border-2">Create Admin</a>
 <a href="{{ route('admin.trash') }}" class="btn btn-outline-danger mt-3 border-2">Trash</a>
 
 
-<form action="{{ route('admin.search') }}" method="GET" class="col-sm-3 mt-3 float-end border border-dark">
+<form action="{{ route('admins.search') }}" method="GET" class="col-sm-3 mt-3 float-end border border-dark">
         @csrf
-    
-            <input type="text" name="search" class="search form-control" placeholder="Search">     
+        <input type="text" name="search" class="search form-control" placeholder="Search">
     </form>
-   
+
     <div class="table-responsive">
     <table class="table table-bordered border-danger text-center mt-4 h6 border-2">
     <thead>
@@ -36,7 +37,7 @@
                     <th>Last Name</th>
                     <th>Address</th>
                     <th>Contact No</th>
-                    <th>Email Address</th>
+                    <th>Email</th>
                     <th>Birthday</th>
                     <th>gender</th>
                     <th>Password</th>
@@ -76,5 +77,5 @@
         @endforeach
         </tbody>
     </table>
-    @include('custom_pagination', ['paginator' => $admins])
+    @include('admin/custom_pagination', ['paginator' => $admins])
 @endsection

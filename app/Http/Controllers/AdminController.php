@@ -21,11 +21,11 @@ class AdminController extends Controller
         return view('admin.a_registration');
     }
 
-    public function index()
-    {
-        // return view('admin.admin_login');
+    // public function index()
+    // {
+    //     // return view('admin.admin_login');
 
-    }
+    // }
 
     public function to_login()
     {
@@ -38,7 +38,7 @@ class AdminController extends Controller
         $check = $request->all();
         if(Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])){
             //if nagmatch lahat
-            return redirect()->route('admin.index')->with('error', 'admin logged in successfully');
+            return redirect()->route('admin.dashboard')->with('error', 'admin logged in successfully');
             // return view('admin.admin_dashboard');
         }
         else{
@@ -47,15 +47,20 @@ class AdminController extends Controller
         }
     }
 
-    public function home()
+    public function index(Request $request): View
     {
         // return view('admin.admin_home');
 
-        $totalAdmins = Admin::count();
-        $totalInstructor = Instructor::count();
-        $totalClient = Client::count();
-        $totalPayments = Payments::count();
-        return view('admin.a_dashboard', compact('totalAdmins', 'totalInstructor', 'totalClient', 'totalPayments',));
+        // $totalAdmins = Admin::count();
+        // $totalInstructor = Instructor::count();
+        // $totalClient = Client::count();
+        // $totalPayments = Payments::count();
+
+        $perPage = $request->input('per_page', 5); // Number of items to show per page
+        $admins = Admin::paginate($perPage);
+        // return view('admin.a_dashboard', compact('totalAdmins', 'totalInstructor', 'totalClient', 'totalPayments',));
+
+        return view('admin.a_index',compact('admins'));
     }
 
     public function create(): View
@@ -73,9 +78,13 @@ class AdminController extends Controller
             'lastname' => 'required',
             'address' => 'required',
             'contact_no' => 'required|size:11',
-            'email' => 'required|email',
-            'password' => 'required',
-            'confirm_password' => 'required',
+            'email' => 'required|email|unique:admins,email',
+           'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
+            ],
+            'confirm_password' => 'required|same:password',
             'birthday' => 'required',
             'gender' => 'required|in:male,female',
         ]);
@@ -122,6 +131,8 @@ class AdminController extends Controller
                 ->orWhere('email', 'LIKE', "%$search%")
                 ->orWhere('contact_no', 'LIKE', "%$search%")
                 ->orWhere('password', 'LIKE', "%$search%")
+                ->orWhere('birthday', 'LIKE', "%$search%")
+                ->orWhere('gender', 'LIKE', "%$search%")
                 ->orWhere('created_at', 'LIKE', "%$search%")
                 ->orWhere('updated_at', 'LIKE', "%$search%");
             });
@@ -161,5 +172,10 @@ class AdminController extends Controller
         $admin->forceDelete(); // Permanently delete
 
         return redirect()->route('admin.a_trash')->with('success', 'Admin permanently deleted');
+    }
+
+    public function show()
+    {
+
     }
 }

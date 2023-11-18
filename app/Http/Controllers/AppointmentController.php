@@ -7,6 +7,8 @@ use App\Models\Appointment;
 use App\Models\Client;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class AppointmentController extends Controller
 {
@@ -69,6 +71,7 @@ class AppointmentController extends Controller
             ->get();
         return view('client.c_appointments', ['appointments' => $appointments]);
     }
+    
 
     public function index()
     {
@@ -76,5 +79,62 @@ class AppointmentController extends Controller
         // You can replace 'Appointment' with your actual model name if it's different.
 
         return view('admin.appointment_index', compact('appointments'));
+    }
+
+    public function show(string $id)
+    {
+        $appointment = Appointment::findOrFail($id); // Retrieve the appointment by its ID
+    
+        return view('admin.appointment_view', compact('appointment'));
+    }
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+    
+        $appointments = Appointment::where('id', 'like', '%' . $searchTerm . '%')
+            ->orWhere('client_id', 'like', '%' . $searchTerm . '%')
+            ->orWhere('medical_condition', 'like', '%' . $searchTerm . '%')
+            ->orWhere('target', 'like', '%' . $searchTerm . '%')
+            ->orWhere('instructors_id', 'like', '%' . $searchTerm . '%')
+            ->orWhere('appointment_time', 'like', '%' . $searchTerm . '%')
+            ->orWhere('created_at', 'like', '%' . $searchTerm . '%')
+            ->orWhere('updated_at', 'like', '%' . $searchTerm . '%')
+            ->get();
+    
+        return view('admin.appointment_index', compact('appointments'));
+    }
+    
+    public function trash(): View
+    {
+        $appointment = Appointment::onlyTrashed()->get();
+    
+        return view('admin.appointment_trash', compact('appointment'));
+    }
+
+    public function destroy($id): RedirectResponse
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->delete(); // Soft delete
+    
+        return redirect()->route('appointments.index')->with('success', 'Appointment Deleted successfully');
+    }
+    
+    public function restore($id): RedirectResponse
+    {
+        $appointment = Appointment::onlyTrashed()->findOrFail($id);
+        $appointment->restore();
+    
+        return redirect()->route('appointments.index')->with('success', 'Appointment restored successfully');
+    }
+
+
+
+    public function forceDelete($id): RedirectResponse
+    {
+        $appointment = Appointment::onlyTrashed()->findOrFail($id);
+        $appointment->forceDelete(); // Permanently delete
+
+        return redirect()->route('appointments.trash')->with('success', 'Appointment permanently deleted');
     }
 }

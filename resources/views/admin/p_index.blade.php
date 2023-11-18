@@ -80,7 +80,13 @@
                 @endforeach
             </tbody>
         </table>
-
+        <div class="container text-end ">
+        <p> Total Amount: ₱<span class="fw-bold text-danger">{{ $totalAmount }} </span></p>
+        <p> Total Paid Amount:  <span class="fw-bold text-danger">{{ $paidPayments->sum('amount')  }}</span></p>
+        <p> Total Unpaid Amount:  <span class="fw-bold text-danger">{{ $unpaidPayments->sum('amount')  }}</span></p>
+        <p> Total Paid Person :  <span class="fw-bold text-danger">{{ $paidPayments->where('status', 1)->count() }}</span></p>
+        <p> Total Unpaid Person :  <span class="fw-bold text-danger">{{ $unpaidPayments->where('status', 0)->count() }}</span></p>
+        </div>
         @include('admin/custom_pagination', ['paginator' => $payments])
     </div>
 </div>

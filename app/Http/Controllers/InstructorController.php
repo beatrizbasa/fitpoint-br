@@ -146,7 +146,7 @@ class InstructorController extends Controller
      */
     public function create(): View
     {
-        return view('instructor.create');
+        return view('admin.i_create');
     }
 
     /**
@@ -168,12 +168,12 @@ class InstructorController extends Controller
       
         Instructor::create($request->all());
        
-        return redirect()->route('instructor.index')->with('success','Instructor created successfully.');
+        return redirect()->route('admin.i_index')->with('success','Instructor created successfully.');
     }
 
     public function edit(Instructor $instructor)
     {
-        return view('instructor.edit', compact('instructor'));
+        return view('admin.i_edit', compact('instructor'));
     }
     
     public function update(Request $request, Instructor $instructor)
@@ -192,7 +192,7 @@ class InstructorController extends Controller
     
         $instructor->update($request->all());
     
-        return redirect()->route('instructor.index')->with('success', 'Instructor updated successfully');
+        return redirect()->route('admin.i_index')->with('success', 'Instructor updated successfully');
     }
     
     public function search(Request $request)
@@ -217,7 +217,7 @@ class InstructorController extends Controller
         }
         $instructors = $query->paginate(5);
 
-        return view('instructor.index', compact('instructors'));
+        return view('admin.i_index', compact('instructors'));
  
     }
 
@@ -225,14 +225,14 @@ class InstructorController extends Controller
     {
         $Instructor = Instructor::onlyTrashed()->get();
     
-        return view('instructor.trash', compact('Instructor'));
+        return view('admin.i_trash', compact('Instructor'));
     }
     public function destroy($id): RedirectResponse
     {
         $instructor = Instructor::findOrFail($id);
         $instructor->delete(); // Soft delete
     
-        return redirect()->route('instructor.index')->with('success', 'Instructor Deleted successfully');
+        return redirect()->route('admin.i_index')->with('success', 'Instructor Deleted successfully');
     }
     
     public function restore($id): RedirectResponse
@@ -240,7 +240,7 @@ class InstructorController extends Controller
         $instructor = Instructor::onlyTrashed()->findOrFail($id);
         $instructor->restore();
     
-        return redirect()->route('instructor.index')->with('success', 'Instructor restored successfully');
+        return redirect()->route('admin.i_index')->with('success', 'Instructor restored successfully');
     }
 
 
@@ -250,6 +250,6 @@ class InstructorController extends Controller
         $instructor = Instructor::onlyTrashed()->findOrFail($id);
         $instructor->forceDelete(); // Permanently delete
 
-        return redirect()->route('instructor.trash')->with('success', 'Instructor permanently deleted');
+        return redirect()->route('admin.i_trash')->with('success', 'Instructor permanently deleted');
     }
 }
