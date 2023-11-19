@@ -91,7 +91,7 @@ class AdminController extends Controller
       
         Admin::create($request->all());
        
-        return redirect()->route('admin.a_index')->with('success','Admin created successfully.');
+        return redirect()->route('admin.index')->with('success','Admin created successfully.');
     }
 
     public function edit(Admin $admin)
@@ -115,7 +115,7 @@ class AdminController extends Controller
     
         $admin->update($request->all());
     
-        return redirect()->route('admin.a_index')->with('success', 'Admin updated successfully');
+        return redirect()->route('admin.index')->with('success', 'Admin updated successfully');
     }
 
     public function search(Request $request)
@@ -155,7 +155,7 @@ class AdminController extends Controller
         $admin = Admin::findOrFail($id);
         $admin->delete(); // Soft delete
     
-        return redirect()->route('admin.a_index')->with('success', 'Admin Deleted successfully');
+        return redirect()->route('admin.index')->with('success', 'Admin Deleted successfully');
     }
     
     public function restore($id): RedirectResponse
@@ -163,7 +163,7 @@ class AdminController extends Controller
         $admin = Admin::onlyTrashed()->findOrFail($id);
         $admin->restore();
     
-        return redirect()->route('admin.a_index')->with('success', 'Admin restored successfully');
+        return redirect()->route('admin.index')->with('success', 'Admin restored successfully');
     }
 
     public function forceDelete($id): RedirectResponse
@@ -171,7 +171,7 @@ class AdminController extends Controller
         $admin = Admin::onlyTrashed()->findOrFail($id);
         $admin->forceDelete(); // Permanently delete
 
-        return redirect()->route('admin.a_trash')->with('success', 'Admin permanently deleted');
+        return redirect()->route('admin.trash')->with('success', 'Admin permanently deleted');
     }
 
     public function show()

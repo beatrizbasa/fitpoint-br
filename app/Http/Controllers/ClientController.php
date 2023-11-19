@@ -369,7 +369,7 @@ class ClientController extends Controller
     {
         $client = Client::onlyTrashed()->get();
     
-        return view('clients.trash', compact('client'));
+        return view('admin.c_trash', compact('client'));
     }
     
     public function destroy($id): RedirectResponse

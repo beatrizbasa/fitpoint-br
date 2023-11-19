@@ -21,7 +21,7 @@ class AppointmentController extends Controller
             $full_name = $instructor->full_name;
         }
 
-        return view('client.c_bookappointment', ['instructors' => $instructors, 'fullname' => $full_name]);
+        return view('client.c_bookappointment', ['instructors' => $instructors, ]);
     }
 
     public function appointment_form($ptid)

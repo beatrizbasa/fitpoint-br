@@ -168,7 +168,7 @@ class InstructorController extends Controller
       
         Instructor::create($request->all());
        
-        return redirect()->route('admin.i_index')->with('success','Instructor created successfully.');
+        return redirect()->route('instructor.index')->with('success','Instructor created successfully.');
     }
 
     public function edit(Instructor $instructor)
@@ -192,7 +192,7 @@ class InstructorController extends Controller
     
         $instructor->update($request->all());
     
-        return redirect()->route('admin.i_index')->with('success', 'Instructor updated successfully');
+        return redirect()->route('instructor.index')->with('success', 'Instructor updated successfully');
     }
     
     public function search(Request $request)
@@ -232,7 +232,7 @@ class InstructorController extends Controller
         $instructor = Instructor::findOrFail($id);
         $instructor->delete(); // Soft delete
     
-        return redirect()->route('admin.i_index')->with('success', 'Instructor Deleted successfully');
+        return redirect()->route('instructor.index')->with('success', 'Instructor Deleted successfully');
     }
     
     public function restore($id): RedirectResponse
@@ -240,7 +240,7 @@ class InstructorController extends Controller
         $instructor = Instructor::onlyTrashed()->findOrFail($id);
         $instructor->restore();
     
-        return redirect()->route('admin.i_index')->with('success', 'Instructor restored successfully');
+        return redirect()->route('instructor.index')->with('success', 'Instructor restored successfully');
     }
 
 
@@ -250,6 +250,6 @@ class InstructorController extends Controller
         $instructor = Instructor::onlyTrashed()->findOrFail($id);
         $instructor->forceDelete(); // Permanently delete
 
-        return redirect()->route('admin.i_trash')->with('success', 'Instructor permanently deleted');
+        return redirect()->route('instructor.trash')->with('success', 'Instructor permanently deleted');
     }
 }
