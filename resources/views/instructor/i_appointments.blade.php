@@ -114,7 +114,7 @@
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Pending Appointments</h3>
         @if($appointments == null)<p class="w3-text-grey">No pending appointments yet.</p>
-        @else<p class="w3-text-grey">Below is a list of all your pending appointments. <b>Press ACCEPT if you accept the appointment, DECLINE if you decline the appointment.</b></p>
+        @else<p class="w3-text-grey">Below is a list of all your pending appointments. <b>Press <i class="fa-solid fa-circle-check" style="font-size: larger;"></i> if you accept the appointment, <i class="fa-solid fa-circle-xmark" style="font-size: larger;"></i> if you decline the appointment.</b></p>
       </div>
       
       <div class="col-12" style="overflow-x:auto;">

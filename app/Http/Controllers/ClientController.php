@@ -104,39 +104,95 @@ class ClientController extends Controller
         $instructor = Appointment::select('*')
             ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
             ->where('appointments.client_id', $cid)
-            ->where('appointments.status', 'Accepted')
+            // ->where('appointments.status', 'Accepted')
+            ->get();
+
+        $appt = Appointment::select('*')
+            ->where('client_id', $cid)
+            ->where('status', 'Pending')
             ->get();
 
         $curr_ins = '';
+        $cidd='';
+        $curr_stat='';
         foreach ($instructor as $ins){
             $curr_ins = $ins->id;
+            $curr_stat = $ins->status;
         }
-        if ($curr_ins == null){
-            $curr_ins == '';
+
+        foreach ($appt as $app){
+            $cidd = $app->id;
+        }
+
+        if ($cidd == null){
+            $cidd == '';
+        }
+        else {
+            if ($curr_ins == null){
+                $curr_ins == '';
+            }
         }
         // $instructor = PersonalTrainer::get();
-        return view('client.c_booked_instructor', ['instructor' => $instructor, 'curr_ins'=>$curr_ins]);
+        return view('client.c_booked_instructor', ['instructor' => $instructor, 'curr_ins'=>$curr_ins, 'cidd'=>$cidd, 'curr_stat'=>$curr_stat]);
     }
 
     public function workout_plan()
     {
         $cid = Auth::guard('client')->user()->id;
+        // $instructor = Appointment::select('*')
+        //     ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
+        //     ->where('appointments.client_id', $cid)
+        //     ->where('appointments.status', 'Accepted')
+        //     ->get();
+
+        // $appt = Appointment::select('*')
+        //     ->where('client_id', $cid)
+        //     ->where('status', 'Pending')
+        //     ->get();
+
+
+        // $curr_ins = '';
+        // foreach ($instructor as $ins){
+        //     $curr_ins = $ins->firstname;
+        // }
+
+        // if ($curr_ins == null){
+        //     $curr_ins == '';
+        // }
+
         $instructor = Appointment::select('*')
             ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
             ->where('appointments.client_id', $cid)
-            ->where('appointments.status', 'Accepted')
+            // ->where('appointments.status', 'Accepted')
+            ->get();
+
+        $appt = Appointment::select('*')
+            ->where('client_id', $cid)
+            ->where('status', 'Pending')
             ->get();
 
         $curr_ins = '';
+        $cidd='';
+        $curr_stat='';
         foreach ($instructor as $ins){
-            $curr_ins = $ins->firstname;
+            $curr_ins = $ins->id;
+            $curr_stat = $ins->status;
         }
 
-        if ($curr_ins == null){
-            $curr_ins == '';
+        foreach ($appt as $app){
+            $cidd = $app->id;
+        }
+
+        if ($cidd == null){
+            $cidd == '';
+        }
+        else {
+            if ($curr_ins == null){
+                $curr_ins == '';
+            }
         }
         
-        return view('client.c_workout_plan',['curr_ins'=>$curr_ins]);
+        return view('client.c_workout_plan',['instructor' => $instructor, 'curr_ins'=>$curr_ins, 'cidd'=>$cidd, 'curr_stat'=>$curr_stat]);
     }
 
     public function appointments()
@@ -189,12 +245,27 @@ class ClientController extends Controller
 
     public function instructors()
     {
+        $cid = Auth::guard('client')->user()->id;
+        $instructor = Appointment::select('*')
+            ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
+            ->where('appointments.client_id', $cid)
+            // ->where('appointments.status', 'Accepted')
+            ->get();
+
+        $curr_ins = '';
+        $cidd='';
+        $curr_stat='';
+        foreach ($instructor as $ins){
+            $curr_ins = $ins->id;
+            $curr_stat = $ins->status;
+        }
+
         $instructors = Instructor::get();
         
         foreach ($instructors as $instructor){
             $full_name = $instructor->full_name;
         }
-        return view('client.c_instructors', ['instructors' => $instructors]);
+        return view('client.c_instructors', ['instructors' => $instructors, 'curr_stat'=>$curr_stat]);
     }
 
 

@@ -9,6 +9,7 @@ use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -44,24 +45,41 @@ class AppointmentController extends Controller
     }
 
     public function insert_appointment(Request $request) {
-        $data = $request->validate([
-            'client_id' => 'required|integer',
-            'medical_condition' => 'required|string',
-            'target' => 'required|string',
-            'instructor_id' => 'required|integer',
-            'appointment_date' => 'required|string',
-            'appointment_time' => 'required|string',
-            // add other fields validations
-        ]);
-    
-        $newData = Appointment::create($data);
-        
-        if ($newData) {
-            // return response()->json(['message' => 'Appointment submitted!']);
-            return redirect()->route('client.home')->with('message', 'record inserted successfully');
-        } else {
-            return response()->json(['message' => 'Error submitting appointment.'], 500);
+        $cid = Auth::guard('client')->user()->id;
+        $appts = Appointment::select('*')
+            ->where('client_id', $cid)
+            ->get();
+
+        $apptid = '';
+        foreach ($appts as $appt){
+            $apptid = $appt->id;
         }
+
+        if ($apptid == null){
+            $data = $request->validate([
+                'client_id' => 'required|integer',
+                'medical_condition' => 'required|string',
+                'target' => 'required|string',
+                'instructor_id' => 'required|integer',
+                'appointment_date' => 'required|string',
+                'appointment_time' => 'required|string',
+                // add other fields validations
+            ]);
+    
+            $newData = Appointment::create($data);
+            
+            if ($newData) {
+                // return response()->json(['message' => 'Appointment submitted!']);
+                return redirect()->route('client.home')->with('message', 'record inserted successfully');
+            } else {
+                return response()->json(['message' => 'Error submitting appointment.'], 500);
+            }
+        }
+        else{
+            return redirect()->route('client.home')->with('message', 'Client already booked an appointment.');
+        }
+
+        
     }
 
     public function view_appointment(){

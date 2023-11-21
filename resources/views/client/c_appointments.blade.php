@@ -103,7 +103,7 @@
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Personal trainer</b></label>
-          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->fullname }}">
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->firstname }} {{ $pen_appt->lastname }}">
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Medical condition</b></label>

@@ -53,7 +53,9 @@
         @if($curr_ins == '')<p class="w3-text-grey">No current booked personal trainer yet.</p>
         <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now!</a>
 
-        @else
+        @elseif($curr_stat == 'Pending')<p class="w3-text-grey">Waiting for personal trainer's response.</p>
+
+        @elseif($curr_stat == 'Accepted')
           @foreach ($instructor as $p_trainer)
           <div class="col-4 adjust-top">
             <label for="inputFname" class="form-label"><b>Personal trainer</b></label>

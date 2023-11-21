@@ -73,7 +73,12 @@
                         <td>{{ $instructor->address }}</td>
                         <td>{{ $instructor->contact_no }}</td>
                         <td>{{ $instructor->gender }}</td>
-                        <td><a class="link-buttons" href="{{ route('client.book_appointment_form', $instructor->id) }}">Book an appointment</a></td>
+                        <td>@if ($curr_stat=='Pending')
+                            Client already booked. Waiting for confirmation.
+                            @elseif ($curr_stat =='Accepted')
+                            Client already has booked personal trainer.
+                            @else <a class="link-buttons" href="{{ route('client.book_appointment_form', $instructor->id) }}">Book an appointment</a></td>
+                            @endif
                     </tr>
                     @endforeach
                     </form>

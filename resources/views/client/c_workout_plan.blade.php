@@ -44,10 +44,12 @@
         <div class="col-12">
             <h3 style="font-size:xx-large; ">Current Workout Plan</h3>
             <!-- <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p> -->
-            @if ($curr_ins == '' )
-            <p class="w3-text-grey">No ongoing workout plan yet.</p>
-            <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now to get started!</a>
-            @else
+            @if($curr_ins == '')<p class="w3-text-grey">No current booked personal trainer yet.</p>
+            <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now!</a>
+
+            @elseif($curr_stat == 'Pending')<p class="w3-text-grey">Waiting for personal trainer's response.</p>
+
+            @elseif($curr_stat == 'Accepted')
             <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p>
             @endif
       </div>
