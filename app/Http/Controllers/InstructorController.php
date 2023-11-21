@@ -44,7 +44,7 @@ class InstructorController extends Controller
         $ptid = Auth::guard('instructor')->user()->id;
 
         $appointments = Appointment::join('clients', 'clients.id', '=', 'appointments.client_id')
-            ->select('clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'appointments.medical_condition', 'appointments.target', 'appointments.appointment_date', 'appointments.appointment_time', 'appointments.status')
+            ->select('clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'appointments.medical_condition', 'appointments.target', 'appointments.appointment_date', 'appointments.appointment_time', 'appointments.status', 'appointments.id')
             ->where('appointments.instructor_id', $ptid)
             ->where('appointments.appointment_date', '>=', now())
             ->orderBy('appointments.appointment_date', 'asc')
@@ -102,6 +102,26 @@ class InstructorController extends Controller
             ->where('feedbacks.instructor_id', $ptid)
             ->get();
         return view('instructor.i_feedbacks', ['feedbacks' => $feedbacks]);
+    }
+
+    public function stat_accepted($apptid)
+    {
+        $appt = Appointment::findOrFail($apptid);
+
+        $appt->status = "Accepted";
+    
+        $appt->save();
+        return redirect()->route('instructor.appointments');
+    }
+    
+    public function stat_denied($apptid)
+    {
+        $appt = Appointment::findOrFail($apptid);
+
+        $appt->status = "Denied";
+    
+        $appt->save();
+        return redirect()->route('instructor.appointments');
     }
 
     public function profile()

@@ -126,6 +126,7 @@
               <th>Target of Workout</th>
               <th>Appointment Date</th>
               <th>Appointment Time</th>
+              <th>Status</th>
               <th>Action</th>
           </tr>
         </thead>
@@ -137,7 +138,8 @@
               <td>{{ $appointment->target }}</td>
               <td>{{ $appointment->appointment_date }}</td>
               <td>{{ $appointment->appointment_time }}</td>
-              <td><a class="accept-btn link-buttons" href="{{ route('client.book_appointment') }}" ><i class="fa-solid fa-circle-check" style="font-size: larger;"></i></a> <a class="decline-btn link-buttons" href="{{ route('client.book_appointment') }}" ><i class="fa-solid fa-circle-xmark" style="font-size: larger;"></i></a></td>
+              <td>{{ $appointment->status }}</td>
+              <td><a class="accept-btn link-buttons" href="{{ route('instructor.stat_accepted', $appointment->id) }}" ><i class="fa-solid fa-circle-check" style="font-size: larger;"></i></a> <a class="decline-btn link-buttons" href="{{ route('instructor.stat_denied', $appointment->id) }}" ><i class="fa-solid fa-circle-xmark" style="font-size: larger;"></i></a></td>
           </tr>
           @endforeach
         </tbody>

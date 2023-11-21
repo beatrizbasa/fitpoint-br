@@ -81,6 +81,8 @@ Route::prefix('instructor')->group(function(){
     Route::post('/login/login_instructor', [InstructorController::class, 'login'])->name('instructor.login');
 
     Route::get('/appointments', [InstructorController::class, 'appointments'])->name('instructor.appointments');
+    Route::get('/stat_accepted/{apptid}', [InstructorController::class, 'stat_accepted'])->name('instructor.stat_accepted');
+    Route::get('/stat_denied/{apptid}', [InstructorController::class, 'stat_denied'])->name('instructor.stat_denied');
     Route::get('/clients_list', [InstructorController::class, 'clients_list'])->name('instructor.clients_list');
     Route::get('/workout_plans', [InstructorController::class, 'workout_plans'])->name('instructor.workout_plans');
     Route::get('/feedbacks', [InstructorController::class, 'feedbacks'])->name('instructor.feedbacks');
