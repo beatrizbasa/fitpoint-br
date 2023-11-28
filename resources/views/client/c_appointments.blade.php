@@ -103,32 +103,32 @@
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Personal trainer</b></label>
-          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->firstname }} {{ $pen_appt->lastname }}">
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->firstname }} {{ $pen_appt->lastname }}" readonly>
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Medical condition</b></label>
-          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->medical_condition }}">
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->medical_condition }}" readonly>
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Target of workout</b></label>
-          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->target }}">
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->target }}" readonly>
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Appointment date</b></label>
-          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->appointment_date }}">
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->appointment_date }}" readonly>
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Appointment time</b></label>
-          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->appointment_time }}">
+          <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="{{ $pen_appt->appointment_time }}" readonly>
         </div>
         <div class="col-4 adjust-top">
           <label for="inputFname" class="form-label"><b>Appointment status</b></label>
           @if($pen_appt->status == 'Pending')
-            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="PENDING" style="background-color: lightgray; font-weight: bold">
+            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="PENDING" style="background-color: lightgray; font-weight: bold" readonly>
           @elseif($pen_appt->status == 'Accepted')
-            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="ACCEPTED" style="background-color: lightgreen; color: darkgreen; font-weight: bold">
+            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="ACCEPTED" style="background-color: lightgreen; color: darkgreen; font-weight: bold" readonly>
           @elseif($pen_appt->status == 'Declined')
-            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="DECLINED" style="background-color: pink; color: darkred; font-weight: bold">
+            <input name="appointment_time" type="text" class="form-control" id="inputFname" aria-describedby="emailHelp" value="DECLINED" style="background-color: pink; color: darkred; font-weight: bold" readonly>
           @endif
         </div>
         <div class="col-12">

@@ -60,9 +60,6 @@
                     <td>{{ $admin->password }}</td>
                     <td>{{ $admin->created_at}}</td>
                     <td>{{ $admin->updated_at }}</td>
-
-                    
-                    
             <td>
                 <form action="{{ route('admin.destroy',$admin->id) }}" method="POST">
    
@@ -70,7 +67,27 @@
    
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger  btn-sm">Delete</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal{{ $admin->id }}">Delete</button>
+
+                    <div class="modal fade" id="deleteConfirmationModal{{ $admin->id }}" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger text-white">
+                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Confirmation</h5>
+                                    <button type="button" class="btn-close btn-close-white"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="lead">Are you sure you want to delete this admin?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </td>
         </tr>
@@ -78,4 +95,5 @@
         </tbody>
     </table>
     @include('admin/custom_pagination', ['paginator' => $admins])
+    </div>
 @endsection

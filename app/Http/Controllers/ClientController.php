@@ -12,6 +12,7 @@ use App\Models\Appointment;
 use App\Models\Client;
 use App\Models\fullname;
 use App\Models\Instructor;
+use App\Models\Workout;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -44,11 +45,11 @@ class ClientController extends Controller
         if(Auth::guard('client')->attempt(['email' => $check['email'], 'password' => $check['password']])){
             //if nagmatch lahat
             // 
-            return redirect()->route('client.home')->with('error', 'client logged in successfully');
+            return redirect()->route('client.home')->with('error', 'Client logged in successfully!');
             // return view('admin.admin_dashboard');
         }
         else{
-            return back()->with('error', 'invalid credentialsss');
+            return back()->with('error', 'Invalid credentials');
             // return view('admin.error');
         }
     }
@@ -66,7 +67,7 @@ class ClientController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        return redirect()->route('client.login_form')->with('error', 'Client account created successfully');
+        return redirect()->route('client.login_form')->with('error', 'Client account created successfully!');
     }
 
     public function home()
@@ -89,14 +90,16 @@ class ClientController extends Controller
             ->get();
 
         $curr_appt = '';
+        $curr_stat = '';
         foreach ($appointments as $appt){
             $curr_appt = $appt->id;
+            $curr_stat = $appt->status;
         }
         if ($curr_appt == null){
             $curr_appt == '';
         }
         
-        return view('client.c_home', ['appointments' => $appointments, 'curr_appt'=>$curr_appt, 'instructors' => $instructors, 'cid' => $cid]);
+        return view('client.c_home', ['appointments' => $appointments, 'curr_appt'=>$curr_appt, 'instructors' => $instructors, 'cid' => $cid, 'curr_stat'=>$curr_stat]);
     }
 
     public function booked_instructor($cid)
@@ -139,26 +142,6 @@ class ClientController extends Controller
     public function workout_plan()
     {
         $cid = Auth::guard('client')->user()->id;
-        // $instructor = Appointment::select('*')
-        //     ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
-        //     ->where('appointments.client_id', $cid)
-        //     ->where('appointments.status', 'Accepted')
-        //     ->get();
-
-        // $appt = Appointment::select('*')
-        //     ->where('client_id', $cid)
-        //     ->where('status', 'Pending')
-        //     ->get();
-
-
-        // $curr_ins = '';
-        // foreach ($instructor as $ins){
-        //     $curr_ins = $ins->firstname;
-        // }
-
-        // if ($curr_ins == null){
-        //     $curr_ins == '';
-        // }
 
         $instructor = Appointment::select('*')
             ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
@@ -171,9 +154,15 @@ class ClientController extends Controller
             ->where('status', 'Pending')
             ->get();
 
+        $wout = Workout::select('*')
+            ->where('client_id', $cid)
+            ->get();
+
         $curr_ins = '';
         $cidd='';
         $curr_stat='';
+        $workout='';
+
         foreach ($instructor as $ins){
             $curr_ins = $ins->id;
             $curr_stat = $ins->status;
@@ -183,16 +172,21 @@ class ClientController extends Controller
             $cidd = $app->id;
         }
 
+        foreach ($wout as $wou){
+            $workout = $wou->id;
+        }
+
         if ($cidd == null){
             $cidd == '';
         }
+
         else {
             if ($curr_ins == null){
                 $curr_ins == '';
             }
         }
         
-        return view('client.c_workout_plan',['instructor' => $instructor, 'curr_ins'=>$curr_ins, 'cidd'=>$cidd, 'curr_stat'=>$curr_stat]);
+        return view('client.c_workout_plan',['instructor' => $instructor, 'curr_ins'=>$curr_ins, 'cidd'=>$cidd, 'curr_stat'=>$curr_stat, 'workout'=>$workout, 'wout'=>$wout]);
     }
 
     public function appointments()
@@ -204,10 +198,8 @@ class ClientController extends Controller
         $curr_date = Carbon::now()->format('Y-m-d');
         $pen_appts = Appointment::select('*')
             ->join('instructors', 'appointments.instructor_id', '=', 'instructors.id')
-            ->where('appointments.appointment_date', '>=', now())
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Pending')
-            ->orderBy('appointments.appointment_date', 'asc')
             ->get();
 
         $pen_id = '';
@@ -323,7 +315,7 @@ class ClientController extends Controller
 
     public function logout(){
         Auth::guard('client')->logout();
-        return redirect()->route('client.login_form')->with('error', 'fishfarmer logged out successfully');
+        return redirect()->route('client.login_form')->with('error', 'Fishfarmer logged out successfully!');
     }
 
     public function insert_feedback(Request $request) {
@@ -406,7 +398,7 @@ class ClientController extends Controller
       
         $client->update($request->all());
       
-        return redirect()->route('clients.index')->with('success','Client updated successfully');
+        return redirect()->route('clients.index')->with('success','Client updated successfully!');
     }
 
     public function search(Request $request)

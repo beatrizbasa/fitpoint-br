@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\Client;
 use App\Models\Feedbacks;
 use App\Models\Instructor;
+use App\Models\Workout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -30,11 +32,11 @@ class InstructorController extends Controller
         $check = $request->all();
         if(Auth::guard('instructor')->attempt(['email' => $check['email'], 'password' => $check['password']])){
             //if nagmatch lahat
-            return redirect()->route('instructor.appointments')->with('error', 'instructor logged in successfully');
+            return redirect()->route('instructor.appointments')->with('error', 'Instructor logged in successfully!');
             // return view('admin.admin_dashboard');
         }
         else{
-            return back()->with('error', 'invalid credentialsss');
+            return back()->with('error', 'Invalid credentials');
             // return view('admin.error');
         }
     }
@@ -90,7 +92,14 @@ class InstructorController extends Controller
 
     public function workout_plans()
     {
-        return view('instructor.i_workout_plans');
+        $ptid = Auth::guard('instructor')->user()->id;
+
+        $workouts = Workout::join('clients', 'clients.id', '=', 'workouts.client_id')
+            ->join('instructors', 'instructors.id', '=', 'workouts.instructor_id')
+            ->select('workouts.id', 'instructors.firstname as i_firstname', 'instructors.lastname as i_lastname', 'clients.firstname as c_firstname', 'clients.lastname as c_lastname', 'workouts.workout_date', 'workouts.focus', 'workouts.exercises')
+            ->where('workouts.instructor_id', $ptid)
+            ->get();
+        return view('instructor.i_workout_plans', ['workouts'=>$workouts]);
     }
 
     public function feedbacks()
@@ -152,7 +161,7 @@ class InstructorController extends Controller
 
     public function logout(){
         Auth::guard('instructor')->logout();
-        return redirect()->route('instructor.login_form')->with('error', 'fishfarmer logged out successfully');
+        return redirect()->route('instructor.login_form')->with('error', 'Instructor account logged out successfully!');
     }
 
     public function index()
@@ -272,4 +281,30 @@ class InstructorController extends Controller
 
         return redirect()->route('instructor.trash')->with('success', 'Instructor permanently deleted');
     }
+
+    public function select_client()
+    {
+        $ptid = Auth::guard('instructor')->user()->id;
+
+        $clients = Appointment::join('clients', 'clients.id', '=', 'appointments.client_id')
+            ->select('clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'clients.address', 'clients.contact_no', 'clients.birthday', 'clients.gender', 'clients.id')
+            ->where('appointments.instructor_id', $ptid)
+            ->where('appointments.status', 'Accepted')
+            ->get();
+
+        return view('instructor.i_select_clients', ['clients' => $clients]);
+    }
+
+    public function add_workout($clientid)
+    {
+        $ptid = Auth::guard('instructor')->user()->id;
+
+        $clients = Client::select('*')
+            ->where('id', $clientid)
+            // ->where('appointments.status', 'Accepted')
+            ->get();
+
+        return view('instructor.i_add_workout', ['clients' => $clients]);
+    }
+    
 }

@@ -105,6 +105,5 @@
    
 </div>
 
-// Next na gagawin ay ayusin yong Trainers in category, kapag pinindot yong Trainer ay magppakita lahat ng handle niyang client
 @endsection
 

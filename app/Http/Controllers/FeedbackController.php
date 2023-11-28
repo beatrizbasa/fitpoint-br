@@ -61,6 +61,9 @@ class FeedbackController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $feedback = Feedbacks::findOrFail($id);
+        $feedback ->delete(); // Soft delete
+    
+        return redirect()->route('feedback.index')->with('success', 'Instructor Deleted successfully');
     }
 }

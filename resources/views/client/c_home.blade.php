@@ -111,10 +111,12 @@
     <div class="row mobile" style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
         <h3 style="font-size:xx-large; ">Workout Plan</h3>
-        <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p>
         @if($curr_appt == null)
         <p class="w3-text-grey">No ongoing workout plan yet.</p>
         <a class="link-buttons" href="">Book your personal trainer now!</a>
+        
+        @else
+        <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p>
         @endif
       </div>
     </div>
@@ -154,10 +156,12 @@
             </tbody>
           </table>
         </div>
-        @else
+        @elseif ($curr_stat == 'Accepted')
           @foreach ($appointments as $appt)
-          <h5 style="padding: 2rem 0rem 2rem 0rem;">Your personal trainer is <b>{{ $appt->firstname }} {{ $appt->lastname }}</b></h5>
+            <h5 style="padding: 2rem 0rem 2rem 0rem;">Your personal trainer is <b>{{ $appt->firstname }} {{ $appt->lastname }}</b></h5>
           @endforeach
+        @else 
+          <h5 style="padding: 2rem 0rem 2rem 0rem;">Waiting for the approval of selected personal trainer.</b></h5>
         @endif
       </div>
       

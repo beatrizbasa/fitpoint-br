@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-<div class="pagination-responsive"> 
+<div class="pagination-responsive "> 
     <ul class="pagination justify-content-end mt-3">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())

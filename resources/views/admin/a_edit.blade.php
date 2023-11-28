@@ -114,6 +114,7 @@
                 <div class="col-sm-12 text-end mt-3">
                     <a class="btn btn-primary" href="{{ route('admin.index') }}">Back</a>
                     <button type="submit" class="btn btn-success">Submit</button>
+                    
                 </div>
             </div>
         </form>

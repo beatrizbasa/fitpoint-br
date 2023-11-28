@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-
+<br><br><br>
 @if (session('success'))
-    <div class="alert text-white bg-dark bg-gradient">
+    <div class="alert text-white text-center bg-dark bg-gradient">
         {{ session('success') }}
     </div>
 @endif
@@ -14,7 +14,7 @@
     overflow-x: auto;
 }
     }
-</style><br><br>
+</style>
 <div class="container mt-5">
 <h1 class="text-danger ">Personal Trainers</h1>
 <a href="{{ route('instructor.create') }}" class="btn btn-outline-dark mt-3 border-2">Create Trainer</a>
@@ -30,13 +30,12 @@
     <thead>
             <tr>
                     <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
                     <th>Address</th>
                     <th>Contact No</th>
                     <th>Email Address</th>
                     <th>Password</th>
-                    <th>Confirm Password</th>
                     <th>Birthday</th>
                     <th>Gender</th>
                     <th>Created</th>
@@ -55,26 +54,48 @@
                     <td>{{ $instructor->contact_no }}</td>
                     <td>{{ $instructor->email}}</td>
                     <td>{{ $instructor->password }}</td>
-                    <td>{{ $instructor->confirm_password }}</td>
                     <td>{{ $instructor->birthday}}</td>
                     <td>{{ $instructor->gender }}</td>
                     <td>{{ $instructor->created_at}}</td>
                     <td>{{ $instructor->updated_at }}</td>
                     
             <td>
-                <form action="{{ route('instructor.destroy',$instructor->id) }}" method="POST">
-   
+            <form action="{{ route('instructor.destroy', $instructor->id) }}" method="POST">
+                                    <a class="btn btn-primary btn-sm" href="{{ route('instructor.edit', $instructor->id) }}">Edit</a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#deleteConfirmationModal{{ $instructor->id }}">Delete</button>
 
-                    <a class="btn btn-primary btn-sm" href="{{ route('instructor.edit',$instructor->id) }}">Edit</a>
-   
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger  btn-sm">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-        </tbody>
-    </table>
-    @include('admin/custom_pagination', ['paginator' => $instructors])
+                                    <!-- Delete Confirmation Modal -->
+                                    <div class="modal fade" id="deleteConfirmationModal{{ $instructor->id }}" tabindex="-1"
+                                        aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-danger text-white">
+                                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Confirmation</h5>
+                                                    <button type="button" class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="lead">Are you sure you want to delete this instructor?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Delete Confirmation Modal -->
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @include('admin/custom_pagination', ['paginator' => $instructors])
+        </div>
+    </div>
 @endsection

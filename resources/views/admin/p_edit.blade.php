@@ -2,10 +2,11 @@
   
 @section('content')
 <br> <br>
+<div class="container mt-5">
 <div class="row p-3">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left text-danger mt-3">
-            <h1>Create Payments</h1>
+            <h1>Edit Payments</h1>
         </div>
     </div>
 </div>

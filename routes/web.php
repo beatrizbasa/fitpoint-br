@@ -9,6 +9,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WorkoutController;
 
 
 /*
@@ -84,7 +85,19 @@ Route::prefix('instructor')->group(function(){
     Route::get('/stat_accepted/{apptid}', [InstructorController::class, 'stat_accepted'])->name('instructor.stat_accepted');
     Route::get('/stat_denied/{apptid}', [InstructorController::class, 'stat_denied'])->name('instructor.stat_denied');
     Route::get('/clients_list', [InstructorController::class, 'clients_list'])->name('instructor.clients_list');
-    Route::get('/workout_plans', [InstructorController::class, 'workout_plans'])->name('instructor.workout_plans');
+
+    Route::get('/workout_plans', [InstructorController::class, 'workout_plans'])->name
+    ('instructor.workout_plans');
+    Route::get('/select_client', [InstructorController::class, 'select_client'])->name
+    ('instructor.select_client');
+
+    Route::get('/add_workout/{clientid}', [InstructorController::class, 'add_workout'])->name('instructor.add_workout');
+    Route::post('/adding_workout', [WorkoutController::class, 'adding_workout'])->name('instructor.adding_workout');
+    Route::get('/edit_workout/{id}', [WorkoutController::class, 'show_edit'])->name('instructor.edit_workout');
+    Route::post('/editing_workout/{id}', [WorkoutController::class, 'editing_workout'])->name('instructor.editing_workout');
+    Route::get('/delete_workout/{id}', [WorkoutController::class, 'delete_workout'])->name('instructor.delete_workout');
+
+
     Route::get('/feedbacks', [InstructorController::class, 'feedbacks'])->name('instructor.feedbacks');
 
     Route::get('/profile', [InstructorController::class, 'profile'])->name('instructor.profile');

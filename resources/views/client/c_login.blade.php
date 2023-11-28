@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('styles.css') }}?version=24">
+    
     <style>
         .center {
             margin: auto;
@@ -60,9 +61,13 @@
                     <b style="font-size: 2.5rem; color: black; font-size:xx-large"><center>Login Account</center></b>
                     <center><p style="font-size: 1.5rem; color: black">A&T Fitness Center</p></center>
                 </div>
-                @if(Session::has('error'))
-                {{ session::get('error') }}
-                @endif
+                <p style="font-size: medium; ">
+                    @if(Session::has('error'))
+                    <div class="alert alert-warning col-12">
+                        <b>{{ session::get('error') }}</b>
+                    </div>
+                    @endif
+                </p>
                 <form action="{{ route('client.login') }}" method="post">
                 @csrf
                 <div class="col-12 adjust-top">

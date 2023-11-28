@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Workout Plan</title>
+    <title>Select Client</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -10,8 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7528702e77.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=24">
-
+    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=20">
+    
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -23,6 +23,7 @@
         font-family: 'Open Sans', sans-serif;
     }
     .fa-dumbbell,.fa-user-group {font-size:200px}
+
     @media only screen and (max-width: 768px) {
       /* For mobile phones: */
       [class*="col-"] {
@@ -38,49 +39,44 @@
 <body>
 
 <!-- Navbar -->
-@include('partials.c_header')
+@include('partials.pt_header')
 
 <!-- First Grid -->
 <div class="w3-container">
 
   <div class="w3-padding-64" style="margin-top: 3rem">
     <div class="row mobile" style="padding: 0rem 15rem 0rem 15rem;">
-        <div class="col-12">
-            <h3 style="font-size:xx-large; ">Current Workout Plan</h3>
-            <!-- <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p> -->
-            @if($curr_ins == '')<p class="w3-text-grey">No current booked personal trainer yet.</p>
-            <a class="link-buttons" href="{{ route('client.book_appointment') }}">Book your personal trainer now!</a>
-
-            @elseif($curr_stat == 'Pending')<p class="w3-text-grey">Waiting for personal trainer's response.</p>
-
-            @elseif($curr_stat == 'Accepted')
-              @foreach ($wout as $w)
-                @if ($curr_stat == 'Accepted' && $w->client_id == Auth::guard('client')->user()->id)
-                  <!-- <b>accepcndncjs</b> -->
-                  <div class="col-12" style="overflow-x:auto;">
-                    <table id="workoutTbl" class="display">
-                      <thead>
-                        <tr>
-                            <th>Workout date</th>
-                            <th>Focus</th>
-                            <th>Exercises</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                            <td>{{ $w->workout_date }}</td>
-                            <td>{{ $w->focus }}</td>
-                            <td>{{ $w->exercises }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                @else
-                  <p class="w3-text-grey">No ongoing workout plan yet. Wait for your personal trainer.</p>
-                @endif
-              @endforeach
-              
-            @endif
+      <div class="col-12">
+          <h3 style="font-size:xx-large; ">Select Client</h3>
+          <p class="w3-text-grey">Select a client below.</p>
+      </div>
+      <div class="col-12" style="overflow-x:auto;">
+        <table id="apptsTbl" class="display">
+          <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Address</th>
+                <th>Contact no.</th>
+                <th>Birthday</th>
+                <th>Gender</th>
+                <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($clients as $client)
+            <tr>
+                <td>{{ $client->client_firstname }} {{ $client->client_lastname }}</td>
+                <td>{{ $client->address }}</td>
+                <td>{{ $client->contact_no }}</td>
+                <td>{{ $client->birthday }}</td>
+                <td>{{ $client->gender }}</td>
+                <td>
+                  <center><a class="link-buttons" href="{{ route('instructor.add_workout', $client->id)}}">Select</a></center>
+                </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -91,10 +87,33 @@
   <div class=" " style="margin-top: 0rem;">
     <div class="row mobile"  style="padding: 2rem 15rem 2rem 15rem;">
       <div class="col-12">
-        <h3 style="font-size:xx-large; ">Past Workout Plans</h3>
-        <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your former workout plans.</h5>
+        <h3 style="font-size:xx-large; ">Former Clients</h3>
+        <h5 style="padding: 2rem 0rem 2rem 0rem;">Below is a list of all your former clients.</h5>
       </div>
-      
+      <div class="col-12" style="overflow-x:auto;">
+        <table id="frmerTbl" class="display">
+          <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Address</th>
+                <th>Contact no.</th>
+                <th>Birthday</th>
+                <th>Gender</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($clients as $client)
+            <tr>
+                <td>{{ $client->client_firstname }} {{ $client->client_lastname }}</td>
+                <td>{{ $client->address }}</td>
+                <td>{{ $client->contact_no }}</td>
+                <td>{{ $client->birthday }}</td>
+                <td>{{ $client->gender }}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -103,12 +122,14 @@
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div> -->
 
-@include('partials.c_footer')
+@include('partials.pt_footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script>
   $(document).ready(function() {
-    $('#workoutTbl').DataTable();
+    $('#apptsTbl').DataTable();
+    $('#acc_apptsTbl').DataTable();
+    $('#frmerTbl').DataTable();
   });
 </script>
 </body>

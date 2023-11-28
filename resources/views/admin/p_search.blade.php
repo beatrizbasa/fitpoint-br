@@ -39,4 +39,5 @@
 </div>
 </body>
 </html>
+    @include('admin/custom_pagination', ['paginator' => $payments])
 @endsection

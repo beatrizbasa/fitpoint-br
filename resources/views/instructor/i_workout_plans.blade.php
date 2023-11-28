@@ -10,7 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7528702e77.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=20">
+    <link rel="stylesheet" href="{{ asset('styles.css') }}?version=26">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <style>
     body,h1,h2,h3,h4,h5,h6 {
         font-family: 'Open Sans', sans-serif;
@@ -51,7 +55,35 @@
         <div class="col-12">
         <h3 style="font-size:xx-large; ">Workout Plans</h3>
         <p class="w3-text-grey">Below is a list of all your ongoing workout plans with your clients.</p>
-        <a class="link-buttons" style="float: right" href="{{ route('client.book_appointment') }}">Add a Workout Plan</a>
+        <a class="link-buttons" style="float: right" href="{{ route('instructor.select_client') }}">Add a Workout Plan</a>
+
+        <div class="col-12" style="overflow-x:auto;">
+          <table id="workTbl" class="display">
+            <thead>
+              <tr>
+                  <th>Workout date</th>
+                  <th>Client name</th>
+                  <th>Focus</th>
+                  <th>Exercises</th>
+                  <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($workouts as $workout)
+              <tr>
+                  <td>{{ $workout->workout_date }}</td>
+                  <td>{{ $workout->c_firstname }} {{ $workout->c_lastname }}</td>
+                  <td>{{ $workout->focus }}</td>
+                  <td>{{ $workout->exercises }}</td>
+                  <td>
+                    <center><a class="edit-btn" onclick="return confirm('Are you sure you want to EDIT this record?')" href="{{ route('instructor.edit_workout', $workout->id) }}"><i class="fa fa-edit" style="font-size: larger; padding: 0.7rem"></i></a> 
+                    <a class="delete-btn"  onclick="return confirm('Are you sure you want to DELETE this record?')" href="{{ route('instructor.delete_workout', $workout->id) }}"><i class="fa fa-trash" style="font-size: larger; padding: 0.7rem"></i></a></center>
+                  </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -75,6 +107,12 @@
 </div> -->
 
 @include('partials.pt_footer')
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#workTbl').DataTable();
+  });
+</script>
 </body>
 </html>

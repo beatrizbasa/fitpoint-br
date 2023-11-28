@@ -61,9 +61,13 @@
                     <center><p style="font-size: 1.5rem; color: black">A&T Fitness Center</p></center>
                     <center><p style="font-size: 1rem; color: black">Personal Trainer</p></center>
                 </div>
-                @if(Session::has('error'))
-                {{ session::get('error') }}
-                @endif
+                <p style="font-size: medium; ">
+                    @if(Session::has('error'))
+                    <div class="alert alert-warning col-12">
+                        <b>{{ session::get('error') }}</b>
+                    </div>
+                    @endif
+                </p>
                 <form action="{{ route('instructor.login') }}" method="post">
                 @csrf
                 <div class="col-12 adjust-top">
@@ -75,7 +79,7 @@
                     <input type="password" name="password" class="form-control" aria-describedby="passwordHelp">
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn buttons" style="float: right"> Login </button>
+                    <center><button type="submit" class="btn form-buttons" style="width: 10rem"> Login </button></center>
                 </div>
                 </form>
             </div>

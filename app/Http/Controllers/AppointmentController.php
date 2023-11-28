@@ -99,6 +99,11 @@ class AppointmentController extends Controller
         return view('admin.appointment_index', compact('appointments'));
     }
 
+    public function instructor()
+    {
+        return $this->belongsTo(Instructor::class, 'instructor_id');
+    }
+    
     public function show(string $id)
     {
         $appointment = Appointment::findOrFail($id); // Retrieve the appointment by its ID

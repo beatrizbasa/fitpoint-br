@@ -75,7 +75,8 @@
                     <input type="password" name="password" class="form-control" aria-describedby="passwordHelp">
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn buttons" style="float: right"> Login </button>
+                    <center><button type="submit" class="btn form-buttons" style="width: 10rem"> Login </button></center>
+                    <br><center style="font-size: small;">Don't have an account? <b><a href="{{ route('client.registration') }}" style="font-size: small; text-decoration: none; color: red">Register</a></b></center>
                 </div>
                 </form>
             </div>

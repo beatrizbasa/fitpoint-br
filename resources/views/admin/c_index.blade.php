@@ -10,11 +10,11 @@
 <style>
     .search{
         border: none; 
+    }
         .table-responsive{
     overflow-x: auto;
 }
-    }
-</style><br><br>
+</style> 
 <div class="container mt-5">
 <h1 class="text-danger ">Clients</h1>
 <a href="{{ route('clients.create') }}" class="btn btn-outline-dark mt-3 border-2">Create Client</a>
@@ -64,11 +64,31 @@
             <td>
                 <form action="{{ route('clients.destroy',$client->id) }}" method="POST">
 
-                    <a class="btn btn-primary  btn-sm" href="{{ route('clients.edit',$client->id) }}">Edit</a>
+                    <a class="btn btn-primary btn-sm" href="{{ route('clients.edit', $client->id) }}">Edit</a>
    
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger  btn-sm">Delete</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal{{ $client->id }}">Delete</button>
+
+                    <div class="modal fade" id="deleteConfirmationModal{{ $client->id }}" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger text-white">
+                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Confirmation</h5>
+                                    <button type="button" class="btn-close btn-close-white"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="lead">Are you sure you want to delete this client?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </td>
         </tr>
@@ -76,11 +96,6 @@
         </tbody>
         </table>
         
-        <div class="pagination">
-   
    </div>
-   
-</body>
-</html>
 @include('admin/custom_pagination', ['paginator' => $clients])
 @endsection

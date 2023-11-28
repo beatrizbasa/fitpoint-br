@@ -98,3 +98,32 @@ padding: 15px;
   font-weight: 600;
 }
 
+.edit-btn {
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 0.5rem !important;
+  width: auto;
+  background-color: lightgreen !important;
+  color: darkgreen !important;
+}
+
+.delete-btn {
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 0.5rem !important;
+  width: auto;
+  background-color: pink !important;
+  color: darkred !important;
+}
+
+.edit-btn:hover{
+  background-color: darkgreen !important;
+  color: white !important;
+}
+
+.delete-btn:hover{
+  background-color: darkred !important;
+  color: white !important;
+}

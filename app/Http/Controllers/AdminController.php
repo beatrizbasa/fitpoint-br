@@ -31,18 +31,22 @@ class AdminController extends Controller
     {
         return view('admin.a_login');
     }
-
+    // public function logout()
+    // {
+    //     Auth::guard('admin')->logout(); // Assuming you are using a guard named 'admin'
+    //     return redirect()->route('admin.login'); // Redirect to the admin login page
+    // }
     public function login(Request $request){
         // dd($request->all());
 
         $check = $request->all();
         if(Auth::guard('admin')->attempt(['email' => $check['email'], 'password' => $check['password']])){
             //if nagmatch lahat
-            return redirect()->route('admin.dashboard')->with('error', 'admin logged in successfully');
+            return redirect()->route('admin.dashboard')->with('error', 'Admin account logged in successfully!');
             // return view('admin.admin_dashboard');
         }
         else{
-            return back()->with('error', 'invalid credentialsss');
+            return back()->with('error', 'Invalid credentials');
             // return view('admin.error');
         }
     }
@@ -150,12 +154,16 @@ class AdminController extends Controller
         return view('admin.a_trash', compact('admin'));
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy($id)
     {
-        $admin = Admin::findOrFail($id);
-        $admin->delete(); // Soft delete
+        $admin = Admin::find($id);
     
-        return redirect()->route('admin.index')->with('success', 'Admin Deleted successfully');
+        if ($admin) {
+            $admin->delete();
+            return redirect()->route('admin.login')->with('success', 'Admin deleted successfully.');
+        } else {
+            return redirect()->route('admin.index')->with('error', 'Admin not found.');
+        }
     }
     
     public function restore($id): RedirectResponse
