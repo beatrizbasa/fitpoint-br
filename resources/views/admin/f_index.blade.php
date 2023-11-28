@@ -23,11 +23,12 @@
           <tbody>
           @foreach ($feedbacks as $feedback)
             <tr> 
-        
-            <td>  <div class="overflow-hidden shadow-lg p-3 mt-3 ">
-            <p> <h4> {{ $feedback->id}}</h4>{{ $feedback->content}}</p>    
-            </div></td>
-           
+                <td>  
+                    <div class="overflow-hidden shadow-lg p-3 mt-3 ">
+                        <p> <b>{{ $feedback->client_firstname }} {{ $feedback->client_lastname }} (Client)</b> to <b>{{ $feedback->ptrainer_firstname }} {{ $feedback->ptrainer_lastname }} (Instructor)</b>
+                        <br><p style="font-size: large">{{ $feedback->content}}</p> </p>    
+                    </div>
+                </td>
             </tr>
             <tr> 
                 <td>

@@ -265,7 +265,7 @@ class ClientController extends Controller
     {
         $instructor = Appointment::select('*')
             ->join('instructors', 'instructors.id', '=', 'appointments.instructor_id')
-            ->join('clients', 'clients.id', '=', 'appointments.client_id')
+            // ->join('clients', 'clients.id', '=', 'appointments.client_id')
             ->where('appointments.client_id', $cid)
             ->where('appointments.status', 'Accepted')
             ->get();

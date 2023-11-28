@@ -48,7 +48,7 @@ class InstructorController extends Controller
         $appointments = Appointment::join('clients', 'clients.id', '=', 'appointments.client_id')
             ->select('clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'appointments.medical_condition', 'appointments.target', 'appointments.appointment_date', 'appointments.appointment_time', 'appointments.status', 'appointments.id')
             ->where('appointments.instructor_id', $ptid)
-            ->where('appointments.appointment_date', '>=', now())
+            // ->where('appointments.appointment_date', '>=', now())
             ->orderBy('appointments.appointment_date', 'asc')
             ->get();
 

@@ -141,7 +141,7 @@
         </div>
         @foreach ($feedbacks as $feedback)
             <div class="col-4">
-                <b>{{ $feedback->client_firstname }} {{ $feedback->client_lastname }}</b>
+                <b>{{ $feedback->client_firstname }} {{ $feedback->client_lastname }} (Client)</b> to <b>{{ $feedback->ptrainer_firstname }} {{ $feedback->ptrainer_lastname }} (Instructor)</b>
                 <textarea name="content" id="feedback_inp" class="form-control" readonly>{{ $feedback->content }}</textarea>
             </div>
         @endforeach

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Appointment;
 use App\Models\Feedback;
 use App\Models\Feedbacks;
 use Illuminate\Http\Request;
@@ -12,7 +14,11 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        $feedbacks = Feedbacks::paginate(5); // 10 instructors per page
+        // $feedbacks = Feedbacks::paginate(5); // 10 instructors per page
+        $feedbacks = Feedbacks::join('instructors', 'instructors.id', '=', 'feedbacks.instructor_id')
+            ->join('clients', 'clients.id', '=', 'feedbacks.client_id')
+            ->select('instructors.firstname as ptrainer_firstname', 'instructors.lastname as ptrainer_lastname', 'clients.firstname as client_firstname', 'clients.lastname as client_lastname', 'feedbacks.content as content', 'feedbacks.created_at as fback_date', 'feedbacks.id')
+            ->get();
         return view('admin.f_index', compact('feedbacks'));
     }            
 
